@@ -34,9 +34,7 @@ const playSample = (audioContext: AudioContext, audioBuffer: AudioBuffer, time: 
 
 const StepSeqButton = ({index, extraCSS, activePad, step}: StepSeqProps) => {
   const assignSampleHandler = () => {
-    console.log('inside step', activePad)
     if(step.instruments.includes(activePad)){
-      console.log('splicestep', activePad)
       step.instruments.splice(step.instruments.indexOf(activePad), 1)
     }
     else{
@@ -61,19 +59,15 @@ function App() {
   const instruments = useInstruments()
   const [bpm, setBpm] = useState<number>(120)
   const [activePad, setActivePad] = useState<'kick' | 'clap' | 'closedHH' | ''>('')
+  const [timerId, setTimerId] = useState<ReturnType<typeof setTimeout>>()
   // const [instruments, setInstruments]= useState<LoadedInstruments>()
-  const [seq] = useState<Sequencer>(Array.from({ length: 16 }, () => {
+  const [seq, setSeq] = useState<Sequencer>(Array.from({ length: 16 }, () => {
     return {
       instruments: [''],
       extraCSS: ''
     }
   }))
-  // const seq: Sequencer = Array.from({ length: 16 }, () => {
-  //   return {
-  //     instruments: [''],
-  //     extraCSS: ''
-  //   }
-  // })
+
 
   if(!instruments) return <>Loading...</>
   if(!seq[0]) return <>Loading...</>
@@ -84,9 +78,11 @@ function App() {
   let activeStep = 0
   let nextStepTime = 0.0 // when next note is due
   const nextStep = () => {
-    const secondsPerBeat = (60.0 / bpm) / 4
-    nextStepTime += secondsPerBeat
-    activeStep = (activeStep + 1) % 16
+    const secondsPerBeat = (60.0 / bpm) 
+    // TODO: have stepsPerBeat user assignable? 
+    const stepsPerBeat = 4
+    nextStepTime += secondsPerBeat / stepsPerBeat
+    activeStep = (activeStep + 1) % (4 * stepsPerBeat)
   }
   
   const stepsInQueue: QueueSteps[] = []
@@ -105,14 +101,15 @@ function App() {
   }
   
   
-  let timerId: ReturnType<typeof setInterval>
+  // let timerId: ReturnType<typeof setTimeout>
+  console.log(timerId)
   const scheduleSequencer = () => {
     //advance the pointer while there are still steps to be played
     while (nextStepTime < audioContext.currentTime + scheduleAheadTime) {
       scheduleStep(activeStep, nextStepTime)
       nextStep()
     }
-    timerId = setTimeout(scheduleSequencer, lookahead)
+    setTimerId(setTimeout(scheduleSequencer, lookahead))
   }
   
   let lastStepHighlighted = 3
@@ -121,14 +118,20 @@ function App() {
     const currentTime = audioContext.currentTime
     
     while (stepsInQueue.length && stepsInQueue[0].time < currentTime) {
+      console.log('0step',stepsInQueue[0].step)
       highlightStep = stepsInQueue[0].step
       stepsInQueue.shift()
     }
     if(lastStepHighlighted !== highlightStep) {
-      seq.forEach(() => {
-        seq[lastStepHighlighted * 2].extraCSS = ''
-        seq[highlightStep * 2].extraCSS = 'border-lime-400'
-      })
+      setSeq(seq.map((step: Step, index: number) => {
+        if (index === lastStepHighlighted ){
+          step.extraCSS = ''
+        }
+        else if (index === highlightStep){
+          step.extraCSS = 'border-lime-400'
+        }
+        return step
+      }))
       lastStepHighlighted = highlightStep
     }
     requestAnimationFrame(colorSteps)
@@ -144,7 +147,7 @@ function App() {
       activeStep = 0
       nextStepTime = audioContext.currentTime
       scheduleSequencer()
-      window.requestAnimationFrame(colorSteps)
+      requestAnimationFrame(colorSteps)
     }
     else {
       clearTimeout(timerId)
@@ -177,7 +180,7 @@ function App() {
         Closed HH
       </button>
       {/* button below has to change to stop multiple intervals */}
-      <button className="p-5 border-4 rounded-md m-2" onClick={() => launchSequencer()}>Play/Stop</button>
+      <button className="p-5 border-4 rounded-md m-2" onClick={() => launchSequencer()} role='switch' >Play/Stop</button>
       {/* <button className="p-5 border-4 rounded-md m-2" onClick={() => launchSequencer()}>Stop</button> */}
       <div className='seq-container grid gap-4 grid-cols-4 grid-rows-4'>
         {seq.map((b, i) => {
