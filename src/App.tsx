@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { ChangeEvent, useState } from 'react'
 import './App.css'
 import { audioContext } from './utils/audioContext'
 import useInstruments from './hooks/useInstruments'
@@ -9,46 +9,77 @@ interface StepSeqProps {
   index: number
   extraCSS: string
   activePad: availableInstruments
-  step: Step
+  step: Step,
+  volume: number
 }
 
 interface QueueSteps { step: number, time: number }
+interface GainObject { kick: number, clap: number, closedHH: number }
 
 type Step = {
   instruments: [availableInstruments],
-  extraCSS: string
+  extraCSS: string,
+  gain: GainObject
 }
 type Sequencer = Step[]
 
 
-const playSample = (audioContext: AudioContext, audioBuffer: AudioBuffer, time: number) => {
+const playSample = (audioContext: AudioContext, audioBuffer: AudioBuffer, time: number, volume) => {
   const sampleSource = new AudioBufferSourceNode(audioContext, {
     buffer: audioBuffer
     // possible to have playbackRate here if wanted in future (possible pitch-like adjustment?)
   })
-  sampleSource.connect(audioContext.destination)
+  const gainNode = audioContext.createGain()
+  gainNode.gain.value = volume
+  sampleSource
+    .connect(gainNode)
+    .connect(audioContext.destination)
   sampleSource.start(time)
+  console.log(gainNode)
   return sampleSource
 }
 
 
-const StepSeqButton = ({index, extraCSS, activePad, step}: StepSeqProps) => {
+const StepSeqButton = ({index, extraCSS, activePad, step, volume }: StepSeqProps) => {
   const assignSampleHandler = () => {
     if(step.instruments.includes(activePad)){
       step.instruments.splice(step.instruments.indexOf(activePad), 1)
     }
     else{
       step.instruments.push(activePad)
+      step.gain[activePad] = volume
     }
-    console.log(step)
   }
   return (
-    <button 
-      className={'box-border border-4 p-4 rounded-md h-18 ' + `${extraCSS}`}
-      onClick={() => assignSampleHandler()} 
-      >
-      {index + 1}
-    </button>
+    <>
+      <button
+        className={'box-border border-4 p-4 rounded-md h-18 ' + `${extraCSS}`}
+        onClick={() => assignSampleHandler()}
+        >
+        {index + 1}
+        {step.instruments.includes('kick')
+          ? `Kick volume: ${step.gain.kick}`
+          : null
+        }
+      </button>
+    </>
+  )
+}
+
+const VolumeControl = ({ volume, setVolume }: {volume: number, setVolume: React.Dispatch<React.SetStateAction<number>>}) => {
+  return (
+    <div>
+      <input 
+        type='range' 
+        id='volume' 
+        onChange={(event: ChangeEvent) => setVolume(event?.target?.value)} 
+        value={volume} 
+        max={3.4}
+        min={0}
+        step={0.1}
+        /> 
+      <label htmlFor='volume'>Volume</label>
+    </div>
   )
 }
 
@@ -57,14 +88,17 @@ const StepSeqButton = ({index, extraCSS, activePad, step}: StepSeqProps) => {
 function App() {
 
   const instruments = useInstruments()
+
   const [bpm, setBpm] = useState<number>(120)
   const [activePad, setActivePad] = useState<'kick' | 'clap' | 'closedHH' | ''>('')
-  const [timerId, setTimerId] = useState<ReturnType<typeof setTimeout>>()
+  const [volume, setVolume] = useState(1)
+  // const [timerId, setTimerId] = useState<ReturnType<typeof setTimeout>>()
   // const [instruments, setInstruments]= useState<LoadedInstruments>()
   const [seq, setSeq] = useState<Sequencer>(Array.from({ length: 16 }, () => {
     return {
       instruments: [''],
-      extraCSS: ''
+      extraCSS: '',
+      gain: {kick: 1, clap: 1, closedHH: 1}
     }
   }))
 
@@ -90,26 +124,30 @@ function App() {
     stepsInQueue.push({ step: stepNumber, time })
     // if sampleArray[stepNumber] is assigned then play sample etc
     if(seq[stepNumber].instruments.includes('kick')) {
-      playSample(audioContext, instruments.kick, time)
+      const stepGain = seq[stepNumber].gain.kick
+      console.log(stepGain);
+      playSample(audioContext, instruments.kick, time, stepGain)
     }
     if(seq[stepNumber].instruments.includes('clap')) {
-      playSample(audioContext, instruments.clap, time)
+      const stepGain = seq[stepNumber].gain.clap
+      playSample(audioContext, instruments.clap, time, stepGain)
     }
     if(seq[stepNumber].instruments.includes('closedHH')) {
-      playSample(audioContext, instruments.closedHH, time)
+      const stepGain = seq[stepNumber].gain.closedHH
+      playSample(audioContext, instruments.closedHH, time, stepGain)
     }
   }
   
   
-  // let timerId: ReturnType<typeof setTimeout>
-  console.log(timerId)
+  let timerId: ReturnType<typeof setTimeout>
+  // console.log(timerId)
   const scheduleSequencer = () => {
     //advance the pointer while there are still steps to be played
     while (nextStepTime < audioContext.currentTime + scheduleAheadTime) {
       scheduleStep(activeStep, nextStepTime)
       nextStep()
     }
-    setTimerId(setTimeout(scheduleSequencer, lookahead))
+    setTimeout(scheduleSequencer, lookahead)
   }
   
   let lastStepHighlighted = 3
@@ -118,7 +156,6 @@ function App() {
     const currentTime = audioContext.currentTime
     
     while (stepsInQueue.length && stepsInQueue[0].time < currentTime) {
-      console.log('0step',stepsInQueue[0].step)
       highlightStep = stepsInQueue[0].step
       stepsInQueue.shift()
     }
@@ -156,17 +193,24 @@ function App() {
 
   const padHandler = (element: availableInstruments) => {
     setActivePad(element)
-    playSample(audioContext, instruments[element], 0)
+    playSample(audioContext, instruments[element], 0, volume)
   }
 
   return (
     <>
-      <button 
-        className={activePad === 'kick' ? "box-border h-32 w-32 border-4 rounded-md m-2 border-lime-400" : "box-border h-32 w-32 border-4 rounded-md m-2"}
-        onClick={() => padHandler('kick') }
-        >
-        Kick
-      </button>
+      <>
+        <button
+          className={activePad === 'kick' ? "box-border h-32 w-32 border-4 rounded-md m-2 border-lime-400" : "box-border h-32 w-32 border-4 rounded-md m-2"}
+          onClick={() => padHandler('kick') }
+          >
+          Kick
+        </button>
+        {activePad === 'kick'
+          ? <VolumeControl volume={volume} setVolume={setVolume} />
+          : null
+        }
+        
+      </>
       <button 
         className={activePad === 'clap' ? "box-border h-32 w-32 border-4 rounded-md m-2 border-blue-400" : "box-border h-32 w-32 border-4 rounded-md m-2"}
         onClick={() => padHandler('clap')}
@@ -184,7 +228,7 @@ function App() {
       {/* <button className="p-5 border-4 rounded-md m-2" onClick={() => launchSequencer()}>Stop</button> */}
       <div className='seq-container grid gap-4 grid-cols-4 grid-rows-4'>
         {seq.map((b, i) => {
-          return <StepSeqButton index={i} extraCSS={b.extraCSS} key={i} activePad={activePad} step={seq[i]} />
+          return <StepSeqButton index={i} extraCSS={b.extraCSS} key={i} activePad={activePad} step={seq[i]} volume={volume} />
         })}
       </div>
     </>
