@@ -3,28 +3,36 @@ import './App.css'
 import { audioContext } from './utils/audioContext'
 import useInstruments from './hooks/useInstruments'
 
-type availableInstruments = 'kick' | 'clap' | 'closedHH' | ''
+type AvailableInstruments = 'kick' | 'clap' | 'closedHH'
+
 
 interface StepSeqProps {
   index: number
   extraCSS: string
-  activePad: availableInstruments
+  activePad: AvailableInstruments
   step: Step,
   volume: number
 }
 
 interface QueueSteps { step: number, time: number }
 interface GainObject { kick: number, clap: number, closedHH: number }
+interface InstrumentPadType { 
+  instrument: string 
+  activePad: string 
+  padHandler: (element: AvailableInstruments) => void
+  volume: number 
+  setVolume: React.Dispatch<React.SetStateAction<number>>
+ }
 
 type Step = {
-  instruments: [availableInstruments],
+  instruments: AvailableInstruments[],
   extraCSS: string,
   gain: GainObject
 }
 type Sequencer = Step[]
 
 
-const playSample = (audioContext: AudioContext, audioBuffer: AudioBuffer, time: number, volume) => {
+const playSample = (audioContext: AudioContext, audioBuffer: AudioBuffer, time: number, volume: number) => {
   const sampleSource = new AudioBufferSourceNode(audioContext, {
     buffer: audioBuffer
     // possible to have playbackRate here if wanted in future (possible pitch-like adjustment?)
@@ -39,6 +47,68 @@ const playSample = (audioContext: AudioContext, audioBuffer: AudioBuffer, time: 
   return sampleSource
 }
 
+const isString = (text: unknown): text is string => {
+  return typeof text === 'string' || text instanceof String
+}
+const isInstrument = (instrument: string): instrument is AvailableInstruments => {
+  const allInstruments: AvailableInstruments[] = ['kick', 'clap', 'closedHH'] 
+  return allInstruments.includes(instrument as AvailableInstruments)
+}
+
+const validateInstrument = (instrument: unknown) => {
+  if(!instrument || !isString(instrument) || !isInstrument(instrument)){
+    throw new Error('Instrument is not valid')
+  }
+  return instrument
+}
+
+const InstrumentPad = ({ instrument, activePad, padHandler, volume, setVolume}: InstrumentPadType) => {
+
+  const setActiveBorder = (activePad: string) => {
+    switch (activePad && instrument) {
+      case 'kick':
+        if(activePad === 'kick') {
+          return "box-border h-32 w-32 border-4 rounded-md m-2 border-lime-400"
+        }
+        else {
+          return "box-border h-32 w-32 border-4 rounded-md m-2"
+        }
+      case 'clap':
+        if(activePad === 'clap') {
+          return "box-border h-32 w-32 border-4 rounded-md m-2 border-blue-400"
+        } 
+        else {
+          return "box-border h-32 w-32 border-4 rounded-md m-2"
+        } 
+      case 'closedHH':
+        if(activePad === 'closedHH') {
+          return "box-border h-32 w-32 border-4 rounded-md m-2 border-amber-400"
+        }
+        else  {
+          return "box-border h-32 w-32 border-4 rounded-md m-2"
+        }
+      default:
+        return "box-border h-32 w-32 border-4 rounded-md m-2"
+    }
+  }
+
+  return(
+    <>
+        <button
+          className={setActiveBorder(activePad)}
+          onClick={() => padHandler(validateInstrument(instrument))}
+          >
+          {instrument.toUpperCase()}
+        </button>
+        {activePad === instrument
+          ? <VolumeControl volume={volume} setVolume={setVolume} />
+          : null
+        }
+        
+        </>
+  )
+}
+
 
 const StepSeqButton = ({index, extraCSS, activePad, step, volume }: StepSeqProps) => {
   const assignSampleHandler = () => {
@@ -47,7 +117,8 @@ const StepSeqButton = ({index, extraCSS, activePad, step, volume }: StepSeqProps
     }
     else{
       step.instruments.push(activePad)
-      step.gain[activePad] = volume
+      const instrument = validateInstrument(activePad)
+      step.gain[instrument] = volume
     }
   }
   return (
@@ -90,13 +161,13 @@ function App() {
   const instruments = useInstruments()
 
   const [bpm, setBpm] = useState<number>(120)
-  const [activePad, setActivePad] = useState<'kick' | 'clap' | 'closedHH' | ''>('')
+  const [activePad, setActivePad] = useState<string | undefined>()
   const [volume, setVolume] = useState(1)
   // const [timerId, setTimerId] = useState<ReturnType<typeof setTimeout>>()
   // const [instruments, setInstruments]= useState<LoadedInstruments>()
   const [seq, setSeq] = useState<Sequencer>(Array.from({ length: 16 }, () => {
     return {
-      instruments: [''],
+      instruments: [],
       extraCSS: '',
       gain: {kick: 1, clap: 1, closedHH: 1}
     }
@@ -191,39 +262,16 @@ function App() {
     }
   }
 
-  const padHandler = (element: availableInstruments) => {
+  const padHandler = (element: AvailableInstruments) => {
     setActivePad(element)
     playSample(audioContext, instruments[element], 0, volume)
   }
 
   return (
     <>
-      <>
-        <button
-          className={activePad === 'kick' ? "box-border h-32 w-32 border-4 rounded-md m-2 border-lime-400" : "box-border h-32 w-32 border-4 rounded-md m-2"}
-          onClick={() => padHandler('kick') }
-          >
-          Kick
-        </button>
-        {activePad === 'kick'
-          ? <VolumeControl volume={volume} setVolume={setVolume} />
-          : null
-        }
-        
-      </>
-      <button 
-        className={activePad === 'clap' ? "box-border h-32 w-32 border-4 rounded-md m-2 border-blue-400" : "box-border h-32 w-32 border-4 rounded-md m-2"}
-        onClick={() => padHandler('clap')}
-        >
-        Clap
-      </button>
-      <button 
-        className={activePad === 'closedHH' ? "box-border h-32 w-32 border-4 rounded-md m-2 border-amber-400" : "box-border h-32 w-32 border-4 rounded-md m-2"}
-        onClick={() => padHandler('closedHH')}
-        >
-        Closed HH
-      </button>
-      {/* button below has to change to stop multiple intervals */}
+    <InstrumentPad instrument='kick' activePad={activePad} padHandler={padHandler} volume={volume} setVolume={setVolume} />
+    <InstrumentPad instrument='clap' activePad={activePad} padHandler={padHandler} volume={volume} setVolume={setVolume} />
+    <InstrumentPad instrument='closedHH' activePad={activePad} padHandler={padHandler} volume={volume} setVolume={setVolume} />
       <button className="p-5 border-4 rounded-md m-2" onClick={() => launchSequencer()} role='switch' >Play/Stop</button>
       {/* <button className="p-5 border-4 rounded-md m-2" onClick={() => launchSequencer()}>Stop</button> */}
       <div className='seq-container grid gap-4 grid-cols-4 grid-rows-4'>
