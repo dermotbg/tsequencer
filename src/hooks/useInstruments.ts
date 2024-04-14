@@ -28,7 +28,8 @@ const fetchInstruments = async () => {
   const kick = await setSamples('src/audio/91627__suicidity__dirty-tonys-kick-drum-mx-055.wav')
   const clap = await setSamples('src/audio/561119__sorinious_genious__clap-9.wav')
   const closedHH = await setSamples('src/audio/674295__theendofacycle__hi-hat-closed-hit-02.wav')
-  return { kick, clap, closedHH }
+  const ride = await setSamples('src/audio/26665__altemark__ride08.wav')
+  return { kick, clap, closedHH, ride }
 }
 
 const useInstruments = () => {

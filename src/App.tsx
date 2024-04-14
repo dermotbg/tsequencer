@@ -3,7 +3,7 @@ import './App.css'
 import { audioContext } from './utils/audioContext'
 import useInstruments from './hooks/useInstruments'
 
-type AvailableInstruments = 'kick' | 'clap' | 'closedHH'
+type AvailableInstruments = 'kick' | 'clap' | 'closedHH' | 'ride'
 
 
 interface StepSeqProps {
@@ -15,7 +15,7 @@ interface StepSeqProps {
 }
 
 interface QueueSteps { step: number, time: number }
-interface GainObject { kick: number, clap: number, closedHH: number }
+interface GainObject { kick: number, clap: number, closedHH: number, ride: number }
 interface InstrumentPadType { 
   instrument: string 
   activePad: string 
@@ -51,7 +51,7 @@ const isString = (text: unknown): text is string => {
   return typeof text === 'string' || text instanceof String
 }
 const isInstrument = (instrument: string): instrument is AvailableInstruments => {
-  const allInstruments: AvailableInstruments[] = ['kick', 'clap', 'closedHH'] 
+  const allInstruments: AvailableInstruments[] = ['kick', 'clap', 'closedHH', 'ride'] 
   return allInstruments.includes(instrument as AvailableInstruments)
 }
 
@@ -83,6 +83,13 @@ const InstrumentPad = ({ instrument, activePad, padHandler, volume, setVolume}: 
       case 'closedHH':
         if(activePad === 'closedHH') {
           return "box-border h-32 w-32 border-4 rounded-md m-2 border-amber-400"
+        }
+        else  {
+          return "box-border h-32 w-32 border-4 rounded-md m-2"
+        }
+      case 'ride':
+        if(activePad === 'ride') {
+          return "box-border h-32 w-32 border-4 rounded-md m-2 border-cyan-400"
         }
         else  {
           return "box-border h-32 w-32 border-4 rounded-md m-2"
@@ -169,7 +176,7 @@ function App() {
     return {
       instruments: [],
       extraCSS: '',
-      gain: {kick: 1, clap: 1, closedHH: 1}
+      gain: {kick: 1, clap: 1, closedHH: 1, ride: 1}
     }
   }))
 
@@ -206,6 +213,10 @@ function App() {
     if(seq[stepNumber].instruments.includes('closedHH')) {
       const stepGain = seq[stepNumber].gain.closedHH
       playSample(audioContext, instruments.closedHH, time, stepGain)
+    }
+    if(seq[stepNumber].instruments.includes('ride')) {
+      const stepGain = seq[stepNumber].gain.ride
+      playSample(audioContext, instruments.ride, time, stepGain)
     }
   }
   
@@ -272,6 +283,7 @@ function App() {
     <InstrumentPad instrument='kick' activePad={activePad} padHandler={padHandler} volume={volume} setVolume={setVolume} />
     <InstrumentPad instrument='clap' activePad={activePad} padHandler={padHandler} volume={volume} setVolume={setVolume} />
     <InstrumentPad instrument='closedHH' activePad={activePad} padHandler={padHandler} volume={volume} setVolume={setVolume} />
+    <InstrumentPad instrument='ride' activePad={activePad} padHandler={padHandler} volume={volume} setVolume={setVolume} />
       <button className="p-5 border-4 rounded-md m-2" onClick={() => launchSequencer()} role='switch' >Play/Stop</button>
       {/* <button className="p-5 border-4 rounded-md m-2" onClick={() => launchSequencer()}>Stop</button> */}
       <div className='seq-container grid gap-4 grid-cols-4 grid-rows-4'>
