@@ -3,7 +3,7 @@ import './App.css'
 import { audioContext } from './utils/audioContext'
 import useInstruments from './hooks/useInstruments'
 
-type AvailableInstruments = 'kick' | 'clap' | 'closedHH' | 'ride'
+type AvailableInstruments = 'kick' | 'clap' | 'closedHH' | 'ride' 
 
 
 interface StepSeqProps {
@@ -18,7 +18,7 @@ interface QueueSteps { step: number, time: number }
 interface GainObject { kick: number, clap: number, closedHH: number, ride: number }
 interface InstrumentPadType { 
   instrument: string 
-  activePad: string 
+  activePad: string | undefined
   padHandler: (element: AvailableInstruments) => void
   volume: number 
   setVolume: React.Dispatch<React.SetStateAction<number>>
@@ -64,7 +64,7 @@ const validateInstrument = (instrument: unknown) => {
 
 const InstrumentPad = ({ instrument, activePad, padHandler, volume, setVolume}: InstrumentPadType) => {
 
-  const setActiveBorder = (activePad: string) => {
+  const setActiveBorder = (activePad: string | undefined) => {
     switch (activePad && instrument) {
       case 'kick':
         if(activePad === 'kick') {
@@ -150,7 +150,7 @@ const VolumeControl = ({ volume, setVolume }: {volume: number, setVolume: React.
       <input 
         type='range' 
         id='volume' 
-        onChange={(event: ChangeEvent) => setVolume(event?.target?.value)} 
+        onChange={(event: ChangeEvent<HTMLInputElement>) => setVolume(parseFloat(event.target.value))} 
         value={volume} 
         max={3.4}
         min={0}
@@ -288,7 +288,7 @@ function App() {
       {/* <button className="p-5 border-4 rounded-md m-2" onClick={() => launchSequencer()}>Stop</button> */}
       <div className='seq-container grid gap-4 grid-cols-4 grid-rows-4'>
         {seq.map((b, i) => {
-          return <StepSeqButton index={i} extraCSS={b.extraCSS} key={i} activePad={activePad} step={seq[i]} volume={volume} />
+          return <StepSeqButton index={i} extraCSS={b.extraCSS} key={i} activePad={activePad as AvailableInstruments} step={seq[i]} volume={volume} />
         })}
       </div>
     </>
