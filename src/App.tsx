@@ -162,6 +162,14 @@ const VolumeControl = ({ volume, setVolume }: {volume: number, setVolume: React.
 }
 
 
+const BpmController = ({ bpm, setBpm }: {bpm: number, setBpm: React.Dispatch<React.SetStateAction<number>>}) => {
+  return (
+    <>
+      <input type="number" value={bpm} min={25} max={300} onChange={(e) => setBpm(parseInt(e.target.value))} />
+    </>
+  )
+}
+
 
 function App() {
 
@@ -280,6 +288,7 @@ function App() {
 
   return (
     <>
+    <BpmController bpm={bpm} setBpm={setBpm} />
     <InstrumentPad instrument='kick' activePad={activePad} padHandler={padHandler} volume={volume} setVolume={setVolume} />
     <InstrumentPad instrument='clap' activePad={activePad} padHandler={padHandler} volume={volume} setVolume={setVolume} />
     <InstrumentPad instrument='closedHH' activePad={activePad} padHandler={padHandler} volume={volume} setVolume={setVolume} />
