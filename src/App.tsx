@@ -3,33 +3,9 @@ import './App.css'
 import { audioContext } from './utils/audioContext'
 import useInstruments from './hooks/useInstruments'
 
-type AvailableInstruments = 'kick' | 'clap' | 'closedHH' | 'ride' 
+import { AvailableInstruments, InstrumentPadType, Step, StepSeqProps, Sequencer, QueueSteps } from './types'
+import instrumentAttributeRenderer from './utils/instrumentAttributeRenderer'
 
-
-interface StepSeqProps {
-  index: number
-  extraCSS: string
-  activePad: AvailableInstruments
-  step: Step,
-  volume: number
-}
-
-interface QueueSteps { step: number, time: number }
-interface GainObject { kick: number, clap: number, closedHH: number, ride: number }
-interface InstrumentPadType { 
-  instrument: string 
-  activePad: string | undefined
-  padHandler: (element: AvailableInstruments) => void
-  volume: number 
-  setVolume: React.Dispatch<React.SetStateAction<number>>
- }
-
-type Step = {
-  instruments: AvailableInstruments[],
-  extraCSS: string,
-  gain: GainObject
-}
-type Sequencer = Step[]
 
 
 const playSample = (audioContext: AudioContext, audioBuffer: AudioBuffer, time: number, volume: number) => {
@@ -135,10 +111,9 @@ const StepSeqButton = ({index, extraCSS, activePad, step, volume }: StepSeqProps
         onClick={() => assignSampleHandler()}
         >
         {index + 1}
-        {step.instruments.includes('kick')
-          ? `Kick volume: ${step.gain.kick}`
-          : null
-        }
+        {step.instruments.map((i) => {
+          return instrumentAttributeRenderer(i, step)}
+        )}
       </button>
     </>
   )
