@@ -7,7 +7,6 @@ import { AvailableInstruments, InstrumentPadType, Step, StepSeqProps, Sequencer,
 import instrumentAttributeRenderer from './utils/instrumentAttributeRenderer'
 
 
-
 const playSample = (audioContext: AudioContext, audioBuffer: AudioBuffer, time: number, volume: number) => {
   const sampleSource = new AudioBufferSourceNode(audioContext, {
     buffer: audioBuffer
@@ -105,19 +104,24 @@ const StepSeqButton = ({index, extraCSS, activePad, step, volume }: StepSeqProps
     }
   }
   return (
-    <>
+    <div className='flex-col'>
       <button
-        className={'box-border border-4 p-4 rounded-md h-18 ' + `${extraCSS}`}
+        className={'box-border border-4 p-4 rounded-md w-5/6 h-full  ' + `${extraCSS}`}
         onClick={() => assignSampleHandler()}
         >
         {index + 1}
         {step.instruments.map((i) => {
-          return instrumentAttributeRenderer(i, step)}
-        )}
+          return (
+            <div key={i}>
+              {instrumentAttributeRenderer(i, step)}
+            </div>
+          )
+        })}
       </button>
-    </>
+    </div>
   )
 }
+
 
 const VolumeControl = ({ volume, setVolume }: {volume: number, setVolume: React.Dispatch<React.SetStateAction<number>>}) => {
   return (
@@ -152,7 +156,7 @@ function App() {
 
   const [bpm, setBpm] = useState<number>(120)
   const [activePad, setActivePad] = useState<string | undefined>()
-  const [volume, setVolume] = useState(1)
+  const [volume, setVolume] = useState(3.4)
   // const [timerId, setTimerId] = useState<ReturnType<typeof setTimeout>>()
   // const [instruments, setInstruments]= useState<LoadedInstruments>()
   const [seq, setSeq] = useState<Sequencer>(Array.from({ length: 16 }, () => {

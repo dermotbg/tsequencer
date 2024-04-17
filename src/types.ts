@@ -5,7 +5,7 @@ export interface StepSeqProps {
   index: number
   extraCSS: string
   activePad: AvailableInstruments
-  step: Step,
+  step: Step
   volume: number
 }
 
