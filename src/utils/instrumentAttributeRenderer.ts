@@ -1,4 +1,4 @@
-import { Step } from "../types"
+import { Step } from "../assets/components/StepSequencerContainer/types"
 
 const instrumentAttributeRenderer = ( instrument: string, step: Step ): string | undefined => {
     switch (instrument) {
