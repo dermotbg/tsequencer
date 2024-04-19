@@ -1,4 +1,4 @@
-import { validateInstrument } from "../../../../../utils/typeChecking"
+import { validateInstrument } from "../../../../utils/typeChecking"
 import VolumeControl from "../VolumeControl"
 import { setActiveBorder } from "../../utils/SetActiveBorder"
 import { InstrumentPadType } from "../../types"

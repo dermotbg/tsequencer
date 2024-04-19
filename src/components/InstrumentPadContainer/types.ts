@@ -1,4 +1,4 @@
-import { AvailableInstruments } from "../../../types"
+import { AvailableInstruments } from "../../types"
 
 export interface InstrumentPadContainerType {
   activePad: string | undefined

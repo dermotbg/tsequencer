@@ -1,9 +1,9 @@
 import StepSequencer from "./components/StepSequencer"
-import useInstruments from "../../../hooks/useInstruments"
-import useSequencer from "../../../hooks/useSequencer"
+import useInstruments from "../../hooks/useInstruments"
+import useSequencer from "../../hooks/useSequencer"
 import LaunchController from "./components/LaunchController"
-import useActivePadStore from "../../../hooks/useActivePadStore"
-import useVolumeStore from "../../../hooks/useVolumeStore"
+import useActivePadStore from "../../hooks/useActivePadStore"
+import useVolumeStore from "../../hooks/useVolumeStore"
 
 
 

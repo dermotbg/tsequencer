@@ -1,4 +1,4 @@
-import { AvailableInstruments, GainObject } from "../../../types"
+import { AvailableInstruments, GainObject } from "../../types"
 
 export interface StepSeqProps {
   index: number

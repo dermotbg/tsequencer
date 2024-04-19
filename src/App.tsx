@@ -1,7 +1,7 @@
 import './App.css'
-import BpmController from './assets/components/BpmController'
-import InstrumentPadContainer from './assets/components/InstrumentPadContainer'
-import StepSequencerContainer from './assets/components/StepSequencerContainer'
+import BpmController from './components/BpmController'
+import InstrumentPadContainer from './components/InstrumentPadContainer'
+import StepSequencerContainer from './components/StepSequencerContainer'
 
 function App() {
   return (

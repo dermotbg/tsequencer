@@ -1,5 +1,5 @@
-import instrumentAttributeRenderer from "../../../../../utils/instrumentAttributeRenderer"
-import { validateInstrument } from "../../../../../utils/typeChecking"
+import instrumentAttributeRenderer from "../../../../utils/instrumentAttributeRenderer"
+import { validateInstrument } from "../../../../utils/typeChecking"
 import { StepSeqProps } from "../../types"
 
 const StepSeqButton = ({index, extraCSS, activePad, step, volume }: StepSeqProps) => {
@@ -18,7 +18,7 @@ const StepSeqButton = ({index, extraCSS, activePad, step, volume }: StepSeqProps
     }
   }
   return (
-    <div className='flex-col'>
+    <div className='flex-col box-border'>
       <button
         className={'box-border border-4 p-4 rounded-md w-5/6 h-full  ' + `${extraCSS}`}
         onClick={() => assignSampleHandler()}

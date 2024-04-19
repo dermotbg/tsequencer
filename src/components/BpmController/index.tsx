@@ -1,4 +1,4 @@
-import useSequencer from "../../../hooks/useSequencer"
+import useSequencer from "../../hooks/useSequencer"
 
 const BpmController = () => {
   const sequencer = useSequencer()

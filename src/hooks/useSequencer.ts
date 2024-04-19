@@ -1,7 +1,7 @@
 import { useState } from "react"
-import { Sequencer, Step } from "../assets/components/StepSequencerContainer/types"
+import { Sequencer, Step } from "../components/StepSequencerContainer/types"
 import { QueueSteps } from "../types"
-import { playSample } from "../assets/components/StepSequencerContainer/utils/playSample"
+import { playSample } from "../components/StepSequencerContainer/utils/playSample"
 import { audioContext } from "../utils/audioContext"
 import useInstruments from "./useInstruments"
 
