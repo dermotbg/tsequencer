@@ -13,9 +13,14 @@ const InstrumentPadContainer = () => {
   const volume = useVolumeStore()
 
   if (!instruments) return <>Loading...</>
+  console.log(Array.from(Object.keys(instruments)))
 
   const padHandler = (element: AvailableInstruments) => {
     activePad.set(element)
+    playSample(audioContext, instruments[element], 0, volume.level)
+  }
+
+  const onPressHandler = (element: AvailableInstruments) => {
     playSample(audioContext, instruments[element], 0, volume.level)
   }
 
@@ -23,10 +28,19 @@ const InstrumentPadContainer = () => {
   // TODO turn this render into map func
   return(
     <>
-      <InstrumentPad instrument='kick' activePad={activePad.activePad} padHandler={padHandler} volume={volume.level} setVolume={volume.set} />
-      <InstrumentPad instrument='clap' activePad={activePad.activePad} padHandler={padHandler} volume={volume.level} setVolume={volume.set} />
-      <InstrumentPad instrument='closedHH' activePad={activePad.activePad} padHandler={padHandler} volume={volume.level} setVolume={volume.set} />
-      <InstrumentPad instrument='ride' activePad={activePad.activePad} padHandler={padHandler} volume={volume.level} setVolume={volume.set} />
+      {Array.from(Object.keys(instruments).map((i) => {
+        return(
+          <InstrumentPad 
+            key={i}
+            instrument={i} 
+            activePad={activePad.activePad} 
+            padHandler={padHandler}
+            onPressHandler={onPressHandler}
+            volume={volume.level} 
+            setVolume={volume.set} 
+          />
+        )
+      }))}
     </>
   )
 }

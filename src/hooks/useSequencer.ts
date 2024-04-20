@@ -41,7 +41,9 @@ const useSequencer = () => {
   
   const stepsInQueue: QueueSteps[] = []
   const scheduleStep = async (stepNumber: number, time: number) => {
-    if(!instruments) return
+    // initial pre-instruments load calls scheduler
+    if(!instruments) return 
+
     stepsInQueue.push({ step: stepNumber, time })
     // if sampleArray[stepNumber] is assigned then play sample etc
     if(seq[stepNumber].instruments.includes('kick')) {
@@ -117,7 +119,6 @@ const useSequencer = () => {
       requestAnimationFrame(colorSteps)
     }
     else {
-      console.log('timerID',timerId)
       clearTimeout(timerId.current)
     }
   }
