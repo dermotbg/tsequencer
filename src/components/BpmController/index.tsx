@@ -1,10 +1,10 @@
-import useSequencer from "../../hooks/useSequencer"
+import useBPMStore from "../../hooks/useBPMStore"
 
 const BpmController = () => {
-  const sequencer = useSequencer()
+  const bpmController = useBPMStore()
   return (
     <>
-      <input type="number" value={sequencer.bpm} min={25} max={300} onChange={(e) => sequencer.setBpm(parseInt(e.target.value))} />
+      <input type="number" value={bpmController.bpm} min={25} max={300} onChange={(e) => bpmController.set(parseInt(e.target.value))} />
     </>
   )
 }

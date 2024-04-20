@@ -1,12 +1,14 @@
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { Sequencer, Step } from "../components/StepSequencerContainer/types"
 import { QueueSteps } from "../types"
 import { playSample } from "../components/StepSequencerContainer/utils/playSample"
 import { audioContext } from "../utils/audioContext"
 import useInstruments from "./useInstruments"
-
+import useBPMStore from "./useBPMStore"
 const useSequencer = () => {
-  const [bpm, setBpm] = useState<number>(120)
+  const instruments = useInstruments()
+  const bpm = useBPMStore((state) => state.bpm)
+  const [secondsPerBeat, setSecondsPerBeat] = useState<number>(60 / bpm)
   const [seq, setSeq] = useState<Sequencer>(Array.from({ length: 16 }, () => {
     return {
       instruments: [],
@@ -15,7 +17,14 @@ const useSequencer = () => {
     }
   }))
 
-  const instruments = useInstruments()
+  const timerId = useRef<ReturnType<typeof setTimeout>>()
+  const isPlaying = useRef<boolean>(false)
+
+  useEffect(() => {
+    setSecondsPerBeat(60 / bpm)
+    launchSequencer()
+  }, [bpm])
+
 
   const lookahead = 25.0 // freq of scheduling function (miliseconds)
   const scheduleAheadTime = 0.1 // how far ahead to schedule (seconds)
@@ -23,7 +32,7 @@ const useSequencer = () => {
   let nextStepTime = 0.0 // when next note is due
 
   const nextStep = () => {
-    const secondsPerBeat = (60.0 / bpm) 
+    // const secondsPerBeat = (60.0 / bpm) 
     // TODO: have stepsPerBeat user assignable? 
     const stepsPerBeat = 4
     nextStepTime += secondsPerBeat / stepsPerBeat
@@ -32,13 +41,11 @@ const useSequencer = () => {
   
   const stepsInQueue: QueueSteps[] = []
   const scheduleStep = async (stepNumber: number, time: number) => {
-    console.log('steps in queue instruments',instruments)
-    if(!instruments) throw new Error('Instruments are not loaded')
+    if(!instruments) return
     stepsInQueue.push({ step: stepNumber, time })
     // if sampleArray[stepNumber] is assigned then play sample etc
     if(seq[stepNumber].instruments.includes('kick')) {
       const stepGain = seq[stepNumber].gain.kick
-      console.log(stepGain);
       playSample(audioContext, instruments.kick, time, stepGain)
     }
     if(seq[stepNumber].instruments.includes('clap')) {
@@ -55,14 +62,13 @@ const useSequencer = () => {
     }
   }
   
-  let timerId: ReturnType<typeof setTimeout>
   const scheduleSequencer = () => {
     //advance the pointer while there are still steps to be played
     while (nextStepTime < audioContext.currentTime + scheduleAheadTime) {
       scheduleStep(activeStep, nextStepTime)
       nextStep()
     }
-    setTimeout(scheduleSequencer, lookahead)
+    timerId.current = setTimeout(scheduleSequencer, lookahead)
   }
   
     
@@ -87,14 +93,21 @@ const useSequencer = () => {
       }))
       lastStepHighlighted = highlightStep
     }
+    if(!isPlaying.current){
+      setSeq(seq.map((step: Step) => {
+        step.extraCSS = ''
+        return step
+      }))
+    }
     requestAnimationFrame(colorSteps)
   }
   
   
-  let isPlaying = false
+  // let isPlaying = false
   const launchSequencer = () => {
-    isPlaying = !isPlaying
-    if(isPlaying){
+    isPlaying.current = !isPlaying.current
+
+    if(isPlaying.current){
       if(audioContext.state === 'suspended'){
         audioContext.resume()
       }
@@ -104,11 +117,12 @@ const useSequencer = () => {
       requestAnimationFrame(colorSteps)
     }
     else {
-      clearTimeout(timerId)
+      console.log('timerID',timerId)
+      clearTimeout(timerId.current)
     }
   }
 
-  return { seq, setSeq, bpm, setBpm, launchSequencer }
+  return { seq, setSeq, launchSequencer }
 
 }
 
