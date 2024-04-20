@@ -9,5 +9,5 @@ export interface InstrumentPadContainerType {
 export interface InstrumentPadType extends InstrumentPadContainerType {
   instrument: string
   padHandler: (element: AvailableInstruments) => void
-  onPressHandler: (element: AvailableInstruments) => void
+  onPressHandler: (element: AvailableInstruments, keyCode: string) => void
 }

@@ -20,12 +20,27 @@ const InstrumentPadContainer = () => {
     playSample(audioContext, instruments[element], 0, volume.level)
   }
 
-  const onPressHandler = (element: AvailableInstruments) => {
-    playSample(audioContext, instruments[element], 0, volume.level)
+  const onPressHandler = (element: AvailableInstruments, keyCode: string) => {
+    console.log(keyCode)
+    console.log(element)
+    switch (keyCode) {
+      case 'KeyS':
+        playSample(audioContext, instruments['kick'], 0, volume.level)
+        break;
+      case 'KeyK':
+        playSample(audioContext, instruments['clap'], 0, volume.level)
+        break;
+      case 'KeyL':
+        playSample(audioContext, instruments['closedHH'], 0, volume.level)
+        break;
+      case 'KeyJ':
+        playSample(audioContext, instruments['ride'], 0, volume.level)
+        break;
+      default:
+        break;
+    }
   }
 
-
-  // TODO turn this render into map func
   return(
     <>
       {Array.from(Object.keys(instruments).map((i) => {

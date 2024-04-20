@@ -3,12 +3,13 @@ import VolumeControl from "../VolumeControl"
 import { setActiveBorder } from "../../utils/SetActiveBorder"
 import { InstrumentPadType } from "../../types"
 
-const InstrumentPad = ({ instrument, activePad, padHandler, volume, setVolume}: InstrumentPadType) => {
+const InstrumentPad = ({ instrument, activePad, padHandler, volume, setVolume, onPressHandler}: InstrumentPadType) => {
   return(
     <>
         <button
           className={setActiveBorder(activePad, instrument)}
           onClick={() => padHandler(validateInstrument(instrument))}
+          onKeyUp={(e) => onPressHandler(validateInstrument(instrument), e.code)}
           >
           {instrument.toUpperCase()}
         </button>
