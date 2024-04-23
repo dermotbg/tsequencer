@@ -29,6 +29,9 @@ const fetchInstruments = async () => {
   const clap = await setSamples('src/audio/561119__sorinious_genious__clap-9.wav')
   const closedHH = await setSamples('src/audio/674295__theendofacycle__hi-hat-closed-hit-02.wav')
   const ride = await setSamples('src/audio/26665__altemark__ride08.wav')
+  // TODO: metronome
+  // const metroUp = await setSamples('src/audio/250551__druminfected__metronomeup.wav')
+  // const metroDown = await setSamples('src/audio/250552__druminfected__metronome.wav')
   return { kick, clap, closedHH, ride }
 }
 

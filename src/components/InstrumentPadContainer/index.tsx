@@ -3,38 +3,46 @@ import { AvailableInstruments } from "../../types"
 import { audioContext } from "../../utils/audioContext"
 import { playSample } from "../StepSequencerContainer/utils/playSample"
 import InstrumentPad from "./components/InstrumentPad"
-import useActivePadStore from "../../hooks/useActivePadStore"
-import useVolumeStore from "../../hooks/useVolumeStore"
+import useActivePadStore from "../../hooks/StateHooks/useActivePadStore"
+import useVolumeStore from "../../hooks/StateHooks/useVolumeStore"
+import useSequencer from "../../hooks/useSequencer"
+import useRecordStore from "../../hooks/StateHooks/useRecordStore"
 
 const InstrumentPadContainer = () => {
 
   const instruments = useInstruments() 
+  const { pushToSequencer } = useSequencer()
   const activePad = useActivePadStore()
   const volume = useVolumeStore()
+  const recording = useRecordStore((state) => state.record)
+  const stepRef = useRecordStore((state) => state.stepRef)
 
   if (!instruments) return <>Loading...</>
-  console.log(Array.from(Object.keys(instruments)))
 
   const padHandler = (element: AvailableInstruments) => {
     activePad.set(element)
     playSample(audioContext, instruments[element], 0, volume.level)
   }
 
+
   const onPressHandler = (element: AvailableInstruments, keyCode: string) => {
-    console.log(keyCode)
-    console.log(element)
+
     switch (keyCode) {
       case 'KeyS':
         playSample(audioContext, instruments['kick'], 0, volume.level)
+        if(recording) pushToSequencer(stepRef, element, volume.level)
         break;
       case 'KeyK':
         playSample(audioContext, instruments['clap'], 0, volume.level)
+        if(recording) pushToSequencer(stepRef, element, volume.level)
         break;
       case 'KeyL':
         playSample(audioContext, instruments['closedHH'], 0, volume.level)
+        if(recording) pushToSequencer(stepRef, element, volume.level)
         break;
       case 'KeyJ':
         playSample(audioContext, instruments['ride'], 0, volume.level)
+        if(recording) pushToSequencer(stepRef, element, volume.level)
         break;
       default:
         break;

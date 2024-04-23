@@ -9,6 +9,5 @@ export const playSample = (audioContext: AudioContext, audioBuffer: AudioBuffer,
     .connect(gainNode)
     .connect(audioContext.destination)
   sampleSource.start(time)
-  console.log(gainNode)
   return sampleSource
 }

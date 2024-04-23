@@ -1,28 +1,26 @@
 import { useEffect, useRef, useState } from "react"
-import { Sequencer, Step } from "../components/StepSequencerContainer/types"
-import { QueueSteps } from "../types"
+import { Step } from "../components/StepSequencerContainer/types"
+import { AvailableInstruments, QueueSteps } from "../types"
 import { playSample } from "../components/StepSequencerContainer/utils/playSample"
 import { audioContext } from "../utils/audioContext"
 import useInstruments from "./useInstruments"
-import useBPMStore from "./useBPMStore"
+import useBPMStore from "./StateHooks/useBPMStore"
+import useRecordStore from "./StateHooks/useRecordStore"
+import useSequencerStore from "./StateHooks/useSequencerStore"
+
 const useSequencer = () => {
   const instruments = useInstruments()
   const bpm = useBPMStore((state) => state.bpm)
+  const setStepRef = useRecordStore((state) => state.setStepRef)
+  const { seq, setSeq } = useSequencerStore()
   const [secondsPerBeat, setSecondsPerBeat] = useState<number>(60 / bpm)
-  const [seq, setSeq] = useState<Sequencer>(Array.from({ length: 16 }, () => {
-    return {
-      instruments: [],
-      extraCSS: '',
-      gain: {kick: 1, clap: 1, closedHH: 1, ride: 1}
-    }
-  }))
 
   const timerId = useRef<ReturnType<typeof setTimeout>>()
   const isPlaying = useRef<boolean>(false)
 
   useEffect(() => {
     setSecondsPerBeat(60 / bpm)
-    launchSequencer()
+    if(timerId.current) clearTimeout(timerId.current)
   }, [bpm])
 
 
@@ -37,7 +35,9 @@ const useSequencer = () => {
     const stepsPerBeat = 4
     nextStepTime += secondsPerBeat / stepsPerBeat
     activeStep = (activeStep + 1) % (4 * stepsPerBeat)
+    setStepRef(activeStep)
   }
+
   
   const stepsInQueue: QueueSteps[] = []
   const scheduleStep = async (stepNumber: number, time: number) => {
@@ -45,6 +45,12 @@ const useSequencer = () => {
     if(!instruments) return 
 
     stepsInQueue.push({ step: stepNumber, time })
+    
+    // if metronome on play metronome
+    // TODO: metronom samples are way out of time
+    // if(stepNumber === 0) playSample(audioContext, instruments.metroUp, time, 1)
+    // if(stepNumber === 5 || stepNumber === 9 || stepNumber === 13) playSample(audioContext, instruments.metroDown, time, 1)
+        
     // if sampleArray[stepNumber] is assigned then play sample etc
     if(seq[stepNumber].instruments.includes('kick')) {
       const stepGain = seq[stepNumber].gain.kick
@@ -123,7 +129,18 @@ const useSequencer = () => {
     }
   }
 
-  return { seq, setSeq, launchSequencer }
+  const pushToSequencer = (stepRef: number, element: AvailableInstruments, volume: number) => {
+    
+    setSeq(seq.map((step: Step) => {
+      if(!seq[stepRef].instruments.includes(element)) {
+        seq[stepRef].instruments.push(element)
+        seq[stepRef].gain[element] = volume
+      }
+      return step
+    }))
+  }
+
+  return { seq, setSeq, launchSequencer, pushToSequencer }
 
 }
 

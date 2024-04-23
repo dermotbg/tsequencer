@@ -1,4 +1,4 @@
-import useBPMStore from "../../hooks/useBPMStore"
+import useBPMStore from "../../hooks/StateHooks/useBPMStore"
 
 const BpmController = () => {
   const bpmController = useBPMStore()

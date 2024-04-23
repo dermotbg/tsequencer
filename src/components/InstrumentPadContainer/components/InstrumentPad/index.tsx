@@ -9,7 +9,7 @@ const InstrumentPad = ({ instrument, activePad, padHandler, volume, setVolume, o
         <button
           className={setActiveBorder(activePad, instrument)}
           onClick={() => padHandler(validateInstrument(instrument))}
-          onKeyUp={(e) => onPressHandler(validateInstrument(instrument), e.code)}
+          onKeyDown={(e) => onPressHandler(validateInstrument(instrument), e.code)}
           >
           {instrument.toUpperCase()}
         </button>
