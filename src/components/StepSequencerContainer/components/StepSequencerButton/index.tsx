@@ -1,9 +1,28 @@
+import { useState } from "react"
+import useActiveStepStore from "../../../../hooks/StateHooks/useActiveStepStore"
 import instrumentAttributeRenderer from "../../../../utils/instrumentAttributeRenderer"
 import { validateInstrument } from "../../../../utils/typeChecking"
 import { StepSeqProps } from "../../types"
 
-const StepSeqButton = ({index, extraCSS, activePad, step, volume }: StepSeqProps) => {
+const StepSeqButton = ({ index, extraCSS, activePad, step, volume }: StepSeqProps) => {
+  const [active, setActive] = useState('')
+  const activeStep = useActiveStepStore()
   
+  const onClickHandler = () => {
+    active !== '' ? setActive('') : setActive('border-fuchsia-600')
+    assignSampleHandler()
+    activeStepHandler()
+  }
+
+
+  const activeStepHandler = () => {
+    if(!activePad) {
+      activeStep.set(index)
+      return
+    }
+  }
+
+
   const assignSampleHandler = () => {
     // TODO: incorporate more logic into step interaction with no active step
     // maybe volume mixer beneath or something
@@ -20,8 +39,8 @@ const StepSeqButton = ({index, extraCSS, activePad, step, volume }: StepSeqProps
   return (
     <div className='flex-col box-border'>
       <button
-        className={'box-border border-4 p-4 rounded-md w-5/6 h-full  ' + `${extraCSS}`}
-        onClick={() => assignSampleHandler()}
+        className={'box-border border-4 p-4 rounded-md w-5/6 h-full  ' + `${extraCSS}` + `${active}`}
+        onClick={() => onClickHandler()}
         >
         {index + 1}
         {step.instruments.map((i) => {

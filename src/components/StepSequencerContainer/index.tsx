@@ -9,13 +9,13 @@ import useSequencer from "../../hooks/useSequencer"
 import useVolumeStore from "../../hooks/StateHooks/useVolumeStore"
 
 
-
 const StepSequencerContainer = () => {
   const instruments = useInstruments()
   const sequencer = useSequencer()
   const activePad = useActivePadStore((state) => state.activePad)
   const volume = useVolumeStore((state) => state.level)
   const setRecording = useRecordStore((state) => state.setRecording)
+  
   
   const launchHandler = () => {
     sequencer.launchSequencer()

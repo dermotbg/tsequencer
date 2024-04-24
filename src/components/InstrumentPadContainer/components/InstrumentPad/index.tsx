@@ -1,9 +1,8 @@
 import { validateInstrument } from "../../../../utils/typeChecking"
-import VolumeControl from "../VolumeControl"
 import { setActiveBorder } from "../../utils/SetActiveBorder"
 import { InstrumentPadType } from "../../types"
 
-const InstrumentPad = ({ instrument, activePad, padHandler, volume, setVolume, onPressHandler}: InstrumentPadType) => {
+const InstrumentPad = ({ instrument, activePad, padHandler, onPressHandler}: InstrumentPadType) => {
   return(
     <>
         <button
@@ -12,13 +11,7 @@ const InstrumentPad = ({ instrument, activePad, padHandler, volume, setVolume, o
           onKeyDown={(e) => onPressHandler(validateInstrument(instrument), e.code)}
           >
           {instrument.toUpperCase()}
-        </button>
-        {/* {activePad === instrument
-          // ? <VolumeControl volume={volume} setVolume={setVolume} />
-          ? <>There used to be a volume slider here</>
-          : null
-        } */}
-        
+        </button>    
         </>
   )
 }
