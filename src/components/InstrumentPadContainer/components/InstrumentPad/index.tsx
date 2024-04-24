@@ -13,10 +13,11 @@ const InstrumentPad = ({ instrument, activePad, padHandler, volume, setVolume, o
           >
           {instrument.toUpperCase()}
         </button>
-        {activePad === instrument
-          ? <VolumeControl volume={volume} setVolume={setVolume} />
+        {/* {activePad === instrument
+          // ? <VolumeControl volume={volume} setVolume={setVolume} />
+          ? <>There used to be a volume slider here</>
           : null
-        }
+        } */}
         
         </>
   )

@@ -1,6 +1,7 @@
 import './App.css'
 import BpmController from './components/BpmController'
 import InstrumentPadContainer from './components/InstrumentPadContainer'
+import MixingDeskContainer from './components/MixingDeskContainer'
 import StepSequencerContainer from './components/StepSequencerContainer'
 
 function App() {
@@ -9,6 +10,7 @@ function App() {
       <BpmController/>
       <InstrumentPadContainer />
       <StepSequencerContainer />
+      <MixingDeskContainer />
     </>
   )
 }
