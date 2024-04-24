@@ -2,7 +2,7 @@ import { create } from "zustand"
 
 interface ActivePadStateType {
   activePad: string | undefined
-  set: (instrument: string) => void
+  set: (instrument: string | undefined) => void
 }
 
 const useActivePadStore = create<ActivePadStateType>()((set) => ({

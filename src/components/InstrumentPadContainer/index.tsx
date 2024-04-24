@@ -20,7 +20,12 @@ const InstrumentPadContainer = () => {
   if (!instruments) return <>Loading...</>
 
   const padHandler = (element: AvailableInstruments) => {
-    activePad.set(element)
+    if(activePad.activePad === element){
+      activePad.set(undefined)
+    } 
+    else {
+      activePad.set(element)
+    }
     playSample(audioContext, instruments[element], 0, volume.level)
   }
 
