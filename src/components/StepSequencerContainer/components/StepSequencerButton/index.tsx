@@ -9,7 +9,8 @@ const StepSeqButton = ({ index, extraCSS, activePad, step, volume }: StepSeqProp
   const activeStep = useActiveStepStore()
   
   const onClickHandler = () => {
-    active !== '' ? setActive('') : setActive('border-fuchsia-600')
+    // below temporaryily disabled, TODO: implement properly
+    active !== '' ? setActive('') : setActive('') //setActive('border-fuchsia-600')
     assignSampleHandler()
     activeStepHandler()
   }

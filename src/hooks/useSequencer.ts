@@ -38,6 +38,21 @@ const useSequencer = () => {
     setStepRef(activeStep)
   }
 
+
+  //TODO: only uses first entry in step.instruments. 
+  //Either generate classes for the color mixes manually or randomly select an entry
+  const instrumentsRack: AvailableInstruments[] = ['kick', 'clap', 'closedHH', 'ride']
+  const generateShadowClass = (step: Step) => {
+    let shadowClass = ''
+    for (const instrument of step.instruments){
+      if(instrumentsRack.includes(instrument)){
+        console.log(instrument)
+        shadowClass += instrument + '-'
+      }
+    }
+    return shadowClass.slice(0, -1)
+  }
+
   
   const stepsInQueue: QueueSteps[] = []
   const scheduleStep = async (stepNumber: number, time: number) => {
@@ -52,22 +67,27 @@ const useSequencer = () => {
     // if(stepNumber === 5 || stepNumber === 9 || stepNumber === 13) playSample(audioContext, instruments.metroDown, time, 1)
         
     // if sampleArray[stepNumber] is assigned then play sample etc
+    const colorShadow = generateShadowClass(seq[stepNumber])
     if(seq[stepNumber].instruments.includes('kick')) {
-      const stepGain = seq[stepNumber].gain.kick
-      playSample(audioContext, instruments.kick, time, stepGain)
+      playSample(audioContext, instruments.kick, time, seq[stepNumber].gain.kick)
     }
     if(seq[stepNumber].instruments.includes('clap')) {
-      const stepGain = seq[stepNumber].gain.clap
-      playSample(audioContext, instruments.clap, time, stepGain)
+      playSample(audioContext, instruments.clap, time, seq[stepNumber].gain.clap)
     }
     if(seq[stepNumber].instruments.includes('closedHH')) {
-      const stepGain = seq[stepNumber].gain.closedHH
-      playSample(audioContext, instruments.closedHH, time, stepGain)
+      playSample(audioContext, instruments.closedHH, time, seq[stepNumber].gain.closedHH)
     }
     if(seq[stepNumber].instruments.includes('ride')) {
-      const stepGain = seq[stepNumber].gain.ride
-      playSample(audioContext, instruments.ride, time, stepGain)
+      playSample(audioContext, instruments.ride, time, seq[stepNumber].gain.ride)
     }
+      setSeq(seq.map((step: Step, index: number) => {
+        if (index === stepNumber ){
+          // step.extraCSS = 'shadow-ride'
+          // console.log(colorShadow ? 'shadow-' + `${colorShadow}` : '')
+          step.extraCSS = colorShadow ? 'shadow-' + `${colorShadow}` : ''
+        }
+        return step
+      }))
   }
   
   const scheduleSequencer = () => {
@@ -95,7 +115,7 @@ const useSequencer = () => {
           step.extraCSS = ''
         }
         else if (index === highlightStep){
-          step.extraCSS = 'border-lime-400'
+          step.extraCSS = 'border-double'
         }
         return step
       }))
