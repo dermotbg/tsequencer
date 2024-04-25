@@ -27,17 +27,19 @@ const MixingDeskContainer = () => {
     </div>
   )
   return(
-    <div className='flex flex-row items-center justify-evenly'>
-      {Array.from(Object.keys(instruments).map((instrument: string) => {
-        if(!seq[activeStep].instruments.includes(validateInstrument(instrument))){
-          return <Fader index={activeStep} disabled={true} key={`${activeStep}-${instrument}`} instrument={validateInstrument(instrument)} gain={seq[activeStep].gain[instrument as keyof GainObject]} setGain={setGain} />
-        }
-        else {
-          return <Fader index={activeStep} disabled={false} key={`${activeStep}-${instrument}`} instrument={validateInstrument(instrument)} gain={seq[activeStep].gain[instrument as keyof GainObject]} setGain={setGain} />
-        }
-
-      }))}
-      <MasterFader volume={volume.level} setVolume={volume.set} />
+    <div className='flex flex-col'>
+      {activeStep ? `Step: ${activeStep}` : null }
+      <div className='flex flex-row items-center justify-evenly'>
+        {Array.from(Object.keys(instruments).map((instrument: string) => {
+          if(!seq[activeStep].instruments.includes(validateInstrument(instrument))){
+            return <Fader index={activeStep} disabled={true} key={`${activeStep}-${instrument}`} instrument={validateInstrument(instrument)} gain={seq[activeStep].gain[instrument as keyof GainObject]} setGain={setGain} />
+          }
+          else {
+            return <Fader index={activeStep} disabled={false} key={`${activeStep}-${instrument}`} instrument={validateInstrument(instrument)} gain={seq[activeStep].gain[instrument as keyof GainObject]} setGain={setGain} />
+          }
+        }))}
+        <MasterFader volume={volume.level} setVolume={volume.set} />
+      </div>
     </div>
   )
 } 
