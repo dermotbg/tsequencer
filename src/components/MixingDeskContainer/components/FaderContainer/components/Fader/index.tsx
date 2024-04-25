@@ -1,7 +1,8 @@
 import { ChangeEvent } from 'react'
-import '../fader.css'
-import { AvailableInstruments } from '../../../../types'
+import '../../../fader.css'
+
 import FaderDetails from '../FaderDetails'
+import { AvailableInstruments } from '../../../../../../types'
 
 const Fader = ({ disabled, index, instrument, gain, setGain }: { disabled: boolean, index: number, instrument: AvailableInstruments, gain: number, setGain: (index: number, gain: number, instrument: AvailableInstruments) => void  }) => {
   return(

@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react"
 import { audioContext } from "../utils/audioContext"
 
-interface LoadedInstruments {
+export interface LoadedInstruments {
   [key: string]: AudioBuffer
   kick: AudioBuffer
   clap: AudioBuffer
   closedHH: AudioBuffer
+  ride: AudioBuffer
 }
 
 const getSample = async (audioContext: AudioContext, filepath: string) => {

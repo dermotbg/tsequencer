@@ -1,5 +1,5 @@
 import { ChangeEvent } from 'react'
-import '../fader.css'
+import '../../../fader.css'
 import FaderDetails from '../FaderDetails'
 
 const MasterFader = ({ volume, setVolume }: { volume: number, setVolume: (gain: number) => void  }) => {

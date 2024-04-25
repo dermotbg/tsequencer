@@ -1,4 +1,5 @@
-import { AvailableInstruments } from "../../../../types"
+import { AvailableInstruments } from "../../../../../../types"
+
 
 type FaderInstrumentTypes = AvailableInstruments | 'Pad' | 'Inactive'
 
