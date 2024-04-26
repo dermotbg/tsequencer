@@ -8,8 +8,11 @@ export interface StepSeqProps {
   volume: number
 }
 
+export type Metronome = 'metroUp' | 'metroDown'
+
 export type Step = {
   instruments: AvailableInstruments[],
+  metronomes: Metronome[],
   extraCSS: string,
   gain: GainObject
 }

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { setSamples } from "../utils/setSamples"
 import { audioContext } from "../utils/audioContext"
 import { playSample } from "../utils/playSample"
+import { Step } from "../components/StepSequencerContainer/types"
 
 export interface LoadedMetronome {
   metroUp: AudioBuffer
@@ -25,24 +26,13 @@ const useMetronome = () => {
     loadMetro()
   },[])
 
-  const triggerMetronome = (stepNumber: number, time: number ) => {
+  const triggerMetronome = (step: Step) => {
     if(!metronome) return
-    console.log(audioContext.currentTime)
-    switch (stepNumber) {
-      case 0:
-        playSample(audioContext, metronome.metroUp, time, 3)
-        break;
-      case 5:
-        playSample(audioContext, metronome.metroDown, time, 3)
-        break
-      case 9:
-        playSample(audioContext, metronome.metroDown, time, 3)
-        break
-      case 13:
-        playSample(audioContext, metronome.metroDown, time, 3)
-        break
-      default:
-        break;
+    if(step.metronomes.includes('metroUp')) {
+      playSample(audioContext, metronome.metroUp, 0, 3)
+    }
+    if(step.metronomes.includes('metroDown')) {
+      playSample(audioContext, metronome.metroDown, 0, 3)
     }
   }
 

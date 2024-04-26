@@ -39,7 +39,7 @@ export const validateInstrument = (instrument: unknown) => {
 
 export const validateInstrumentRack = (object: unknown) => {
   if(!object || !isObject(object) || !isInstrumentRack(object)){
-    throw new Error(`Instrument is not valid: ${object}`)
+    throw new Error(`InstrumentRack is not valid: ${object}`)
   }
   return object
 }
