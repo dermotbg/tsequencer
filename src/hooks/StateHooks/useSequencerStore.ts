@@ -16,7 +16,7 @@ const useSequencerStore = create<SequencerStateType>()((set) => ({
         gain: {kick: 1, clap: 1, closedHH: 1, ride: 1 }
       }
     }
-    else if (i === 5 || i === 9 || i === 13){
+    else if (i === 4 || i === 8 || i === 12){
       return {
         instruments: [],
         metronomes: ['metroDown'],

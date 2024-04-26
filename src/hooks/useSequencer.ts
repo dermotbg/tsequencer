@@ -30,14 +30,6 @@ const useSequencer = () => {
     if(timerId.current) clearTimeout(timerId.current)
   }, [bpm])
 
-  // useEffect(() => {
-  //   if(metronome.metronome){
-  //     playSample(audioContext, metronome.metronome.metroUp, 0, 1)
-  //     playSample(audioContext, metronome.metronome.metroDown, 0, 1)
-  //   }
-  // },[metronome.metronome])
-
-
   const lookahead = 25.0 // freq of scheduling function (miliseconds)
   const scheduleAheadTime = 0.1 // how far ahead to schedule (seconds)
   let activeStep = 0
@@ -52,11 +44,8 @@ const useSequencer = () => {
     setStepRef(activeStep)
   }
 
-  //TODO: only uses first entry in step.instruments. 
-  //Either generate classes for the color mixes manually or randomly select an entry
-
-  
   const stepsInQueue: QueueSteps[] = []
+  
   const scheduleStep = async (stepNumber: number, time: number) => {
     // initial pre-instruments load calls scheduler
     if(!instruments) return 
@@ -65,7 +54,7 @@ const useSequencer = () => {
 
     const colorShadow = generateShadowClass(seq[stepNumber])
 
-    if(metronomeActive) metronome.triggerMetronome(seq[stepNumber]) 
+    if(metronomeActive) metronome.triggerMetronome(seq[stepNumber], time) 
   
     playInstruments(instruments, time, seq, stepNumber)
 

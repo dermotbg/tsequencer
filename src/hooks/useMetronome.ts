@@ -26,13 +26,13 @@ const useMetronome = () => {
     loadMetro()
   },[])
 
-  const triggerMetronome = (step: Step) => {
+  const triggerMetronome = (step: Step, time: number) => {
     if(!metronome) return
     if(step.metronomes.includes('metroUp')) {
-      playSample(audioContext, metronome.metroUp, 0, 3)
+      playSample(audioContext, metronome.metroUp, time, 3)
     }
     if(step.metronomes.includes('metroDown')) {
-      playSample(audioContext, metronome.metroDown, 0, 3)
+      playSample(audioContext, metronome.metroDown, time, 3)
     }
   }
 
