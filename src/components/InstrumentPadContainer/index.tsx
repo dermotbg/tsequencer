@@ -1,7 +1,7 @@
 import useInstruments from "../../hooks/useInstruments"
 import { AvailableInstruments } from "../../types"
 import { audioContext } from "../../utils/audioContext"
-import { playSample } from "../StepSequencerContainer/utils/playSample"
+import { playSample } from "../../utils/playSample"
 import InstrumentPad from "./components/InstrumentPad"
 import useActivePadStore from "../../hooks/StateHooks/useActivePadStore"
 import useVolumeStore from "../../hooks/StateHooks/useVolumeStore"

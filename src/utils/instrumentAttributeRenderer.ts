@@ -1,5 +1,7 @@
 import { Step } from "../components/StepSequencerContainer/types"
 
+// TODO: improve with single letters within small boxes?
+
 const instrumentAttributeRenderer = ( instrument: string, step: Step ): string | undefined => {
     switch (instrument) {
       case 'kick':

@@ -1,18 +1,25 @@
 import { useEffect, useRef, useState } from "react"
 import { Step } from "../components/StepSequencerContainer/types"
 import { AvailableInstruments, QueueSteps } from "../types"
-import { playSample } from "../components/StepSequencerContainer/utils/playSample"
 import { audioContext } from "../utils/audioContext"
 import useInstruments from "./useInstruments"
 import useBPMStore from "./StateHooks/useBPMStore"
 import useRecordStore from "./StateHooks/useRecordStore"
 import useSequencerStore from "./StateHooks/useSequencerStore"
+import { generateShadowClass } from "../utils/generateBoxShadowClass"
+import useMetronomeStore from "./StateHooks/useMetronomeStore"
+import useMetronome from "./useMetronome"
+import playInstruments from "../utils/playInstruments"
 
 const useSequencer = () => {
   const instruments = useInstruments()
+  const metronome = useMetronome()
+
+  const metronomeActive = useMetronomeStore((state) => state.active)
   const bpm = useBPMStore((state) => state.bpm)
   const setStepRef = useRecordStore((state) => state.setStepRef)
   const { seq, setSeq } = useSequencerStore()
+
   const [secondsPerBeat, setSecondsPerBeat] = useState<number>(60 / bpm)
 
   const timerId = useRef<ReturnType<typeof setTimeout>>()
@@ -41,55 +48,27 @@ const useSequencer = () => {
 
   //TODO: only uses first entry in step.instruments. 
   //Either generate classes for the color mixes manually or randomly select an entry
-  const generateShadowClass = (step: Step) => {
-    switch (step.instruments.length) {
-      case 0:
-        return 
-      case 1:
-        return 'shadow-1-stack '
-      case 2: 
-        return 'shadow-2-stack'
-      case 3:
-        return 'shadow-3-stack'
-      default:
-        break;
-    }
-  }
 
   
   const stepsInQueue: QueueSteps[] = []
   const scheduleStep = async (stepNumber: number, time: number) => {
     // initial pre-instruments load calls scheduler
     if(!instruments) return 
-
-    stepsInQueue.push({ step: stepNumber, time })
     
-    // if metronome on play metronome
-    // TODO: metronom samples are way out of time
-    // if(stepNumber === 0) playSample(audioContext, instruments.metroUp, time, 1)
-    // if(stepNumber === 5 || stepNumber === 9 || stepNumber === 13) playSample(audioContext, instruments.metroDown, time, 1)
-        
-    // if sampleArray[stepNumber] is assigned then play sample etc
+    stepsInQueue.push({ step: stepNumber, time })
+
     const colorShadow = generateShadowClass(seq[stepNumber])
-    console.log(colorShadow)
-    if(seq[stepNumber].instruments.includes('kick')) {
-      playSample(audioContext, instruments.kick, time, seq[stepNumber].gain.kick)
-    }
-    if(seq[stepNumber].instruments.includes('clap')) {
-      playSample(audioContext, instruments.clap, time, seq[stepNumber].gain.clap)
-    }
-    if(seq[stepNumber].instruments.includes('closedHH')) {
-      playSample(audioContext, instruments.closedHH, time, seq[stepNumber].gain.closedHH)
-    }
-    if(seq[stepNumber].instruments.includes('ride')) {
-      playSample(audioContext, instruments.ride, time, seq[stepNumber].gain.ride)
-    }
-      setSeq(seq.map((step: Step, index: number) => {
-        if (index === stepNumber ){
-          step.extraCSS = colorShadow ? colorShadow : ''
-        }
-        return step
-      }))
+
+    if(metronomeActive) metronome.triggerMetronome(stepNumber, time)
+  
+    playInstruments(instruments, time, seq, stepNumber)
+
+    setSeq(seq.map((step: Step, index: number) => {
+      if (index === stepNumber ){
+        step.extraCSS = colorShadow ? colorShadow : ''
+      }
+      return step
+    }))
   }
   
   const scheduleSequencer = () => {
