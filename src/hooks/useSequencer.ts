@@ -41,16 +41,19 @@ const useSequencer = () => {
 
   //TODO: only uses first entry in step.instruments. 
   //Either generate classes for the color mixes manually or randomly select an entry
-  const instrumentsRack: AvailableInstruments[] = ['kick', 'clap', 'closedHH', 'ride']
   const generateShadowClass = (step: Step) => {
-    let shadowClass = ''
-    for (const instrument of step.instruments){
-      if(instrumentsRack.includes(instrument)){
-        console.log(instrument)
-        shadowClass += instrument + '-'
-      }
+    switch (step.instruments.length) {
+      case 0:
+        return 
+      case 1:
+        return 'shadow-1-stack '
+      case 2: 
+        return 'shadow-2-stack'
+      case 3:
+        return 'shadow-3-stack'
+      default:
+        break;
     }
-    return shadowClass.slice(0, -1)
   }
 
   
@@ -68,6 +71,7 @@ const useSequencer = () => {
         
     // if sampleArray[stepNumber] is assigned then play sample etc
     const colorShadow = generateShadowClass(seq[stepNumber])
+    console.log(colorShadow)
     if(seq[stepNumber].instruments.includes('kick')) {
       playSample(audioContext, instruments.kick, time, seq[stepNumber].gain.kick)
     }
@@ -82,9 +86,7 @@ const useSequencer = () => {
     }
       setSeq(seq.map((step: Step, index: number) => {
         if (index === stepNumber ){
-          // step.extraCSS = 'shadow-ride'
-          // console.log(colorShadow ? 'shadow-' + `${colorShadow}` : '')
-          step.extraCSS = colorShadow ? 'shadow-' + `${colorShadow}` : ''
+          step.extraCSS = colorShadow ? colorShadow : ''
         }
         return step
       }))
