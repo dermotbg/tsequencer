@@ -13,8 +13,6 @@ interface keyPressHandlerType {
 }
 
 export const keyPressHandler = ({ instruments, keyCode, pushToSequencer, volume, recording, stepRef}: keyPressHandlerType) => {
-  console.log('recording', recording)
-  console.log('volume', volume)
   switch (keyCode) {
     case 'KeyS':
       playSample(audioContext, instruments['kick'], audioContext.currentTime, volume)

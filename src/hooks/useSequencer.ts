@@ -136,7 +136,7 @@ const useSequencer = () => {
     }))
   }
 
-  return { seq, setSeq, launchSequencer, pushToSequencer }
+  return { seq, setSeq, launchSequencer, pushToSequencer, isPlaying }
 
 }
 

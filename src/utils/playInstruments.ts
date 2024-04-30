@@ -17,16 +17,5 @@ const playInstruments = (instruments:LoadedInstruments, time:number, seq:Sequenc
   if(seq[stepNumber].instruments.includes('ride')) {
     playSample(audioContext, instruments.ride, time, seq[stepNumber].gain.ride)
   }
-
-  // THE METRONOME INSTANCE BELOW WORKS ON TIME WITH THE ABOVE INSTRUMENTS
-  // POSSIBLY DUE TO THE BUFFER BEING LOADED INTO THE SEQUENCER AHEAD OF TIME
-  // COULD AUTO-LOAD IN THE METRONOME ON THE CORRECT STEPS TO SOLVE LATENCY?? 
-  // if(seq[stepNumber].instruments.includes('metroUp')) {
-  //     playSample(audioContext, instruments.metroUp, time, 3)
-  // }
-  // if(seq[stepNumber].instruments.includes('metroDown')) {
-  //     playSample(audioContext, instruments.metroDown, time, 3)
-  // }
-
 }
 export default playInstruments
