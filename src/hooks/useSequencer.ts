@@ -46,7 +46,7 @@ const useSequencer = () => {
 
   const stepsInQueue: QueueSteps[] = []
   
-  const scheduleStep = async (stepNumber: number, time: number) => {
+  const scheduleStep = (stepNumber: number, time: number) => {
     // initial pre-instruments load calls scheduler
     if(!instruments) return 
     
@@ -106,8 +106,6 @@ const useSequencer = () => {
     requestAnimationFrame(colorSteps)
   }
   
-  
-  // let isPlaying = false
   const launchSequencer = () => {
     isPlaying.current = !isPlaying.current
 
@@ -126,7 +124,6 @@ const useSequencer = () => {
   }
 
   const pushToSequencer = (stepRef: number, element: AvailableInstruments, volume: number) => {
-    
     setSeq(seq.map((step: Step) => {
       if(!seq[stepRef].instruments.includes(element)) {
         seq[stepRef].instruments.push(element)

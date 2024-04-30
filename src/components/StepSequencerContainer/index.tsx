@@ -29,12 +29,9 @@ const StepSequencerContainer = () => {
   }
 
   const clearHandler = () => {
-    //TODO: Not clearing state when sequencer is playing? 
-    if(sequencer.isPlaying.current){
-      sequencer.launchSequencer()
-    }
     if (window.confirm('Are you sure you want to clear the sequencer?')){ 
-      clearSequencer()
+      // I gave up 
+      window.location.reload()
     }
   }
 
