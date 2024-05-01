@@ -10,6 +10,7 @@ const StepSeqButton = ({ index, extraCSS, step, onClickHandler }: StepSeqProps) 
         onClick={() => onClickHandler(index)}
         >
         {index + 1}
+
         {step.instruments.map((i) => {
           return (
             <div key={i}>

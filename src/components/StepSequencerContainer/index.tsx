@@ -10,6 +10,7 @@ import useVolumeStore from "../../hooks/StateHooks/useVolumeStore"
 import ClearSequencerController from "./components/ClearSequencerController"
 import useSequencerStore from "../../hooks/StateHooks/useSequencerStore"
 import { validateInstrument } from "../../utils/typeChecking"
+import useActiveStepStore from "../../hooks/StateHooks/useActiveStepStore"
 
 
 const StepSequencerContainer = () => {
@@ -19,6 +20,7 @@ const StepSequencerContainer = () => {
   const activePad = useActivePadStore((state) => state.activePad)
   const volume = useVolumeStore((state) => state.level)
   const setRecording = useRecordStore((state) => state.setRecording)
+  const activeStep = useActiveStepStore()
   
   const launchHandler = () => {
     sequencer.launchSequencer()
@@ -35,10 +37,35 @@ const StepSequencerContainer = () => {
     }
   }
 
+
+  const onClickHandler = (index: number) => {
+    assignSampleHandler(index)
+    activeStepHandler(index)
+  }
+
+  const activeStepHandler = (index: number) => {
+    if(!activePad) {
+      activeStep.set(index)
+      return
+    }
+  }
+
+  const assignSampleHandler = (index: number) => {
+    const currentPad = validateInstrument(activePad)
+    if(sequencer.seq[index].instruments.includes(currentPad)){
+      sequencer.seq[index].instruments.splice(sequencer.seq[index].instruments.indexOf(currentPad), 1)
+    }
+    else{
+      sequencer.seq[index].instruments.push(currentPad)
+      const instrument = validateInstrument(activePad)
+      sequencer.seq[index].gain[instrument] = volume
+    }
+  }
+
   if(!instruments) return <>Loading...</>
   return (
     <>
-      <StepSequencer seq={sequencer.seq} activePad={validateInstrument(activePad)} volume={volume} />
+      <StepSequencer seq={sequencer.seq} onClickHandler={onClickHandler} />
       <LaunchController launchHandler={launchHandler} />
       <RecordController recordHandler={recordHandler} />
       <ClearSequencerController clearSequencer={clearHandler} />
