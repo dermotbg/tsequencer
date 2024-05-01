@@ -78,6 +78,7 @@ const useSequencer = () => {
     
   let lastStepHighlighted = 3
   const colorSteps = () => {
+    if(!isPlaying.current) return // needed for clear function. Without it the sequencer state keeps previous instruments FOREVER 
     let highlightStep = lastStepHighlighted
     const currentTime = audioContext.currentTime
     

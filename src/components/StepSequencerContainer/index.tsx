@@ -19,7 +19,6 @@ const StepSequencerContainer = () => {
   const volume = useVolumeStore((state) => state.level)
   const setRecording = useRecordStore((state) => state.setRecording)
   
-  
   const launchHandler = () => {
     sequencer.launchSequencer()
   }
@@ -30,8 +29,8 @@ const StepSequencerContainer = () => {
 
   const clearHandler = () => {
     if (window.confirm('Are you sure you want to clear the sequencer?')){ 
-      // I gave up 
-      window.location.reload()
+      if(sequencer.isPlaying.current){launchHandler()}
+      clearSequencer()
     }
   }
 
