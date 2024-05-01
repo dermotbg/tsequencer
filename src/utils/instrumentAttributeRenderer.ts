@@ -1,6 +1,6 @@
 import { Step } from "../components/StepSequencerContainer/types"
 
-// TODO: improve with single letters within small boxes?
+// TODO: confirm this is no longer relevant or change purpose
 
 const instrumentAttributeRenderer = ( instrument: string, step: Step ): string | undefined => {
     switch (instrument) {
