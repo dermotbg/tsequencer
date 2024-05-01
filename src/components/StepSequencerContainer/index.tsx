@@ -51,6 +51,7 @@ const StepSequencerContainer = () => {
   }
 
   const assignSampleHandler = (index: number) => {
+    if(!activePad) return
     const currentPad = validateInstrument(activePad)
     if(sequencer.seq[index].instruments.includes(currentPad)){
       sequencer.seq[index].instruments.splice(sequencer.seq[index].instruments.indexOf(currentPad), 1)
