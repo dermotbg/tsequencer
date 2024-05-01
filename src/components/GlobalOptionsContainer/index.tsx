@@ -8,6 +8,7 @@ import { keyPressHandler } from "./components/KeyTrackController/utils/keyPressH
 import useVolumeStore from "../../hooks/StateHooks/useVolumeStore"
 import useRecordStore from "../../hooks/StateHooks/useRecordStore"
 import { validateInstrumentRack } from "../../utils/typeChecking"
+import RecordingIndicator from "./components/RecordingIndicator"
 
 const GlobalOptionsContainer = () => {
   const [keysActive, setKeysActive] = useState<boolean>(false)
@@ -49,6 +50,7 @@ const GlobalOptionsContainer = () => {
       <KeyTrackController keysActive={keysActive} setKeysActive={setKeysActive} />
       <BpmController />
       <MetronomeController />
+      <RecordingIndicator />
     </div>
   )
   
