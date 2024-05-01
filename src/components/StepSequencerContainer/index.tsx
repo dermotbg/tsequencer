@@ -9,6 +9,7 @@ import useSequencer from "../../hooks/useSequencer"
 import useVolumeStore from "../../hooks/StateHooks/useVolumeStore"
 import ClearSequencerController from "./components/ClearSequencerController"
 import useSequencerStore from "../../hooks/StateHooks/useSequencerStore"
+import { validateInstrument } from "../../utils/typeChecking"
 
 
 const StepSequencerContainer = () => {
@@ -37,7 +38,7 @@ const StepSequencerContainer = () => {
   if(!instruments) return <>Loading...</>
   return (
     <>
-      <StepSequencer seq={sequencer.seq} activePad={activePad} volume={volume} />
+      <StepSequencer seq={sequencer.seq} activePad={validateInstrument(activePad)} volume={volume} />
       <LaunchController launchHandler={launchHandler} />
       <RecordController recordHandler={recordHandler} />
       <ClearSequencerController clearSequencer={clearHandler} />

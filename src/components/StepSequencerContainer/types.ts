@@ -3,9 +3,8 @@ import { AvailableInstruments, GainObject } from "../../types"
 export interface StepSeqProps {
   index: number
   extraCSS: string
-  activePad: ActivePadInstrument
   step: Step
-  volume: number
+  onClickHandler: (index: number) => void
 }
 
 export type Metronome = 'metroUp' | 'metroDown'
