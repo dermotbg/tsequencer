@@ -44,7 +44,6 @@ const GlobalOptionsContainer = () => {
   
   },[instruments, level, pushToSequencer, stepRef])
 
-
   return(
     <div className="flex justify-evenly">
       <KeyTrackController keysActive={keysActive} setKeysActive={setKeysActive} />

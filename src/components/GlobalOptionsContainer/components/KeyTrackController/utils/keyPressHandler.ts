@@ -1,7 +1,6 @@
 import { LoadedInstruments } from "../../../../../hooks/useInstruments";
 import { AvailableInstruments } from "../../../../../types";
-import { audioContext } from "../../../../../utils/audioContext";
-import { playSample } from "../../../../../utils/playSample";
+
 
 interface keyPressHandlerType {
   instruments: LoadedInstruments
@@ -12,23 +11,38 @@ interface keyPressHandlerType {
   stepRef: number
 }
 
-export const keyPressHandler = ({ instruments, keyCode, pushToSequencer, volume, recording, stepRef}: keyPressHandlerType) => {
+let loopedOnce = false
+
+const latencyCompensator = (stepIndex: number) => {
+  if(!loopedOnce){
+    loopedOnce = true
+    return stepIndex
+  } 
+  else{
+    return stepIndex >= 3 
+      ? stepIndex - 3 
+      : 16 - (3 - stepIndex)
+  }
+
+}
+
+
+export const keyPressHandler = ({ keyCode, pushToSequencer, volume, recording, stepRef}: keyPressHandlerType) => {
   switch (keyCode) {
     case 'KeyS':
-      playSample(audioContext, instruments['kick'], audioContext.currentTime, volume)
-      if(recording) pushToSequencer(stepRef, 'kick', volume)
+      if(recording) 
+        console.log('step',stepRef)
+        console.log('comp',latencyCompensator(stepRef))
+        pushToSequencer(latencyCompensator(stepRef), 'kick', volume)
       break;
     case 'KeyK':
-      playSample(audioContext, instruments['clap'], audioContext.currentTime, volume)
-      if(recording) pushToSequencer(stepRef, 'clap', volume)
+      if(recording) pushToSequencer(latencyCompensator(stepRef), 'clap', volume)
       break;
     case 'KeyL':
-      playSample(audioContext, instruments['closedHH'], audioContext.currentTime, volume)
-      if(recording) pushToSequencer(stepRef, 'closedHH', volume)
+      if(recording) pushToSequencer(latencyCompensator(stepRef), 'closedHH', volume)
       break;
     case 'KeyJ':
-      playSample(audioContext, instruments['ride'], audioContext.currentTime, volume)
-      if(recording) pushToSequencer(stepRef, 'ride', volume)
+      if(recording) pushToSequencer(latencyCompensator(stepRef), 'ride', volume)
       break;
     default:
       break;
