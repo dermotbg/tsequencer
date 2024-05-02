@@ -26,7 +26,7 @@ const GlobalOptionsContainer = () => {
   }, [record])
 
   useEffect(() => {
-    if(!instruments) return
+    if(!instruments || !keysActive) return
     const keyPressFunction = (e: KeyboardEvent) => {
       keyPressHandler({ 
         instruments: validateInstrumentRack(instruments), 
