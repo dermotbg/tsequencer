@@ -1,5 +1,5 @@
-import { LoadedInstruments } from "../../../../../hooks/useInstruments";
-import { AvailableInstruments } from "../../../../../types";
+import { LoadedInstruments } from "../../../../../../../hooks/useInstruments";
+import { AvailableInstruments } from "../../../../../../../types";
 
 
 interface keyPressHandlerType {

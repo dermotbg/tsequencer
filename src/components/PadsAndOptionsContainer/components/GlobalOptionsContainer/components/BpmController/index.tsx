@@ -1,6 +1,6 @@
 import { Input } from "@/components/ui/input"
 
-import useBPMStore from "../../../../hooks/StateHooks/useBPMStore"
+import useBPMStore from "../../../../../../hooks/StateHooks/useBPMStore"
 import { Label } from "@/components/ui/label"
 
 const BpmController = () => {

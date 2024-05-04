@@ -1,10 +1,11 @@
-import useInstruments from "../../hooks/useInstruments"
-import { AvailableInstruments } from "../../types"
-import { audioContext } from "../../utils/audioContext"
-import { playSample } from "../../utils/playSample"
+ 
+import useActivePadStore from '../../../../hooks/StateHooks/useActivePadStore'
 import InstrumentPad from "./components/InstrumentPad"
-import useActivePadStore from "../../hooks/StateHooks/useActivePadStore"
-import useVolumeStore from "../../hooks/StateHooks/useVolumeStore"
+import useInstruments from "../../../../hooks/useInstruments"
+import useVolumeStore from "../../../../hooks/StateHooks/useVolumeStore"
+import { AvailableInstruments } from "../../../../types"
+import { playSample } from "../../../../utils/playSample"
+import { audioContext } from "../../../../utils/audioContext"
 const InstrumentPadContainer = () => {
 
   const instruments = useInstruments() 

@@ -2,13 +2,12 @@ import { useEffect, useRef, useState } from "react"
 import BpmController from "./components/BpmController"
 import MetronomeController from "./components/MetromeController"
 import KeyTrackController from "./components/KeyTrackController"
-import useInstruments from "../../hooks/useInstruments"
-import useSequencer from "../../hooks/useSequencer"
+import useInstruments from "../../../../hooks/useInstruments"
+import useSequencer from "../../../../hooks/useSequencer"
 import { keyPressHandler } from "./components/KeyTrackController/utils/keyPressHandler"
-import useVolumeStore from "../../hooks/StateHooks/useVolumeStore"
-import useRecordStore from "../../hooks/StateHooks/useRecordStore"
-import { validateInstrumentRack } from "../../utils/typeChecking"
-import RecordingIndicator from "./components/RecordingIndicator"
+import useVolumeStore from "../../../../hooks/StateHooks/useVolumeStore"
+import useRecordStore from "../../../../hooks/StateHooks/useRecordStore"
+import { validateInstrumentRack } from "../../../../utils/typeChecking"
 
 const GlobalOptionsContainer = () => {
   const [keysActive, setKeysActive] = useState<boolean>(false)
@@ -50,7 +49,6 @@ const GlobalOptionsContainer = () => {
       <KeyTrackController keysActive={keysActive} setKeysActive={setKeysActive} />
       <MetronomeController />
       <BpmController />
-      <RecordingIndicator />
     </div>
   )
   

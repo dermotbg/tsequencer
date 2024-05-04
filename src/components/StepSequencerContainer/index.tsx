@@ -11,6 +11,7 @@ import ClearSequencerController from "./components/ClearSequencerController"
 import useSequencerStore from "../../hooks/StateHooks/useSequencerStore"
 import { validateInstrument } from "../../utils/typeChecking"
 import useActiveStepStore from "../../hooks/StateHooks/useActiveStepStore"
+import RecordingIndicator from "./components/RecordingIndicator"
 
 
 const StepSequencerContainer = () => {
@@ -70,6 +71,7 @@ const StepSequencerContainer = () => {
       <LaunchController launchHandler={launchHandler} />
       <RecordController recordHandler={recordHandler} />
       <ClearSequencerController clearSequencer={clearHandler} />
+      <RecordingIndicator />
     </>
   )
 }

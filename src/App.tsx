@@ -1,13 +1,11 @@
-import GlobalOptionsContainer from './components/GlobalOptionsContainer'
-import InstrumentPadContainer from './components/InstrumentPadContainer'
 import MixingDeskContainer from './components/MixingDeskContainer'
 import StepSequencerContainer from './components/StepSequencerContainer'
+import PadsAndOptionsContainer from './components/PadsAndOptionsContainer'
 
 function App() {
   return (
     <div className='text-center text-slate-200' >
-      <GlobalOptionsContainer />
-      <InstrumentPadContainer />
+      <PadsAndOptionsContainer />
       <StepSequencerContainer />
       <MixingDeskContainer />
     </div>

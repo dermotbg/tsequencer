@@ -1,8 +1,9 @@
-import { validateInstrument } from "../../../../utils/typeChecking"
+import { validateInstrument } from "../../../../../../utils/typeChecking"
 import { setActiveBorder } from "../../utils/SetActiveBorder"
 import { InstrumentPadType } from "../../types"
 
-import { Button } from "../../../ui/components/ui/button"
+import { Button } from "@/components/ui/button"
+
 
 const InstrumentPad = ({ instrument, activePad, padHandler}: InstrumentPadType) => {
   return(
