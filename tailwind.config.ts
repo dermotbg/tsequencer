@@ -24,7 +24,8 @@ const config = {
         current: 'currentColor',
         'blue-custom': '#001C35',
         'orange-custom': '#CC5803',
-        'red-custom': '#C00808',
+        'red-custom': '#ff0000',
+        'green-custom': '#00f529'
       },
       keyframes: {
         "accordion-down": {
