@@ -7,6 +7,7 @@ import { AvailableInstruments } from '../../types'
 import useInstruments from '../../hooks/useInstruments'
 import FaderContainer from './components/FaderContainer'
 import { validateInstrumentRack } from '../../utils/typeChecking'
+import stepInicator from './components/StepIndicator'
 
 const MixingDeskContainer = () => {
   const { activeStep } = useActiveStepStore()
@@ -25,7 +26,10 @@ const MixingDeskContainer = () => {
   return(
     <div className='flex flex-col'>
       {/* TODO: Proper step number component */} 
-      {activeStep !== undefined && activeStep >= 0 ? `Step: ${activeStep +1}` : null }
+      {activeStep !== undefined && activeStep >= 0 
+        ? stepInicator(activeStep+1)
+        : null 
+      }
       <FaderContainer 
         activeStep={activeStep} 
         instruments={validateInstrumentRack(instruments)} 
