@@ -49,8 +49,8 @@ const GlobalOptionsContainer = () => {
     <div className="flex flex-col items-start">
       <KeyTrackController keysActive={keysActive} setKeysActive={setKeysActive} />
       <MetronomeController />
-      <RecordingIndicator />
       <BpmController />
+      <RecordingIndicator />
     </div>
   )
   
