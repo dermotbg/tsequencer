@@ -13,6 +13,8 @@ const InstrumentPadContainer = () => {
   const volume = useVolumeStore()
   if (!instruments) return <>Loading...</>
 
+
+  // TODO: turn off playback on click when isPlaying
   const padHandler = (element: AvailableInstruments) => {
     if(activePad.activePad === element){
       activePad.set(undefined)

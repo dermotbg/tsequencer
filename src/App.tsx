@@ -5,7 +5,7 @@ import StepSequencerContainer from './components/StepSequencerContainer'
 
 function App() {
   return (
-    <div className='text-center' >
+    <div className='text-center text-slate-200' >
       <GlobalOptionsContainer />
       <InstrumentPadContainer />
       <StepSequencerContainer />

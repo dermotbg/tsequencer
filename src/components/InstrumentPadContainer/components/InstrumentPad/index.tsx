@@ -2,15 +2,20 @@ import { validateInstrument } from "../../../../utils/typeChecking"
 import { setActiveBorder } from "../../utils/SetActiveBorder"
 import { InstrumentPadType } from "../../types"
 
+import { Button } from "../../../ui/components/ui/button"
+
 const InstrumentPad = ({ instrument, activePad, padHandler}: InstrumentPadType) => {
   return(
     <>
-        <button
-          className={setActiveBorder(activePad, instrument) + ' m-4 text-xl'}
+        <Button
+          className={setActiveBorder(activePad, instrument) 
+            + '  '}
           onClick={() => padHandler(validateInstrument(instrument))}
           >
-          {instrument.toUpperCase()}
-        </button>    
+            <div className="font-mono text-shadow-sm shadow-black/50 ">
+              {instrument.toUpperCase()}
+            </div>
+        </Button>    
         </>
   )
 }

@@ -15,7 +15,7 @@ const GlobalOptionsContainer = () => {
   
   
   const instruments = useInstruments()
-  const { pushToSequencer } = useSequencer()
+  const { pushToSequencer, isPlaying } = useSequencer()
   const { level } = useVolumeStore()
   const { record, stepRef } = useRecordStore()
 
@@ -25,8 +25,9 @@ const GlobalOptionsContainer = () => {
     recordingRef.current = record
   }, [record])
 
+  // TODO: add condition where key tracking on launches sample when isPLaying false
   useEffect(() => {
-    if(!instruments || !keysActive) return
+    if(!instruments || !keysActive || !recordingRef.current || !isPlaying.current) return
     const keyPressFunction = (e: KeyboardEvent) => {
       keyPressHandler({ 
         instruments: validateInstrumentRack(instruments), 
@@ -42,14 +43,14 @@ const GlobalOptionsContainer = () => {
 
     return () => window.removeEventListener('keydown', keyPressFunction)
   
-  },[instruments, level, pushToSequencer, stepRef])
+  },[instruments, level, pushToSequencer, stepRef, keysActive, isPlaying])
 
   return(
-    <div className="flex justify-evenly">
+    <div className="flex flex-col items-start">
       <KeyTrackController keysActive={keysActive} setKeysActive={setKeysActive} />
-      <BpmController />
       <MetronomeController />
       <RecordingIndicator />
+      <BpmController />
     </div>
   )
   
