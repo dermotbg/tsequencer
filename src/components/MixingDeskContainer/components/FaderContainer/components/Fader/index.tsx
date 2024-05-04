@@ -6,8 +6,8 @@ import { AvailableInstruments } from '../../../../../../types'
 
 const Fader = ({ disabled, index, instrument, gain, setGain }: { disabled: boolean, index: number, instrument: AvailableInstruments, gain: number, setGain: (index: number, gain: number, instrument: AvailableInstruments) => void  }) => {
   return(
-    <div className='flex-col'>
-      <div className={"wrapper"}>
+    <div className='flex flex-col items-center'>
+      <div className="wrapper">
         <input 
           type="range"
           id='volume' 
@@ -20,7 +20,7 @@ const Fader = ({ disabled, index, instrument, gain, setGain }: { disabled: boole
           style={disabled ? { backgroundColor: 'rgba(0, 0, 0, .8)' } : undefined }
         />
       </div>
-      <div className='flex flex-col justify-start'>
+      <div className='flex flex-col'>
         {disabled
           ? <FaderDetails instrument={'Inactive'} gain={gain} />
           : <FaderDetails instrument={instrument} gain={gain} />
