@@ -1,29 +1,34 @@
 import StepSequencer from "./components/StepSequencer"
-import LaunchController from "./components/LaunchController"
-import RecordController from "./components/RecordController"
+import ControllerContainer from "./components/ControllerContainer"
 
 import useActivePadStore from "../../hooks/StateHooks/useActivePadStore"
-import useInstruments from "../../hooks/useInstruments"
 import useRecordStore from "../../hooks/StateHooks/useRecordStore"
-import useSequencer from "../../hooks/useSequencer"
 import useVolumeStore from "../../hooks/StateHooks/useVolumeStore"
-import ClearSequencerController from "./components/ClearSequencerController"
 import useSequencerStore from "../../hooks/StateHooks/useSequencerStore"
-import { validateInstrument } from "../../utils/typeChecking"
 import useActiveStepStore from "../../hooks/StateHooks/useActiveStepStore"
-import RecordingIndicator from "./components/RecordingIndicator"
+
+import useInstruments from "../../hooks/useInstruments"
+import useSequencer from "../../hooks/useSequencer"
+
+import { validateInstrument } from "../../utils/typeChecking"
+import { useState } from "react"
 
 
 const StepSequencerContainer = () => {
+
   const instruments = useInstruments()
   const sequencer = useSequencer()
+
   const clearSequencer = useSequencerStore((state) => state.clearSequencer)
   const activePad = useActivePadStore((state) => state.activePad)
   const volume = useVolumeStore((state) => state.level)
-  const setRecording = useRecordStore((state) => state.setRecording)
+  const { record, setRecording} = useRecordStore()
   const activeStep = useActiveStepStore()
+
+  const[isRunning, setIsRunning] = useState(false)
   
   const launchHandler = () => {
+    setIsRunning(!isRunning)
     sequencer.launchSequencer()
   }
 
@@ -32,10 +37,7 @@ const StepSequencerContainer = () => {
   }
 
   const clearHandler = () => {
-    if (window.confirm('Are you sure you want to clear the sequencer?')){ 
-      if(sequencer.isPlaying.current){launchHandler()}
       clearSequencer()
-    }
   }
 
 
@@ -68,10 +70,7 @@ const StepSequencerContainer = () => {
   return (
     <>
       <StepSequencer seq={sequencer.seq} onClickHandler={onClickHandler} />
-      <LaunchController launchHandler={launchHandler} />
-      <RecordController recordHandler={recordHandler} />
-      <ClearSequencerController clearSequencer={clearHandler} />
-      <RecordingIndicator />
+      <ControllerContainer launchHandler={launchHandler} recordHandler={recordHandler} clearSequencer={clearHandler} isRecording={record} isRunning={isRunning} />
     </>
   )
 }

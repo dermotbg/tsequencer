@@ -1,0 +1,42 @@
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+import { Button } from "@/components/ui/button"
+import { Trash2 } from "lucide-react"
+
+const ClearSequencerController = ({ clearSequencer }: { clearSequencer: () => void } ) => {
+  return(
+  <AlertDialog>
+    <AlertDialogTrigger asChild>
+      <Button 
+        className="p-8 border-4 rounded-md m-2" 
+      >
+        <Trash2 />
+      </Button>
+    </AlertDialogTrigger>
+    <AlertDialogContent>
+      <AlertDialogHeader>
+        <AlertDialogTitle>Are you sure you want to clear the sequencer?</AlertDialogTitle>
+        <AlertDialogDescription>
+          This will remove all instruments and pararmeters from each step and start from a blank slate. This cannot be undone.
+        </AlertDialogDescription>
+      </AlertDialogHeader>
+      <AlertDialogFooter>
+        <AlertDialogCancel>Cancel</AlertDialogCancel>
+        <AlertDialogAction onClick={() => clearSequencer()}>Continue</AlertDialogAction>
+      </AlertDialogFooter>
+    </AlertDialogContent>
+  </AlertDialog>
+  )
+
+} 
+
+export default ClearSequencerController
