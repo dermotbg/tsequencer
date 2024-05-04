@@ -27,7 +27,7 @@ const GlobalOptionsContainer = () => {
 
   // TODO: add condition where key tracking on launches sample when isPLaying false
   useEffect(() => {
-    if(!instruments || !keysActive || !recordingRef.current || !isPlaying.current) return
+    if(!instruments || !keysActive) return
     const keyPressFunction = (e: KeyboardEvent) => {
       keyPressHandler({ 
         instruments: validateInstrumentRack(instruments), 

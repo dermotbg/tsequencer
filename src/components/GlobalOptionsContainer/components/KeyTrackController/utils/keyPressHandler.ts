@@ -31,8 +31,6 @@ export const keyPressHandler = ({ keyCode, pushToSequencer, volume, recording, s
   switch (keyCode) {
     case 'KeyS':
       if(recording) 
-        console.log('step',stepRef)
-        console.log('comp',latencyCompensator(stepRef))
         pushToSequencer(latencyCompensator(stepRef), 'kick', volume)
       break;
     case 'KeyK':
