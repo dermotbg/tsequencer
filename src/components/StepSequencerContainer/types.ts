@@ -1,10 +1,11 @@
-import { AvailableInstruments, GainObject } from "../../types"
+import { AvailableInstruments, GainObject, windowSize } from "../../types"
 
 export interface StepSeqProps {
   index: number
   extraCSS: string
   step: Step
   onClickHandler: (index: number) => void
+  windowSize: windowSize
 }
 
 export type Metronome = 'metroUp' | 'metroDown'

@@ -1,7 +1,8 @@
+import { windowSize } from "../../../../types"
 import { Sequencer } from "../../types"
 import StepSeqButton from "./components/StepSequencerButton"
 
-const StepSequencer = ({ seq, onClickHandler }: { seq: Sequencer, onClickHandler: (index: number) => void }) => {
+const StepSequencer = ({ seq, onClickHandler, windowSize }: { seq: Sequencer, onClickHandler: (index: number) => void, windowSize: windowSize }) => {
   
   if(!seq[0]) return <>Loading...</>
   return (
@@ -13,6 +14,7 @@ const StepSequencer = ({ seq, onClickHandler }: { seq: Sequencer, onClickHandler
         key={seq.length - i} 
         step={seq[i]} 
         onClickHandler={onClickHandler}
+        windowSize={windowSize}
       />
     })}
   </div>

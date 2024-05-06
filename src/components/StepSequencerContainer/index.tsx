@@ -9,6 +9,7 @@ import useActiveStepStore from "../../hooks/StateHooks/useActiveStepStore"
 
 import useInstruments from "../../hooks/useInstruments"
 import useSequencer from "../../hooks/useSequencer"
+import useWindowSize from "../../hooks/useWindowSize"
 
 import { validateInstrument } from "../../utils/typeChecking"
 import { useState } from "react"
@@ -18,6 +19,7 @@ const StepSequencerContainer = () => {
 
   const instruments = useInstruments()
   const sequencer = useSequencer()
+  const windowSize = useWindowSize()
 
   const clearSequencer = useSequencerStore((state) => state.clearSequencer)
   const activePad = useActivePadStore((state) => state.activePad)
@@ -69,7 +71,7 @@ const StepSequencerContainer = () => {
   if(!instruments) return <>Loading...</>
   return (
     <>
-      <StepSequencer seq={sequencer.seq} onClickHandler={onClickHandler} />
+      <StepSequencer seq={sequencer.seq} onClickHandler={onClickHandler} windowSize={windowSize} />
       <ControllerContainer launchHandler={launchHandler} recordHandler={recordHandler} clearSequencer={clearHandler} isRecording={record} isRunning={isRunning} />
     </>
   )

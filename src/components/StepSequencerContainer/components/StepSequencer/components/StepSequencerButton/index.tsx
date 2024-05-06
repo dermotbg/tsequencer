@@ -3,7 +3,7 @@ import { StepSeqProps } from "../../../../types"
 import AssignedInstrumentsMobile from "./components/AssignedInstrumentsMobile"
 import AssignedInstrumentsDesktop from "./components/AssignedInstrumentsDesktop"
 
-const StepSeqButton = ({ index, extraCSS, step, onClickHandler }: StepSeqProps) => {
+const StepSeqButton = ({ index, extraCSS, step, onClickHandler, windowSize }: StepSeqProps) => {
 
   return (
     <div className='flex-col box-border'>
@@ -12,7 +12,7 @@ const StepSeqButton = ({ index, extraCSS, step, onClickHandler }: StepSeqProps) 
         onClick={() => onClickHandler(index)}
         >
         {index + 1}
-        {window.innerWidth <= 887 
+        {windowSize.width <= 887 
           ? <AssignedInstrumentsMobile step={step} />
           : <AssignedInstrumentsDesktop step={step} />
         }
