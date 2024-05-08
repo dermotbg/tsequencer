@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("tsequencer-backend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a607cd0e06bd72f17a360c5413068c20c0106a8e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+402bd1b2c36a5052eb3c95c7428be7b0cbb19fa8")]
 [assembly: System.Reflection.AssemblyProductAttribute("tsequencer-backend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("tsequencer-backend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
