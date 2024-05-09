@@ -1,0 +1,22 @@
+@tsequencer_hostAddress = http://localhost:5179
+
+GET {{tsequencer_hostAddress}}/api/user
+Accept: application/json
+
+###
+POST {{tsequencer_hostAddress}}/api/user
+Content-Type: application/json
+
+{
+    "username": "dermotbg"
+}
+###
+PUT {{tsequencer_hostAddress}}api/user/663cbd19f12ed3bbb765cf3d
+Content-Type: application/json
+
+{
+    "username": "dermotbg-2"
+}
+
+###
+DELETE {{tsequencer_hostAddress}}api/user/663cbd19f12ed3bbb765cf3d
