@@ -11,7 +11,7 @@ Content-Type: application/json
     "username": "dermotbg"
 }
 ###
-PUT {{tsequencer_hostAddress}}api/user/663cbd19f12ed3bbb765cf3d
+PUT {{tsequencer_hostAddress}}/api/user/663cbd19f12ed3bbb765cf3d
 Content-Type: application/json
 
 {
@@ -19,4 +19,4 @@ Content-Type: application/json
 }
 
 ###
-DELETE {{tsequencer_hostAddress}}api/user/663cbd19f12ed3bbb765cf3d
+DELETE {{tsequencer_hostAddress}}/api/user/663cbd19f12ed3bbb765cf3d

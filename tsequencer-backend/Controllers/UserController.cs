@@ -31,8 +31,6 @@ public class UserController : Controller
   [HttpPut("{id}")]
   public async Task<IActionResult> UpdateUsername(string id, [FromBody] string username) 
   {
-    Console.WriteLine(id);
-    Console.WriteLine(username);
     await _mongoDBService.UpdateUsername(id, username);
     return NoContent();
   }
