@@ -23,7 +23,7 @@ builder.Services.Configure<MongoDBSettings>(options =>
   options.CollectionName = mongoConfig.CollectionName;
 });
 
-builder.Services.AddSingleton<MongoDBService>();
+builder.Services.AddSingleton<UserService>();
 
 var app = builder.Build();
 
