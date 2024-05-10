@@ -11,9 +11,11 @@ namespace TSequencer.Controllers;
 public class UserController : Controller
 {
   private readonly UserService _userService;
+  private readonly UserAuthenticationService _authService;
 
-  public UserController(UserService userService) {
+  public UserController(UserService userService, UserAuthenticationService authService) {
     _userService = userService;
+    _authService = authService;
   }
 
   [HttpGet]
@@ -32,13 +34,9 @@ public class UserController : Controller
     if(await _userService.CheckUsername(newUserBody.username)){
       return Conflict("Username already exists");
     }
-   
-    var passwordHasher = new PasswordHasher<CreateUserDto>();
-    string hashedPassword = passwordHasher.HashPassword(newUserBody, newUserBody.password);
-
     User user = new User{
       Username = newUserBody.username,
-      PasswordHash = hashedPassword
+      PasswordHash = _authService.CreatePasswordHash(newUserBody)
     };
     
     await _userService.CreateAsync(user);
@@ -46,9 +44,15 @@ public class UserController : Controller
   }
 
   [HttpPut("{id}")]
-  public async Task<IActionResult> UpdateUsername(string id, [FromBody] string username) 
+  public async Task<IActionResult> UpdateUsername(string id, [FromBody] UpdateUserNameDto user)
   {
-    await _userService.UpdateUsername(id, username);
+    if(!ModelState.IsValid){
+      return BadRequest("Malformed or Missing Data");
+    }
+    if(!await _authService.PasswordIsCorrect(id, user.password)){
+      return BadRequest("Incorrect Password");
+    }
+    await _userService.UpdateUsername(id, user.newUsername);
     return NoContent();
   }
 

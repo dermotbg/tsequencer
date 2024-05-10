@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using TSequencer.Dtos;
 using TSequencer.Models;
 
 namespace TSequencer.Services;
@@ -13,6 +15,12 @@ public class UserService : MongoDBService<User>
   public async Task<List<User>> GetAsync() 
   {
     return await _collection.Find(new BsonDocument()).ToListAsync();
+  }
+    public async Task<User> GetUserAsync(string id) 
+  {
+    // TODO refactor this Filter to its own method
+    FilterDefinition<User> filter = Builders<User>.Filter.Eq("Id", id);
+    return await _collection.Find(filter).FirstOrDefaultAsync();
   }
   public async Task CreateAsync(User user) 
   {
@@ -28,7 +36,7 @@ public class UserService : MongoDBService<User>
   public async Task UpdateUsername(string id, string username) 
   {
     FilterDefinition<User> filter = Builders<User>.Filter.Eq("Id", id);
-    UpdateDefinition<User> updatedUser = Builders<User>.Update.Set("username", username);
+    UpdateDefinition<User> updatedUser = Builders<User>.Update.Set("Username", username);
     await _collection.UpdateOneAsync(filter, updatedUser);
     return;
   }

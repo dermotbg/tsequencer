@@ -12,12 +12,13 @@ Content-Type: application/json
     "password": "password"
 }
 ###
-PUT {{tsequencer_hostAddress}}/api/user/663daa956531324586faebe0
+PUT {{tsequencer_hostAddress}}/api/user/663dffc6cc27a33dc3e51a30
 Content-Type: application/json
 
 {
-    "username": "dermotbg-2"
+    "newUsername": "dermotbg-2",
+    "password": "password"
 }
 
 ###
-DELETE {{tsequencer_hostAddress}}/api/user/663dcd13d64d0ddb20188af8
+DELETE {{tsequencer_hostAddress}}/api/user/663dffc6cc27a33dc3e51a30
