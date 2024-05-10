@@ -8,7 +8,8 @@ POST {{tsequencer_hostAddress}}/api/user
 Content-Type: application/json
 
 {
-    "username": "dermotbg"
+    "username": "dermotbg",
+    "password": "password"
 }
 ###
 PUT {{tsequencer_hostAddress}}/api/user/663daa956531324586faebe0
@@ -19,4 +20,4 @@ Content-Type: application/json
 }
 
 ###
-DELETE {{tsequencer_hostAddress}}/api/user/663daa956531324586faebe0
+DELETE {{tsequencer_hostAddress}}/api/user/663dcd13d64d0ddb20188af8

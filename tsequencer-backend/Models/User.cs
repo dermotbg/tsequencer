@@ -11,9 +11,10 @@ public class User
   [BsonId]
   [BsonRepresentation(BsonType.ObjectId)]
   public string? Id { get; set; }
-  // [StringLength(15, MinimumLength =3)]
-  // [Required]
+  [StringLength(15, MinimumLength =3)]
+  [Required]
   public string Username { get; set; } = null!;
+  public string PasswordHash { get; set; } = null!;
   // below is for furture seq states
   // [BsonElement("sequences")]
   // [JsonPropertyName("sequences")]
