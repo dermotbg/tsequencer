@@ -25,6 +25,7 @@ builder.Services.Configure<MongoDBSettings>(options =>
 
 builder.Services.AddSingleton<UserService>();
 builder.Services.AddSingleton<UserAuthenticationService>();
+builder.Services.AddSingleton<SequencerService>();
 
 var app = builder.Build();
 

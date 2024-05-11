@@ -11,4 +11,6 @@ public class Sequencer
   public string Id { get; set; } = null!;
   public string? Name { get; set; }
   public List<SequencerStepDto> Sequence { get; set; } = null!;
+  [BsonRepresentation(BsonType.ObjectId)]
+  public string UserId { get; set; } = null!;
 }

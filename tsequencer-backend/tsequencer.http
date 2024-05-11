@@ -12,7 +12,7 @@ Content-Type: application/json
     "password": "password"
 }
 ###
-PUT {{tsequencer_hostAddress}}/api/user/663dffc6cc27a33dc3e51a30
+PUT {{tsequencer_hostAddress}}/api/user/663e07dd8d24b98b75527bb6
 Content-Type: application/json
 
 {
@@ -21,4 +21,241 @@ Content-Type: application/json
 }
 
 ###
-DELETE {{tsequencer_hostAddress}}/api/user/663dffc6cc27a33dc3e51a30
+DELETE {{tsequencer_hostAddress}}/api/user/663e07dd8d24b98b75527bb6
+
+
+
+
+
+###
+GET {{tsequencer_hostAddress}}/api/sequencer
+Accept: application/json
+
+###
+POST {{tsequencer_hostAddress}}/api/sequencer
+Content-Type: application/json
+
+{
+    "name": "NewSequence",
+    "userId": "663e07dd8d24b98b75527bb6",
+    "sequence": 
+    [   
+        {
+            "instruments": ["kick","closedHH"],
+            "metronomes": ["metroUp"],
+            "extraCSS": "",
+            "gain": { "kick": 3, "clap": 1, "closedHH": 0.4, "ride": 1 }
+        },
+        {
+            "instruments": [
+                "closedHH"
+            ],
+            "metronomes": [],
+            "extraCSS": "",
+            "gain": {
+                "kick": 1,
+                "clap": 1,
+                "closedHH": 1,
+                "ride": 1
+            }
+        },
+        {
+            "instruments": [
+                "closedHH"
+            ],
+            "metronomes": [],
+            "extraCSS": "",
+            "gain": {
+                "kick": 1,
+                "clap": 1,
+                "closedHH": 1.9,
+                "ride": 1
+            }
+        },
+        {
+            "instruments": [
+                "closedHH"
+            ],
+            "metronomes": [],
+            "extraCSS": "",
+            "gain": {
+                "kick": 1,
+                "clap": 1,
+                "closedHH": 1,
+                "ride": 1
+            }
+        },
+        {
+            "instruments": [
+                "kick",
+                "clap",
+                "closedHH"
+            ],
+            "metronomes": [
+                "metroDown"
+            ],
+            "extraCSS": "",
+            "gain": {
+                "kick": 3,
+                "clap": 3,
+                "closedHH": 0.4,
+                "ride": 1
+            }
+        },
+        {
+            "instruments": [
+                "closedHH"
+            ],
+            "metronomes": [],
+            "extraCSS": "",
+            "gain": {
+                "kick": 1,
+                "clap": 1,
+                "closedHH": 1,
+                "ride": 1
+            }
+        },
+        {
+            "instruments": [
+                "closedHH"
+            ],
+            "metronomes": [],
+            "extraCSS": "",
+            "gain": {
+                "kick": 1,
+                "clap": 1,
+                "closedHH": 1.9,
+                "ride": 1
+            }
+        },
+        {
+            "instruments": [
+                "closedHH"
+            ],
+            "metronomes": [],
+            "extraCSS": "",
+            "gain": {
+                "kick": 1,
+                "clap": 1,
+                "closedHH": 1,
+                "ride": 1
+            }
+        },
+        {
+            "instruments": [
+                "kick",
+                "closedHH"
+            ],
+            "metronomes": [
+                "metroDown"
+            ],
+            "extraCSS": "",
+            "gain": {
+                "kick": 3,
+                "clap": 1,
+                "closedHH": 0.4,
+                "ride": 1
+            }
+        },
+        {
+            "instruments": [
+                "closedHH"
+            ],
+            "metronomes": [],
+            "extraCSS": "",
+            "gain": {
+                "kick": 1,
+                "clap": 1,
+                "closedHH": 1,
+                "ride": 1
+            }
+        },
+        {
+            "instruments": [
+                "closedHH"
+            ],
+            "metronomes": [],
+            "extraCSS": "",
+            "gain": {
+                "kick": 1,
+                "clap": 1,
+                "closedHH": 1.9,
+                "ride": 1
+            }
+        },
+        {
+            "instruments": [
+                "closedHH"
+            ],
+            "metronomes": [],
+            "extraCSS": "",
+            "gain": {
+                "kick": 1,
+                "clap": 1,
+                "closedHH": 1,
+                "ride": 1
+            }
+        },
+        {
+            "instruments": [
+                "kick",
+                "clap",
+                "closedHH"
+            ],
+            "metronomes": [
+                "metroDown"
+            ],
+            "extraCSS": "",
+            "gain": {
+                "kick": 3,
+                "clap": 3,
+                "closedHH": 0.4,
+                "ride": 1
+            }
+        },
+        {
+            "instruments": [
+                "closedHH"
+            ],
+            "metronomes": [],
+            "extraCSS": "",
+            "gain": {
+                "kick": 1,
+                "clap": 1,
+                "closedHH": 1,
+                "ride": 1
+            }
+        },
+        {
+            "instruments": [
+                "closedHH"
+            ],
+            "metronomes": [],
+            "extraCSS": "",
+            "gain": {
+                "kick": 1,
+                "clap": 1,
+                "closedHH": 1.9,
+                "ride": 1
+            }
+        },
+        {
+            "instruments": [
+                "clap",
+                "closedHH"
+            ],
+            "metronomes": [],
+            "extraCSS": "",
+            "gain": {
+                "kick": 1,
+                "clap": 2.1,
+                "closedHH": 1,
+                "ride": 1
+            }
+        }
+    ]
+}
+
+###
+
+DELETE {{tsequencer_hostAddress}}/api/sequencer/663f3315e77e295a3c6af339
