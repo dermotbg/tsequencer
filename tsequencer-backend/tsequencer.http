@@ -1,5 +1,7 @@
 @tsequencer_hostAddress = http://localhost:5179
 
+# USER
+
 GET {{tsequencer_hostAddress}}/api/user
 Accept: application/json
 
@@ -27,10 +29,19 @@ Content-Type: application/json
 ###
 DELETE {{tsequencer_hostAddress}}/api/user/663e07dd8d24b98b75527bb6
 
+# LOGIN
+###
+POST {{tsequencer_hostAddress}}/api/login
+Content-Type: application/json
+
+{
+    "username": "dermotbg",
+    "password": "password"
+}
 
 
 
-
+# SEQUENCER
 ###
 GET {{tsequencer_hostAddress}}/api/sequencer
 Accept: application/json

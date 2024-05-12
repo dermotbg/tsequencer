@@ -10,11 +10,12 @@ namespace TSequencer.Controllers;
 public class UserController : Controller
 {
   private readonly UserService _userService;
-  private readonly UserAuthenticationService _authService;
+  private readonly UserAuthenticationService _userAuthService;
 
-  public UserController(UserService userService, UserAuthenticationService authService) {
+  public UserController(UserService userService, UserAuthenticationService userAuthService) 
+  {
     _userService = userService;
-    _authService = authService;
+    _userAuthService = userAuthService;
   }
 
   [HttpGet]
@@ -39,12 +40,12 @@ public class UserController : Controller
       return BadRequest("Malformed Data");
     }
 
-    if(await _userService.CheckUsername(newUserBody.username)){
+    if(await _userService.CheckUsername(newUserBody.Username)){
       return Conflict("Username already exists");
     }
     User user = new User{
-      Username = newUserBody.username,
-      PasswordHash = _authService.CreatePasswordHash(newUserBody)
+      Username = newUserBody.Username,
+      PasswordHash = _userAuthService.CreatePasswordHash(newUserBody)
     };
     
     await _userService.CreateAsync(user);
@@ -58,7 +59,7 @@ public class UserController : Controller
     if(!ModelState.IsValid){
       return BadRequest("Malformed or Missing Data");
     }
-    if(!await _authService.PasswordIsCorrect(id, user.password)){
+    if(!await _userAuthService.PasswordIsCorrect(id, user.password)){
       return BadRequest("Incorrect Password");
     }
     await _userService.UpdateUsername(id, user.newUsername);

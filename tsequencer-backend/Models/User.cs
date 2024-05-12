@@ -15,9 +15,4 @@ public class User
   [Required]
   public string Username { get; set; } = null!;
   public string PasswordHash { get; set; } = null!;
-  // below is for furture seq states
-  // [BsonElement("sequences")]
-  // [JsonPropertyName("sequences")]
-  // create data type DTO for the recieved object
-  // public List<SequencerDTO>? sequences { get; set; }
 }

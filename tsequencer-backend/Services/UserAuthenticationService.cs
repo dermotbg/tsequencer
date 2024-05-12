@@ -15,7 +15,7 @@ public class UserAuthenticationService
   public string CreatePasswordHash(CreateUserDto newUserBody)
   {
     var passwordHasher = new PasswordHasher<CreateUserDto>();
-    string hashedPassword = passwordHasher.HashPassword(newUserBody, newUserBody.password);
+    string hashedPassword = passwordHasher.HashPassword(newUserBody, newUserBody.Password);
     return hashedPassword;
   }
   public async Task<bool> PasswordIsCorrect(string id, string password)

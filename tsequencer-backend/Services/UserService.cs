@@ -19,6 +19,11 @@ public class UserService : MongoDBService<User>
     FilterDefinition<User> filter = Builders<User>.Filter.Eq("Id", id);
     return await _collection.Find(filter).FirstOrDefaultAsync();
   }
+  public async Task<User> GetUserByUsernameAsync(string username) 
+  {
+    FilterDefinition<User> filter = Builders<User>.Filter.Eq("Username", username);
+    return await _collection.Find(filter).FirstOrDefaultAsync();
+  }
   public async Task CreateAsync(User user) 
   {
     await _collection.InsertOneAsync(user);

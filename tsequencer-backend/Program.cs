@@ -1,11 +1,45 @@
-using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.IdentityModel.Tokens;
+using TSequencer.Helpers;
 using TSequencer.Models;
 using TSequencer.Services;
 
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
-builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
+
+
+// JWT Config
+builder.Services.AddAuthentication(options => 
+{
+  options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+  options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+  options.RequireHttpsMetadata = false;
+  options.SaveToken = true;
+  options.TokenValidationParameters = new TokenValidationParameters
+  {
+    ValidateIssuerSigningKey = true,
+    ValidIssuer = builder.Configuration.GetSection("JWT_ISSUER").Value,
+    ValidAudience = builder.Configuration.GetSection("JWT_AUDIENCE").Value,
+    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("JWT_SECRET").Value!)),
+    ClockSkew = TimeSpan.Zero
+  };
+});
+
+// Config default authorization policy
+
+builder.Services.AddAuthorization(options =>
+{
+  options.DefaultPolicy = new AuthorizationPolicyBuilder()
+    .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
+    .RequireAuthenticatedUser()
+    .Build();
+});
 
 // Get Mongo settings from settings etc
 var mongoConfig = builder.Configuration.GetSection("MongoDB").Get<MongoDBSettings>();
@@ -23,8 +57,10 @@ builder.Services.Configure<MongoDBSettings>(options =>
   options.CollectionName = mongoConfig.CollectionName;
 });
 
+builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
 builder.Services.AddSingleton<UserService>();
 builder.Services.AddSingleton<UserAuthenticationService>();
+builder.Services.AddSingleton<JwtHandler>();
 builder.Services.AddSingleton<SequencerService>();
 
 var app = builder.Build();
@@ -37,6 +73,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseStaticFiles();
 app.UseRouting();
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 
