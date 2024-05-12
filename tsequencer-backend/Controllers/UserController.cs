@@ -18,12 +18,21 @@ public class UserController : Controller
   }
 
   [HttpGet]
+  // GET /api/user  
   public async Task<List<User>> Get() 
   {
     return await _userService.GetAsync();
   }
 
+  [HttpGet("{id}")]
+  // GET /api/user/{id}
+  public async Task<User> Get(string id) 
+  {
+    return await _userService.GetUserAsync(id);
+  }
+
   [HttpPost]
+  // POST /api/user
   public async Task<IActionResult> Post([FromBody] CreateUserDto newUserBody ) 
   {
     if(!ModelState.IsValid){
@@ -43,6 +52,7 @@ public class UserController : Controller
   }
 
   [HttpPut("{id}")]
+  // PUT /api/user/{id}
   public async Task<IActionResult> UpdateUsername(string id, [FromBody] UpdateUserNameDto user)
   {
     if(!ModelState.IsValid){
@@ -56,6 +66,7 @@ public class UserController : Controller
   }
 
   [HttpDelete("{id}")]
+  // DELETE /api/user/{id}
   public async Task<IActionResult> Delete(string id)
   {
     await _userService.DeleteAsync(id);

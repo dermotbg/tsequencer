@@ -4,6 +4,10 @@ GET {{tsequencer_hostAddress}}/api/user
 Accept: application/json
 
 ###
+GET {{tsequencer_hostAddress}}/api/user/663e07dd8d24b98b75527bb6
+Accept: application/json
+
+###
 POST {{tsequencer_hostAddress}}/api/user
 Content-Type: application/json
 
@@ -29,6 +33,10 @@ DELETE {{tsequencer_hostAddress}}/api/user/663e07dd8d24b98b75527bb6
 
 ###
 GET {{tsequencer_hostAddress}}/api/sequencer
+Accept: application/json
+
+###
+GET {{tsequencer_hostAddress}}/api/sequencer/user/663e07dd8d24b98b75527bb6
 Accept: application/json
 
 ###

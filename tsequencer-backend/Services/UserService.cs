@@ -14,9 +14,8 @@ public class UserService : MongoDBService<User>
   {
     return await _collection.Find(new BsonDocument()).ToListAsync();
   }
-    public async Task<User> GetUserAsync(string id) 
+  public async Task<User> GetUserAsync(string id) 
   {
-    // TODO refactor this Filter to its own method
     FilterDefinition<User> filter = Builders<User>.Filter.Eq("Id", id);
     return await _collection.Find(filter).FirstOrDefaultAsync();
   }

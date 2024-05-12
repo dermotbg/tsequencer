@@ -1,8 +1,4 @@
-using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
-using MongoDB.Bson.IO;
-using MongoDB.Bson.Serialization.Serializers;
-using TSequencer.Dtos;
 using TSequencer.Models;
 using TSequencer.Services;
 
@@ -20,24 +16,30 @@ public class SequencerController : Controller
   }
 
   [HttpGet]
+  // GET /api/sequencer
   public async Task<List<Sequencer>> Get()
   {
     return await _sequencerService.GetSequencersAsync();
   }
 
+  [HttpGet]
+  [Route("user/{id}")]
+  // GET /api/sequencer/user/{UserId}
+  public async Task<List<Sequencer>> Get(string id)
+  {
+    return await _sequencerService.GetUserSequencersAsync(id);
+  }
+
   [HttpPost]
+  // POST /api/sequencer
   public async Task<IActionResult> Post([FromBody] Sequencer newSequence)
   {
-    var options = new JsonSerializerOptions { 
-      WriteIndented = true
-    };
-    string jsonString = JsonSerializer.Serialize(newSequence, options);
-    Console.WriteLine(jsonString);
     await _sequencerService.CreateSequencerAsync(newSequence);
     return CreatedAtAction(nameof(Get), new { id = newSequence.Id }, newSequence );
   }
 
   [HttpDelete("{id}")]
+  // DELETE /api/sequencer/{id}
   public async Task<IActionResult> Delete(string id)
   {
     await _sequencerService.DeleteAsync(id);
