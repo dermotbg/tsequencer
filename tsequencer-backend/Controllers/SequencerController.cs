@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TSequencer.Models;
 using TSequencer.Services;
@@ -9,10 +10,12 @@ namespace TSequencer.Controllers;
 public class SequencerController : Controller
 {
   private readonly SequencerService _sequencerService;
+  private readonly UserAuthenticationService _authService;
 
-  public SequencerController(SequencerService sequencerService)
+  public SequencerController(SequencerService sequencerService, UserAuthenticationService authService)
   {
     _sequencerService = sequencerService;
+    _authService = authService;
   }
 
   [HttpGet]
@@ -34,6 +37,10 @@ public class SequencerController : Controller
   // POST /api/sequencer
   public async Task<IActionResult> Post([FromBody] Sequencer newSequence)
   {
+    if(!_authService.UserisAuthenticated(Request.Headers["Authorization"].ToString().Replace("Bearer ", "")))
+    {
+      Unauthorized("User token is missing or expired.");
+    }
     await _sequencerService.CreateSequencerAsync(newSequence);
     return CreatedAtAction(nameof(Get), new { id = newSequence.Id }, newSequence );
   }

@@ -53,6 +53,7 @@ Accept: application/json
 ###
 POST {{tsequencer_hostAddress}}/api/sequencer
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI2NjNlMDdkZDhkMjRiOThiNzU1MjdiYjYiLCJyb2xlIjoidXNlciIsIm5iZiI6MTcxNTUwOTc0MSwiZXhwIjoxNzE1NTExNTQxLCJpYXQiOjE3MTU1MDk3NDEsImlzcyI6IkFkbWluIiwiYXVkIjoiVXNlciJ9.1uMtGDLvcptsjiiGiiV1CoYbHdmbIJ9YM91CIuWKRpg
 
 {
     "name": "NewSequence",
