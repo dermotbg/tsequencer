@@ -27,7 +27,6 @@ public class SequencerService : MongoDBService<Sequencer>
   public async Task DeleteAsync(string id)
   {
     FilterDefinition<Sequencer> filter = Builders<Sequencer>.Filter.Eq("Id", id);
-    Console.WriteLine(filter);
     await _collection.DeleteOneAsync(filter);
   }
 }
