@@ -8,15 +8,36 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import { Label } from "@radix-ui/react-label"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import { FormEvent, useState } from "react"
+import { loginRequest } from "../../../../../src/services/loginService"
+import { DialogClose } from "@radix-ui/react-dialog"
 
 const LoginDialog = () => {
+
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+
+  const loginHandler = (e: FormEvent) => {
+    e.preventDefault();
+    const loginObject = {
+      username: username.toLowerCase().trim(),
+      password: password
+    }
+    try{
+      const token = loginRequest(loginObject)
+      console.log(token)
+    }
+    catch(error){
+      console.log(error)
+    }
+  }
 
   return(
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant={'outline'}>Login</Button>
+        <Button className="bg-inherit text-stone-300 hover:bg-stone-600 hover:text-white rounded-md px-3 py-2 text-sm font-medium" >Login</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
@@ -27,32 +48,42 @@ const LoginDialog = () => {
             Please enter your username and password below
           </DialogDescription>
         </DialogHeader>
-        <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
-              Name
-            </Label>
-            <Input
-              id="name"
-              defaultValue={"Username"}
-              className="col-span-3"
-            />
-          </div>
+        <form onSubmit={loginHandler}>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="username" className="text-right">
               Username
             </Label>
             <Input
               id="username"
-              defaultValue={"@pepe"}
+              defaultValue={"@username"}
               className="col-span-3"
+              onChange={(e) => setUsername(e.target.value)}
             />
           </div>
-        </div>
-        <DialogFooter>
-          <Button type="submit">Login</Button>
-        </DialogFooter>
-      </DialogContent>
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="name" className="text-right">
+                Password
+              </Label>
+              <Input
+                id="name"
+                type="password"
+                className="col-span-3"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+            <div className="text-right py-4">
+              Don't have an account?
+            </div>
+          </div>
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button type="button" variant={'outline'}>Cancel</Button>
+            </DialogClose>
+            <Button type="submit">Login</Button>
+          </DialogFooter>
+        </form>
+        </DialogContent>
     </Dialog>
   )
 

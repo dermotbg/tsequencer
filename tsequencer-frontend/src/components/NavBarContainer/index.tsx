@@ -1,5 +1,6 @@
 import { CircleUser, Disc3, Menu, X } from "lucide-react"
 import { useState } from "react"
+import LoginDialog from "./components/LoginDialog"
 
 const Navbar = () => {
   // Template from https://tailwindui.com/components/application-ui/navigation/navbars
@@ -29,9 +30,9 @@ const Navbar = () => {
             {/* Nav Buttons */}
             <div className="hidden sm:ml-6 sm:block">
               <div className="flex space-x-4">
-                <a href="#" className="bg-stone-900 hover: text-white hover:bg-stone-900 rounded-lg px-3 py-2 text-sm font-medium" aria-current="page">Sequencer</a>
+                <a href="/" className="bg-stone-900 hover: text-white hover:bg-stone-900 rounded-lg px-3 py-2 text-sm font-medium" aria-current="page">Sequencer</a>
                 <a href="#" className="text-stone-300 hover:bg-stone-600 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Tutorial</a>
-                <a href="#" className="text-stone-300 hover:bg-stone-600 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Login</a>
+                <LoginDialog />
               </div>
             </div>
           </div>
