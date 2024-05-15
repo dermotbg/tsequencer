@@ -1,4 +1,3 @@
-import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from "@radix-ui/react-navigation-menu"
 import { CircleUser, Disc3, Menu, X } from "lucide-react"
 import { useState } from "react"
 
@@ -46,6 +45,17 @@ const Navbar = () => {
                   <CircleUser />
                 </button>
               </div>
+              {/* Possible dropdown animation */}
+              {/* <!--
+                Dropdown menu, show/hide based on menu state.
+
+                Entering: "transition ease-out duration-100"
+                  From: "transform opacity-0 scale-95"
+                  To: "transform opacity-100 scale-100"
+                Leaving: "transition ease-in duration-75"
+                  From: "transform opacity-100 scale-100"
+                  To: "transform opacity-0 scale-95"
+              --> */}
               {userMenuOpen
                 ?
                   <div className={"transition-all ease-in duration-100 absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-stone-300 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"} role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabIndex={-1}>
