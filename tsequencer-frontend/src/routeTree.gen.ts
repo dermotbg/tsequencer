@@ -15,16 +15,16 @@ import { Route as TutorialImport } from './routes/tutorial'
 import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
-const IndexRoute = IndexImport.update({
-  path: '/',
-  getParentRoute: () => rootRoute,
-} as any)
 
 const TutorialRoute = TutorialImport.update({
   path: '/tutorial',
   getParentRoute: () => rootRoute,
 } as any)
 
+const IndexRoute = IndexImport.update({
+  path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
 
 // Populate the FileRoutesByPath interface
 

@@ -14,8 +14,9 @@ import { FormEvent, useState } from "react"
 import { loginRequest } from "../../../../../src/services/loginService"
 import { DialogClose } from "@radix-ui/react-dialog"
 
-const LoginDialog = () => {
+const LoginDialog = ({ isMobile = false }: { isMobile: boolean } ) => {
 
+  // TODO: Abstract to Hook
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
@@ -37,7 +38,10 @@ const LoginDialog = () => {
   return(
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="bg-inherit text-stone-300 hover:bg-stone-600 hover:text-white rounded-md px-3 py-2 text-sm font-medium" >Login</Button>
+        {!isMobile 
+        ? <Button className="bg-inherit text-stone-300 hover:bg-stone-600 hover:text-white rounded-md px-3 py-2 text-sm font-medium" >Login</Button>
+        : <Button className="bg-inherit min-w-full block text-left text-stone-300 hover:bg-stone-700 hover:text-white rounded-md px-3 py-2 text-md font-medium" >Login</Button>
+        }
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
