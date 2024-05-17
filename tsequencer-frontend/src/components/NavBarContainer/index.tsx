@@ -3,7 +3,7 @@ import MobileNavMenu from "./components/MobileMenu"
 import NavBar from "./components/NavBar"
 
 
-const Navbar = () => {
+const NavBarContainer = () => {
   // Template reconstructed from https://tailwindui.com/components/application-ui/navigation/navbars
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [userMenuOpen, setUserMenuOpen] = useState(false)
@@ -19,4 +19,4 @@ const Navbar = () => {
     </nav>
   )
 }
-export default Navbar
+export default NavBarContainer
