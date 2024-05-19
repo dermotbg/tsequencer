@@ -3,6 +3,7 @@ export interface NavBarType {
   setMobileMenuOpen: React.Dispatch<React.SetStateAction<boolean>>
   userMenuOpen: boolean
   setUserMenuOpen: React.Dispatch<React.SetStateAction<boolean>>
+  userIsAuthenticated: boolean
 }
 
 export type NavBarMobileMenuType = Pick<NavBarType, "mobileMenuOpen" | "setMobileMenuOpen">

@@ -22,5 +22,5 @@ export const validateToken = async () => {
     method: 'POST'
   })
   console.log(response)
-
+ return response.status
 } 

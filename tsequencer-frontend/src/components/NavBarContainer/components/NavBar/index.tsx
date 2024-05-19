@@ -5,8 +5,9 @@ import LoginDialog from "../LoginDialog"
 import UserMenuContainer from "../UserMenuContainer"
 import { Button } from "@/components/ui/button"
 import { NavBarType } from "../../types"
+import SaveDialog from "../SaveDialog"
 
-const NavBar = ({ mobileMenuOpen, setMobileMenuOpen, userMenuOpen, setUserMenuOpen }: NavBarType) => {
+const NavBar = ({ mobileMenuOpen, setMobileMenuOpen, userMenuOpen, setUserMenuOpen, userIsAuthenticated }: NavBarType) => {
 
   return(
     <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -22,7 +23,9 @@ const NavBar = ({ mobileMenuOpen, setMobileMenuOpen, userMenuOpen, setUserMenuOp
             <div className="flex space-x-4">
               <Link to="/"> <Button className="bg-stone-900 hover: text-white hover:bg-stone-900 rounded-lg px-3 py-2 text-sm font-medium" aria-current="page">Sequencer</Button></Link>
               <Link to="/tutorial" ><Button className="bg-inherit text-stone-300 hover:bg-stone-600 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Tutorial</Button></Link>
-              <LoginDialog isMobile={false} />
+              {userIsAuthenticated
+                ? <SaveDialog isMobile={false} />
+                : <LoginDialog isMobile={false} />}
             </div>
           </div>
         </div>

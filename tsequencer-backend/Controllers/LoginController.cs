@@ -21,11 +21,6 @@ public class LoginController : Controller
   [HttpPost]
   public async Task<IActionResult> Post([FromBody] LoginDto login)
   {
-    Console.WriteLine(Request.Cookies.TryGetValue("token", out var token));
-    if(token ==  null){
-      Console.WriteLine(token);
-      return Unauthorized();
-    };
     if(!ModelState.IsValid){
       return BadRequest("Please enter a Username & Password");
     }
@@ -40,9 +35,9 @@ public class LoginController : Controller
       return Conflict("Incorrect Password");
     }
 
-    var token2 = _jwtHandler.GenerateJwtToken(user.Id, "user");
+    var token = _jwtHandler.GenerateJwtToken(user.Id, "user");
     // append to cookies
-    Response.Cookies.Append("token", token2, _jwtHandler.createTokenCookie());
+    Response.Cookies.Append("token", token, _jwtHandler.createTokenCookie());
 
     return Ok(token);
   }

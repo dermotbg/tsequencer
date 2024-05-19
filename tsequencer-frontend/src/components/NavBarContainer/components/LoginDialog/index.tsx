@@ -13,12 +13,14 @@ import { Input } from "@/components/ui/input"
 import { FormEvent, useState } from "react"
 import { loginRequest } from "../../../../../src/services/loginService"
 import { DialogClose } from "@radix-ui/react-dialog"
+import useUserStore from "../../../../hooks/StateHooks/UseUserStore"
 
 const LoginDialog = ({ isMobile = false }: { isMobile: boolean } ) => {
 
-  // TODO: Abstract to Hook
+  // TODO: Abstract to Hook / out of this component / create register route
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const user = useUserStore();
 
   const loginHandler = (e: FormEvent) => {
     e.preventDefault();
@@ -28,6 +30,8 @@ const LoginDialog = ({ isMobile = false }: { isMobile: boolean } ) => {
     }
     try{
       loginRequest(loginObject)
+      user.set(username)
+
     }
     catch(error){
       console.log(error)
