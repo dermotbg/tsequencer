@@ -16,3 +16,11 @@ export const loginRequest = async (loginObj: LoginData) => {
   const token = await response.text()
   return token
 }
+
+export const validateToken = async () => {
+  const response = await fetch(`${baseUrl}/validate-token`, {
+    method: 'POST'
+  })
+  console.log(response)
+
+} 

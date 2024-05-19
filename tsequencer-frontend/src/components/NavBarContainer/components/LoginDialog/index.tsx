@@ -27,8 +27,7 @@ const LoginDialog = ({ isMobile = false }: { isMobile: boolean } ) => {
       password: password
     }
     try{
-      const token = loginRequest(loginObject)
-      console.log(token)
+      loginRequest(loginObject)
     }
     catch(error){
       console.log(error)
