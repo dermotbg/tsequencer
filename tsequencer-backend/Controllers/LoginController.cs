@@ -24,14 +24,21 @@ public class LoginController : Controller
     if(!ModelState.IsValid){
       return BadRequest("Please enter a Username & Password");
     }
+
     var user = await _userService.GetUserByUsernameAsync(login.Username);
+
     if(user == null || user.Id == null){
       return Conflict("User not found");
     }
+
     if(!await _userAuthService.PasswordIsCorrect(user.Id, login.Password)){
       return Conflict("Incorrect Password");
     }
+
     var token = _jwtHandler.GenerateJwtToken(user.Id, "user");
+    // append to cookies
+    Response.Cookies.Append("token", token, _jwtHandler.createTokenCookie());
+
     return Ok(token);
   }
 

@@ -38,6 +38,18 @@ public class JwtHandler
     return _jwtSecurityTokenHandler.WriteToken(token);
   }
 
+  public CookieOptions createTokenCookie() 
+  {
+    var cookieOptions = new CookieOptions
+    {
+      HttpOnly = true,
+      Secure = true,
+      SameSite = SameSiteMode.Strict,
+      Expires = DateTime.UtcNow.AddMinutes(60)
+    };
+    return cookieOptions;
+  }
+
   public ClaimsPrincipal ValidateJwtToken(string token)
   {
     var key = Encoding.UTF8.GetBytes(_configuration["JWT_SECRET"]!);
