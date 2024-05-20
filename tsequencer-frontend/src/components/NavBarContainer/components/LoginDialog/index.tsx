@@ -10,33 +10,10 @@ import {
 } from "@/components/ui/dialog"
 import { Label } from "@radix-ui/react-label"
 import { Input } from "@/components/ui/input"
-import { FormEvent, useState } from "react"
-import { loginRequest } from "../../../../../src/services/loginService"
 import { DialogClose } from "@radix-ui/react-dialog"
-import useUserStore from "../../../../hooks/StateHooks/UseUserStore"
+import { LoginDialogType } from "../../types"
 
-const LoginDialog = ({ isMobile = false }: { isMobile: boolean } ) => {
-
-  // TODO: Abstract to Hook / out of this component / create register route
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const user = useUserStore();
-
-  const loginHandler = (e: FormEvent) => {
-    e.preventDefault();
-    const loginObject = {
-      username: username.toLowerCase().trim(),
-      password: password
-    }
-    try{
-      loginRequest(loginObject)
-      user.set(username)
-
-    }
-    catch(error){
-      console.log(error)
-    }
-  }
+const LoginDialog = ({ isMobile = false, loginHandler, setUsername, setPassword }: LoginDialogType ) => {
 
   return(
     <Dialog>

@@ -18,9 +18,25 @@ export const loginRequest = async (loginObj: LoginData) => {
 }
 
 export const validateToken = async () => {
-  const response = await fetch(`${baseUrl}/validate-token`, {
-    method: 'POST'
-  })
-  console.log(response)
- return response.status
+  try{
+    const response = await fetch(`${baseUrl}/validate-token`, {
+      method: 'POST'
+    })
+   return response.status
+  }
+  catch(err){
+    console.error(err)
+  }
 } 
+
+export const logoutRequest = async () => {
+  try{
+    const response = await fetch(`${baseUrl}/logout`, {
+      method: 'POST'
+    })
+    return response.status
+  }
+  catch(err){
+    console.error(err)
+  }
+}

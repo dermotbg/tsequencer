@@ -37,7 +37,7 @@ public class LoginController : Controller
 
     var token = _jwtHandler.GenerateJwtToken(user.Id, "user");
     // append to cookies
-    Response.Cookies.Append("token", token, _jwtHandler.createTokenCookie());
+    Response.Cookies.Append("token", token, _jwtHandler.createTokenCookie(60));
 
     return Ok(token);
   }
@@ -54,5 +54,14 @@ public class LoginController : Controller
     }
     return Ok();
   }
-
+  [HttpPost("logout")]
+  public IActionResult RemoveToken()
+  {
+    if(!Request.Cookies.TryGetValue("token", out var token))
+    {
+      return NoContent();
+    }
+    Response.Cookies.Append("token", token, _jwtHandler.createTokenCookie(-1));
+    return NoContent();
+  }
 }

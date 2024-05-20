@@ -2,7 +2,7 @@ import { create } from "zustand"
 
 interface LoginStateType {
   user: string | null
-  set: (user: string) => void
+  set: (user: string | null) => void
 }
 
 const useUserStore = create<LoginStateType>()((set) => ({

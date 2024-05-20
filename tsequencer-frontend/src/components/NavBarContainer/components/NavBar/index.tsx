@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button"
 import { NavBarType } from "../../types"
 import SaveDialog from "../SaveDialog"
 
-const NavBar = ({ mobileMenuOpen, setMobileMenuOpen, userMenuOpen, setUserMenuOpen, userIsAuthenticated }: NavBarType) => {
+const NavBar = ({ mobileMenuOpen, setMobileMenuOpen, userMenuOpen, setUserMenuOpen, userIsAuthenticated, loginHandler, setUsername, setPassword  }: NavBarType) => {
 
   return(
     <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -25,7 +25,7 @@ const NavBar = ({ mobileMenuOpen, setMobileMenuOpen, userMenuOpen, setUserMenuOp
               <Link to="/tutorial" ><Button className="bg-inherit text-stone-300 hover:bg-stone-600 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Tutorial</Button></Link>
               {userIsAuthenticated
                 ? <SaveDialog isMobile={false} />
-                : <LoginDialog isMobile={false} />}
+                : <LoginDialog isMobile={false} loginHandler={loginHandler} setUsername={setUsername} setPassword={setPassword} />}
             </div>
           </div>
         </div>

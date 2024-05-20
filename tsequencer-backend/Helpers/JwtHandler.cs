@@ -38,14 +38,14 @@ public class JwtHandler
     return _jwtSecurityTokenHandler.WriteToken(token);
   }
 
-  public CookieOptions createTokenCookie() 
+  public CookieOptions createTokenCookie(int expiry) 
   {
     var cookieOptions = new CookieOptions
     {
       HttpOnly = true,
       Secure = true,
       SameSite = SameSiteMode.Strict,
-      Expires = DateTime.UtcNow.AddMinutes(60)
+      Expires = DateTime.UtcNow.AddMinutes(expiry)
     };
     return cookieOptions;
   }
