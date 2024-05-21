@@ -11,6 +11,8 @@ const NavBarContainer = () => {
   const [userMenuOpen, setUserMenuOpen] = useState(false)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [seqName, setSeqName] = useState<string>('');
+
 
   const user = useUserStore();
   
@@ -44,6 +46,11 @@ const NavBarContainer = () => {
     }
   }
 
+  const saveHandler = (e: FormEvent) => {
+    e.preventDefault()
+    console.log(`${seqName}: Saved...`)
+  }
+
   return(
     <nav className="bg-stone-400/25">
       <NavBar 
@@ -55,6 +62,8 @@ const NavBarContainer = () => {
         loginHandler={loginHandler}
         setUsername={setUsername}
         setPassword={setPassword}
+        setSeqName={setSeqName}
+        saveHandler={saveHandler}
       />
       {
         mobileMenuOpen
