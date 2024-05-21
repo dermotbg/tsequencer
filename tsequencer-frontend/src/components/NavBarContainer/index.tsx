@@ -4,9 +4,7 @@ import NavBar from "./components/NavBar"
 import { loginRequest, validateToken } from "../../services/loginService"
 import useUserStore from "../../hooks/StateHooks/UseUserStore"
 import useSequencerStore from "../../hooks/StateHooks/useSequencerStore"
-import { Sequencer, Step } from "../StepSequencerContainer/types"
 import { saveSequencer } from "../../services/sequencerService"
-import { validateString } from "../../utils/typeChecking"
 import { prepareSaveSequencerObject } from "./utils/prepareSaveObject"
 
 

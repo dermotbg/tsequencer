@@ -23,9 +23,8 @@
     /*shadcn*/
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/components/ui/*"]
+      "@/*": ["./src/*"],
     },
   },
-  "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
