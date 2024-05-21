@@ -18,13 +18,13 @@ const FaderContainer = ({ activeStep, instruments, seq, setGain, volume, setVolu
 
     // TODO do something better for validation here, not a fan. 
   if (activeStep === undefined) return (
-    <div className='flex flex-row items-center justify-evenly'>
+    <div className='flex flex-row items-center justify-evenly touch-none'>
       <MasterFader volume={volume} setVolume={setVolume} />
     </div>
   )
 
   return(
-    <div className='flex flex-row items-center justify-evenly'>
+    <div className='flex flex-row items-center justify-evenly touch-none'>
         {Array.from(Object.keys(instruments).map((instrument: string) => {
           if(!seq[activeStep].instruments.includes(validateInstrument(instrument))){
             return <Fader 
