@@ -11,16 +11,9 @@ import {
 import { Label } from "@radix-ui/react-label"
 import { Input } from "@/components/ui/input"
 import { DialogClose } from "@radix-ui/react-dialog"
-import { FormEvent, useState } from "react"
+import { SaveDialogType } from "../../types"
 
-const SaveDialog = ({ isMobile = false }: { isMobile: boolean } ) => {
-
-  const [seqName, setSeqName] = useState<string>();
-
-  const saveHandler = (e: FormEvent) => {
-    e.preventDefault()
-    console.log(`${seqName}: Saved...`)
-  }
+const SaveDialog = ({ isMobile = false, setSeqName, saveHandler }: SaveDialogType ) => {
 
   return(
     <Dialog>

@@ -3,6 +3,10 @@ import MobileNavMenu from "./components/MobileMenu"
 import NavBar from "./components/NavBar"
 import { loginRequest, validateToken } from "../../services/loginService"
 import useUserStore from "../../hooks/StateHooks/UseUserStore"
+import useSequencerStore from "../../hooks/StateHooks/useSequencerStore"
+import { Sequencer, Step } from "../StepSequencerContainer/types"
+import { saveSequencer } from "../../services/sequencerService"
+import { validateString } from "../../utils/typeChecking"
 
 
 const NavBarContainer = () => {
@@ -11,7 +15,9 @@ const NavBarContainer = () => {
   const [userMenuOpen, setUserMenuOpen] = useState(false)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [seqName, setSeqName] = useState<string>('');
 
+  const sequencer = useSequencerStore();
   const user = useUserStore();
   
   useEffect(() => {
@@ -44,6 +50,32 @@ const NavBarContainer = () => {
     }
   }
 
+  const saveHandler = (e: FormEvent) => {
+    e.preventDefault()
+    // catch any extra css assigned mid play
+    const seqCSSPurge: Sequencer = sequencer.seq.map((step: Step) => {
+      return(
+        {...step,
+        extraCSS: ''
+        }
+      )
+    })
+
+    const seqToSave = {
+      sequence: seqCSSPurge,
+      name: seqName,
+      username: validateString(user.user)
+    }
+
+    try {
+      saveSequencer(seqToSave)
+      // TODO: MESSAGE DIALOG - CONFIRM SAVE
+      console.log(`${seqName}: Saved...`)
+    } catch (error) {
+      console.error(`An error has occurred: ${error}`)
+    }
+  }
+
   return(
     <nav className="bg-stone-400/25">
       <NavBar 
@@ -55,6 +87,8 @@ const NavBarContainer = () => {
         loginHandler={loginHandler}
         setUsername={setUsername}
         setPassword={setPassword}
+        setSeqName={setSeqName}
+        saveHandler={saveHandler}
       />
       {
         mobileMenuOpen
