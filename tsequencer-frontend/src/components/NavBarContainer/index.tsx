@@ -7,6 +7,7 @@ import useSequencerStore from "../../hooks/StateHooks/useSequencerStore"
 import { Sequencer, Step } from "../StepSequencerContainer/types"
 import { saveSequencer } from "../../services/sequencerService"
 import { validateString } from "../../utils/typeChecking"
+import { prepareSaveSequencerObject } from "./utils/prepareSaveObject"
 
 
 const NavBarContainer = () => {
@@ -52,20 +53,7 @@ const NavBarContainer = () => {
 
   const saveHandler = (e: FormEvent) => {
     e.preventDefault()
-    // catch any extra css assigned mid play
-    const seqCSSPurge: Sequencer = sequencer.seq.map((step: Step) => {
-      return(
-        {...step,
-        extraCSS: ''
-        }
-      )
-    })
-
-    const seqToSave = {
-      sequence: seqCSSPurge,
-      name: seqName,
-      username: validateString(user.user)
-    }
+    const seqToSave = prepareSaveSequencerObject(sequencer.seq, user.user, seqName)
 
     try {
       saveSequencer(seqToSave)
