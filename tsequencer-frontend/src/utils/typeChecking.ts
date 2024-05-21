@@ -30,6 +30,13 @@ export const isInstrumentRack = (object: unknown): object is AvailableInstrument
   })
 }
 
+export const validateString = (object: unknown) => {
+  if(!isString(object)){
+    throw new Error(`String is not valid ${object}`)
+  }
+  return object
+}
+
 export const validateInstrument = (instrument: unknown) => {
   if(!instrument || !isString(instrument) || !isInstrument(instrument)){
     throw new Error(`Instrument is not valid: ${instrument}`)

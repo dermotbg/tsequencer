@@ -5,6 +5,8 @@ import { loginRequest, validateToken } from "../../services/loginService"
 import useUserStore from "../../hooks/StateHooks/UseUserStore"
 import useSequencerStore from "../../hooks/StateHooks/useSequencerStore"
 import { Sequencer, Step } from "../StepSequencerContainer/types"
+import { saveSequencer } from "../../services/sequencerService"
+import { validateString } from "../../utils/typeChecking"
 
 
 const NavBarContainer = () => {
@@ -51,7 +53,7 @@ const NavBarContainer = () => {
   const saveHandler = (e: FormEvent) => {
     e.preventDefault()
     // catch any extra css assigned mid play
-    const seqToSave: Sequencer = sequencer.seq.map((step: Step) => {
+    const seqCSSPurge: Sequencer = sequencer.seq.map((step: Step) => {
       return(
         {...step,
         extraCSS: ''
@@ -59,7 +61,19 @@ const NavBarContainer = () => {
       )
     })
 
-    console.log(`${seqName}: Saved... ${seqToSave}`)
+    const seqToSave = {
+      sequence: seqCSSPurge,
+      name: seqName,
+      username: validateString(user.user)
+    }
+
+    try {
+      saveSequencer(seqToSave)
+      // TODO: MESSAGE DIALOG - CONFIRM SAVE
+      console.log(`${seqName}: Saved...`)
+    } catch (error) {
+      console.error(`An error has occurred: ${error}`)
+    }
   }
 
   return(
