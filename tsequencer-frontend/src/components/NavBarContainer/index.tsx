@@ -3,6 +3,8 @@ import MobileNavMenu from "./components/MobileMenu"
 import NavBar from "./components/NavBar"
 import { loginRequest, validateToken } from "../../services/loginService"
 import useUserStore from "../../hooks/StateHooks/UseUserStore"
+import useSequencerStore from "../../hooks/StateHooks/useSequencerStore"
+import { Sequencer, Step } from "../StepSequencerContainer/types"
 
 
 const NavBarContainer = () => {
@@ -13,7 +15,7 @@ const NavBarContainer = () => {
   const [password, setPassword] = useState('')
   const [seqName, setSeqName] = useState<string>('');
 
-
+  const sequencer = useSequencerStore();
   const user = useUserStore();
   
   useEffect(() => {
@@ -48,7 +50,16 @@ const NavBarContainer = () => {
 
   const saveHandler = (e: FormEvent) => {
     e.preventDefault()
-    console.log(`${seqName}: Saved...`)
+    // catch any extra css assigned mid play
+    const seqToSave: Sequencer = sequencer.seq.map((step: Step) => {
+      return(
+        {...step,
+        extraCSS: ''
+        }
+      )
+    })
+
+    console.log(`${seqName}: Saved... ${seqToSave}`)
   }
 
   return(
