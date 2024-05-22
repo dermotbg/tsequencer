@@ -43,7 +43,7 @@ builder.Services.AddAuthorization(options =>
 
 // Get Mongo settings from settings etc
 var mongoConfig = builder.Configuration.GetSection("MongoDB").Get<MongoDBSettings>();
-var mongoConnectionURI = builder.Configuration["MONGO_URI"];
+var mongoConnectionURI = Environment.GetEnvironmentVariable("MONGO_URI");
 
 if(mongoConfig == null || mongoConnectionURI == null)
 {
@@ -57,6 +57,7 @@ builder.Services.Configure<MongoDBSettings>(options =>
   options.CollectionName = mongoConfig.CollectionName;
 });
 
+builder.Services.AddHealthChecks();
 builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
 builder.Services.AddSingleton<UserService>();
 builder.Services.AddSingleton<UserAuthenticationService>();
@@ -64,6 +65,8 @@ builder.Services.AddSingleton<JwtHandler>();
 builder.Services.AddSingleton<SequencerService>();
 
 var app = builder.Build();
+
+app.MapHealthChecks("/healthcheck");
 
 if (!app.Environment.IsDevelopment())
 {
