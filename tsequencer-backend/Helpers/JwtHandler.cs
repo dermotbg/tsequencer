@@ -16,7 +16,7 @@ public class JwtHandler
   } 
   public string GenerateJwtToken(string userId, string role)
   {
-    var key = Encoding.UTF8.GetBytes(_configuration["JWT_SECRET"]!);
+    var key = Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("JWT_SECRET")!);
     var claims = new List<Claim>
     {
       new Claim(ClaimTypes.NameIdentifier, userId),
@@ -27,8 +27,8 @@ public class JwtHandler
 
     var tokenDescriptor = new SecurityTokenDescriptor
     {
-      Issuer = _configuration["JWT_ISSUER"],
-      Audience = _configuration["JWT_AUDIENCE"],
+      Issuer = Environment.GetEnvironmentVariable("JWT_ISSUER"),
+      Audience = Environment.GetEnvironmentVariable("JWT_AUDIENCE"),
       Subject = identity,
       Expires = DateTime.UtcNow.AddMinutes(30),
       SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
@@ -52,7 +52,7 @@ public class JwtHandler
 
   public ClaimsPrincipal ValidateJwtToken(string token)
   {
-    var key = Encoding.UTF8.GetBytes(_configuration["JWT_SECRET"]!);
+    var key = Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("JWT_SECRET")!);
 
     try
     {
@@ -61,8 +61,8 @@ public class JwtHandler
       var claimsPrincipal = tokenHandler.ValidateToken(token, new TokenValidationParameters
       {
         ValidateIssuerSigningKey = true,
-        ValidIssuer = _configuration["JWT_ISSUER"],
-        ValidAudience = _configuration["JWT_AUDIENCE"],
+        ValidIssuer = Environment.GetEnvironmentVariable("JWT_ISSUER"),
+        ValidAudience = Environment.GetEnvironmentVariable("JWT_AUDIENCE"),
         IssuerSigningKey = new SymmetricSecurityKey(key)
       }, out SecurityToken validatedToken);
 
