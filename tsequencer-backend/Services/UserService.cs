@@ -8,7 +8,7 @@ namespace TSequencer.Services;
 public class UserService : MongoDBService<User>
 {
   public UserService(IOptions<MongoDBSettings> mongoDBSettings, IConfiguration configuration) 
-    : base(mongoDBSettings, configuration, "users") {}
+    : base(mongoDBSettings, "users") {}
 
   public async Task<List<User>> GetAsync() 
   {

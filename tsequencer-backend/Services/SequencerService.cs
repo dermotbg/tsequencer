@@ -7,8 +7,8 @@ namespace TSequencer.Services;
 
 public class SequencerService : MongoDBService<Sequencer>
 {
-  public SequencerService(IOptions<MongoDBSettings> mongoDBSettings, IConfiguration configuration) 
-    : base(mongoDBSettings, configuration, "sequencers") {}
+  public SequencerService(IOptions<MongoDBSettings> mongoDBSettings) 
+    : base(mongoDBSettings, "sequencers") {}
   
   public async Task<List<Sequencer>> GetSequencersAsync()
   {
