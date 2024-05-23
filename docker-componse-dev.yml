@@ -6,6 +6,13 @@ services:
     build:
       context: ./tsequencer-frontend
       dockerfile: Dev.Dockerfile
+    develop:
+      watch:
+      - action: sync
+        path: ./tsequencer-frontend
+        target: ./usr/src/app
+        ignore:
+          - node_modules
   
   backend:
     image: tseq-backend-dev
