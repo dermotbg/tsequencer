@@ -11,6 +11,7 @@ export interface NavBarType {
   setPassword: React.Dispatch<React.SetStateAction<string>>
   setSeqName: React.Dispatch<React.SetStateAction<string>> 
   saveHandler: (e: FormEvent) => void 
+  logoutHandler: () => void
 }
 
 export type NavBarMobileMenuType = Pick<NavBarType, "mobileMenuOpen" | "setMobileMenuOpen">
