@@ -36,10 +36,12 @@ public class LoginController : Controller
     }
 
     var token = _jwtHandler.GenerateJwtToken(user.Id, "user");
-    // append to cookies
-    Response.Cookies.Append("token", token, _jwtHandler.createTokenCookie(60));
+    // append token to cookies
+    Response.Cookies.Append("token", token, _jwtHandler.createCookie(60));
+    // append user to cookies for FE validation
+    Response.Cookies.Append("user", user.Username, _jwtHandler.createCookie(60));
 
-    return Ok(token);
+    return Ok(user);
   }
   [HttpPost("validate-token")]
   public IActionResult ValidateToken()
@@ -52,7 +54,11 @@ public class LoginController : Controller
     {
       return Unauthorized("Token has expired");
     }
-    return Ok();
+    if(!Request.Cookies.TryGetValue("user", out var username))
+    {
+      return Conflict("No Attached user");
+    }
+    return Ok(username);
   }
   [HttpPost("logout")]
   public IActionResult RemoveToken()
@@ -61,7 +67,10 @@ public class LoginController : Controller
     {
       return NoContent();
     }
-    Response.Cookies.Append("token", token, _jwtHandler.createTokenCookie(-1));
+
+    Response.Cookies.Append("token", string.Empty, _jwtHandler.createCookie(-1));
+    Response.Cookies.Append("user", string.Empty, _jwtHandler.createCookie(-1));
+
     return NoContent();
   }
 }

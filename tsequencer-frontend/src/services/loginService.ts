@@ -6,23 +6,31 @@ interface LoginData {
 }
 
 export const loginRequest = async (loginObj: LoginData) => {
-  const response = await fetch(baseUrl, {
-    method: 'POST',
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(loginObj),
-  })
-  const token = await response.text()
-  return token
+  try {
+    const response = await fetch(baseUrl, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(loginObj),
+    })
+    return response.json()
+  } catch (error) {
+      console.error(`Something went wrong: ${error}`)
+      return error
+    }
 }
 
-export const validateToken = async () => {
+export const validateTokenAsync = async () => {
   try{
     const response = await fetch(`${baseUrl}/validate-token`, {
       method: 'POST'
     })
-   return response.status
+    const respObject = {
+      status: response.status,
+      username: await response.text()
+    }
+    return respObject
   }
   catch(err){
     console.error(err)

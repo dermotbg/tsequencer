@@ -38,7 +38,7 @@ public class JwtHandler
     return _jwtSecurityTokenHandler.WriteToken(token);
   }
 
-  public CookieOptions createTokenCookie(int expiry) 
+  public CookieOptions createCookie(int expiry) 
   {
     var cookieOptions = new CookieOptions
     {
