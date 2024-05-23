@@ -14,10 +14,11 @@ export const loginRequest = async (loginObj: LoginData) => {
       },
       body: JSON.stringify(loginObj),
     })
+
     return response.json()
-  } catch (error) {
-      console.error(`Something went wrong: ${error}`)
-      return error
+  } 
+  catch (error) {
+      throw new Error(`Something went wrong: ${error}`)
     }
 }
 

@@ -57,11 +57,18 @@ const NavBarContainer = () => {
       password: password
     }
     try{
+
       const resp = await loginRequest(loginObject)
-      if(resp && resp.username !== ''){
+
+      if(resp && resp.value){
+        // this is BE error message which only exists on errors
+        throw new Error(resp.value)
+      }
+
+      if(resp && resp.username){
         // set string to LS only to fire token validation when it's defined
         localStorage.setItem("user", JSON.stringify('loggedIn'))
-        user.setUsername(loginObject.username)
+        user.setUsername(resp.username)
         user.setAuthenticated(true)
       }
     }
