@@ -1,13 +1,18 @@
 import { create } from "zustand"
 
 interface LoginStateType {
-  user: string | null
-  set: (user: string | null) => void
+  username: string | null
+  isAuthenticated: boolean
+  setUsername: (user: string | null) => void,
+  setAuthenticated: (set: boolean) => void
 }
 
-const useUserStore = create<LoginStateType>()((set) => ({
-  user: null,
-  set: (user) => set(() => ({ user }))
+const useUserStore = create<LoginStateType>()(
+  (set) => ({
+  username: null,
+  isAuthenticated: false,
+  setUsername: (username: string | null) => set(() => ({ username })),
+  setAuthenticated: (toggle) => set(() => ({ isAuthenticated: toggle }))
 })
 )
 

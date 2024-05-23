@@ -14,5 +14,6 @@ public class User
   [StringLength(15, MinimumLength =3)]
   [Required]
   public string Username { get; set; } = null!;
+  [JsonIgnore]
   public string PasswordHash { get; set; } = null!;
 }

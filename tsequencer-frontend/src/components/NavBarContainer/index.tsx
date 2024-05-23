@@ -1,11 +1,12 @@
 import { FormEvent, useEffect, useState } from "react"
 import MobileNavMenu from "./components/MobileMenu"
 import NavBar from "./components/NavBar"
-import { loginRequest, validateToken } from "../../services/loginService"
+import { loginRequest, logoutRequest, validateTokenAsync } from "../../services/loginService"
 import useUserStore from "../../hooks/StateHooks/UseUserStore"
 import useSequencerStore from "../../hooks/StateHooks/useSequencerStore"
 import { saveSequencer } from "../../services/sequencerService"
 import { prepareSaveSequencerObject } from "./utils/prepareSaveObject"
+import { validateString } from "@/utils/typeChecking"
 
 
 const NavBarContainer = () => {
@@ -14,44 +15,80 @@ const NavBarContainer = () => {
   const [userMenuOpen, setUserMenuOpen] = useState(false)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [seqName, setSeqName] = useState<string>('');
+  const [seqName, setSeqName] = useState('')
 
-  const sequencer = useSequencerStore();
-  const user = useUserStore();
-  
+  const sequencer = useSequencerStore()
+  const user = useUserStore()
+
+  // Login Validation Effect
   useEffect(() => {
-    // validate access token
-    const intervalId = setInterval(() => {
-      runTokenValidation()
-    }, 20000)
     const runTokenValidation = async () => {
-      if(!user.user || await validateToken() != 200){
-        clearInterval(intervalId)
+      // fetch validation info from BE
+      const userValidation = await validateTokenAsync()
+
+      if(userValidation && userValidation.status !== 200){
+        // TODO: ALERT SESSION EXPIRED
+        logoutHandler()
+        clearInterval(tokenValidationPoll)
+      }
+      else{
+        // update FE state with logged in user info set username to LS to confirm loop already completed
+        user.setAuthenticated(true)
+        user.setUsername(validateString(userValidation?.username))
       }
     }
-    return () => clearInterval(intervalId)
-
-  },[user, user.user])
-
-  const loginHandler = (e: FormEvent) => {
+    
+    const tokenValidationPoll = setInterval(() => {
+      // start polling to validate access token if user has already gone through loop
+      if(localStorage.getItem('user'))
+        runTokenValidation()
+    }, 2000)
+    
+    // NOTES: cons for this approach
+    return () => clearInterval(tokenValidationPoll)
+    
+  },[user, user.isAuthenticated])
+  
+  
+  const loginHandler = async(e: FormEvent) => {
     e.preventDefault();
     const loginObject = {
       username: username.toLowerCase().trim(),
       password: password
     }
     try{
-      loginRequest(loginObject)
-      user.set(username)
 
+      const resp = await loginRequest(loginObject)
+
+      if(resp && resp.value){
+        // this is BE error message which only exists on errors
+        throw new Error(resp.value)
+      }
+
+      if(resp && resp.username){
+        // set string to LS only to fire token validation when it's defined
+        localStorage.setItem("user", JSON.stringify('loggedIn'))
+        user.setUsername(resp.username)
+        user.setAuthenticated(true)
+      }
     }
     catch(error){
+      // TODO: MESSAGE DIALOG ERROR LOGGING IN 
       console.log(error)
     }
   }
 
+  const logoutHandler = () => {
+    setUsername("")
+    setPassword("")
+    logoutRequest()
+    user.setAuthenticated(false)
+    localStorage.removeItem('user')
+  }
+
   const saveHandler = (e: FormEvent) => {
     e.preventDefault()
-    const seqToSave = prepareSaveSequencerObject(sequencer.seq, user.user, seqName)
+    const seqToSave = prepareSaveSequencerObject(sequencer.seq, user.username, seqName)
 
     try {
       saveSequencer(seqToSave)
@@ -61,7 +98,6 @@ const NavBarContainer = () => {
       console.error(`An error has occurred: ${error}`)
     }
   }
-
   return(
     <nav className="bg-stone-400/25">
       <NavBar 
@@ -69,19 +105,20 @@ const NavBarContainer = () => {
         setMobileMenuOpen={setMobileMenuOpen} 
         userMenuOpen={userMenuOpen} 
         setUserMenuOpen={setUserMenuOpen} 
-        userIsAuthenticated={user.user !== null}
+        userIsAuthenticated={user.isAuthenticated}
         loginHandler={loginHandler}
         setUsername={setUsername}
         setPassword={setPassword}
         setSeqName={setSeqName}
         saveHandler={saveHandler}
+        logoutHandler={logoutHandler}
       />
       {
         mobileMenuOpen
           ? <MobileNavMenu 
               loginHandler={loginHandler} 
               setUsername={setUsername} 
-              setPassword={setPassword} 
+              setPassword={setPassword}
             />
           : null
       }
