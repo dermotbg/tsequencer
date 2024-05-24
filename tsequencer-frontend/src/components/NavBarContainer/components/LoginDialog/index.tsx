@@ -12,8 +12,9 @@ import { Label } from "@radix-ui/react-label"
 import { Input } from "@/components/ui/input"
 import { DialogClose } from "@radix-ui/react-dialog"
 import { LoginDialogType } from "../../types"
+import DisplayErrorMessage from "../DisplayErrorMessage"
 
-const LoginDialog = ({ isMobile = false, loginHandler, setUsername, setPassword }: LoginDialogType ) => {
+const LoginDialog = ({ isMobile = false, loginHandler, setUsername, setPassword, errorMessage }: LoginDialogType ) => {
 
   return(
     <Dialog>
@@ -42,6 +43,7 @@ const LoginDialog = ({ isMobile = false, loginHandler, setUsername, setPassword 
               defaultValue={"@username"}
               className="col-span-3"
               onChange={(e) => setUsername(e.target.value)}
+              required
             />
           </div>
           <div className="grid gap-4 py-4">
@@ -54,8 +56,14 @@ const LoginDialog = ({ isMobile = false, loginHandler, setUsername, setPassword 
                 type="password"
                 className="col-span-3"
                 onChange={(e) => setPassword(e.target.value)}
+                required
               />
             </div>
+            {
+              errorMessage
+              ? <DisplayErrorMessage errorMessage={errorMessage} />
+              : null 
+            }
             <div className="text-right py-4">
               Don't have an account?
             </div>

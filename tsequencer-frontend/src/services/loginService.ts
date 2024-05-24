@@ -12,14 +12,26 @@ export const loginRequest = async (loginObj: LoginData) => {
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify(loginObj),
+      body: JSON.stringify({
+        ...loginObj, 
+        username: loginObj.username.toLowerCase().trim()
+      }),
     })
 
-    return response.json()
+    if(response.ok){
+      return response.json()
+    }
+    else {
+      throw new Error(await response.text())
+    }
   } 
   catch (error) {
-      throw new Error(`Something went wrong: ${error}`)
+    let errorMessage = ""
+    if (error instanceof Error){
+      errorMessage += error.message
     }
+    throw new Error(`${errorMessage}`)
+  }
 }
 
 export const validateTokenAsync = async () => {
@@ -45,7 +57,11 @@ export const logoutRequest = async () => {
     })
     return response.status
   }
-  catch(err){
-    console.error(err)
+  catch (error) {
+    let errorMessage = ""
+    if (error instanceof Error){
+      errorMessage += error.message
+    }
+    throw new Error(`${errorMessage}`)
   }
 }

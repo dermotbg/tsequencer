@@ -4,9 +4,11 @@ import NavBar from "./components/NavBar"
 import { loginRequest, logoutRequest, validateTokenAsync } from "../../services/loginService"
 import useUserStore from "../../hooks/StateHooks/UseUserStore"
 import useSequencerStore from "../../hooks/StateHooks/useSequencerStore"
-import { saveSequencer } from "../../services/sequencerService"
+import { saveSequencerAsync } from "../../services/sequencerService"
 import { prepareSaveSequencerObject } from "./utils/prepareSaveObject"
 import { validateString } from "@/utils/typeChecking"
+import useMessageStore from "@/hooks/StateHooks/useMessageStore"
+import { useToast } from "../ui/use-toast"
 
 
 const NavBarContainer = () => {
@@ -16,9 +18,12 @@ const NavBarContainer = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [seqName, setSeqName] = useState('')
+  const [isSaveDialogOpen, setIsSaveDialogOpen] = useState(false)
 
   const sequencer = useSequencerStore()
   const user = useUserStore()
+  const errorMessage = useMessageStore()
+  const { toast } = useToast()
 
   // Login Validation Effect
   useEffect(() => {
@@ -44,60 +49,52 @@ const NavBarContainer = () => {
         runTokenValidation()
     }, 2000)
     
-    // NOTES: cons for this approach
     return () => clearInterval(tokenValidationPoll)
     
   },[user, user.isAuthenticated])
   
   
-  const loginHandler = async(e: FormEvent) => {
-    e.preventDefault();
-    const loginObject = {
-      username: username.toLowerCase().trim(),
-      password: password
-    }
+  const loginHandler = async (e: FormEvent) => {
+    e.preventDefault()
     try{
-
-      const resp = await loginRequest(loginObject)
-
-      if(resp && resp.value){
-        // this is BE error message which only exists on errors
-        throw new Error(resp.value)
-      }
-
-      if(resp && resp.username){
+      const resp = await loginRequest({ username, password })
         // set string to LS only to fire token validation when it's defined
         localStorage.setItem("user", JSON.stringify('loggedIn'))
         user.setUsername(resp.username)
         user.setAuthenticated(true)
-      }
+      toast({ description: 'You are now logged in.' })
     }
     catch(error){
-      // TODO: MESSAGE DIALOG ERROR LOGGING IN 
-      console.log(error)
+      errorMessage.set(`${error}`.slice(7))
+      setTimeout(() => {
+        errorMessage.set(undefined)
+      }, 10000)
     }
   }
 
   const logoutHandler = () => {
     setUsername("")
     setPassword("")
-    logoutRequest()
     user.setAuthenticated(false)
     localStorage.removeItem('user')
+    logoutRequest()
   }
 
-  const saveHandler = (e: FormEvent) => {
+  const saveHandler = async (e: FormEvent) => {
     e.preventDefault()
-    const seqToSave = prepareSaveSequencerObject(sequencer.seq, user.username, seqName)
-
-    try {
-      saveSequencer(seqToSave)
-      // TODO: MESSAGE DIALOG - CONFIRM SAVE
-      console.log(`${seqName}: Saved...`)
-    } catch (error) {
-      console.error(`An error has occurred: ${error}`)
+    try{
+      await saveSequencerAsync(prepareSaveSequencerObject(sequencer.seq, user.username, seqName))
+      toast({ description: 'Save successful.' })
+      setIsSaveDialogOpen(false)
+    } 
+    catch(error){
+      errorMessage.set(`${error}`.slice(29))
+      setTimeout(() => {
+        errorMessage.set(undefined)
+      }, 5000)
     }
   }
+  
   return(
     <nav className="bg-stone-400/25">
       <NavBar 
@@ -112,6 +109,9 @@ const NavBarContainer = () => {
         setSeqName={setSeqName}
         saveHandler={saveHandler}
         logoutHandler={logoutHandler}
+        errorMessage={errorMessage.message}
+        isSaveDialogOpen={isSaveDialogOpen}
+        setIsSaveDialogOpen={setIsSaveDialogOpen}
       />
       {
         mobileMenuOpen
@@ -119,6 +119,7 @@ const NavBarContainer = () => {
               loginHandler={loginHandler} 
               setUsername={setUsername} 
               setPassword={setPassword}
+              errorMessage={errorMessage.message}
             />
           : null
       }

@@ -22,17 +22,17 @@ public class LoginController : Controller
   public async Task<IActionResult> Post([FromBody] LoginDto login)
   {
     if(!ModelState.IsValid){
-      return BadRequest(new JsonResult("Please enter a Username & Password"));
+      return BadRequest("Please enter a Username & Password");
     }
 
     var user = await _userService.GetUserByUsernameAsync(login.Username);
 
     if(user == null || user.Id == null){
-      return Conflict(new JsonResult("User not found"));
+      return Conflict("User not found");
     }
 
     if(!await _userAuthService.PasswordIsCorrect(user.Id, login.Password)){
-      return Conflict(new JsonResult("Incorrect Password"));
+      return Conflict("Incorrect Password");
     }
 
     var token = _jwtHandler.GenerateJwtToken(user.Id, "user");

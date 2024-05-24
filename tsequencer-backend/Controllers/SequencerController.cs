@@ -39,6 +39,10 @@ public class SequencerController : Controller
   // POST /api/sequencer
   public async Task<IActionResult> Post([FromBody] CreateSequencerDto newSequenceBody)
   {
+    if(!ModelState.IsValid)
+    {
+      return BadRequest("Please enter a sequencer name");
+    }
     if(!Request.Cookies.TryGetValue("token", out var token))
     {
       return Unauthorized("No token found");
