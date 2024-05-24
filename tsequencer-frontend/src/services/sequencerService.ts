@@ -8,17 +8,28 @@ interface SaveSeqType {
 
 const baseUrl = '/api/sequencer'
 
-export const saveSequencer = async (SaveSeqObj: SaveSeqType ) => {
+export const saveSequencerAsync = async (SaveSeqObj: SaveSeqType ): Promise<Response> => {
   try {
-    const response = await fetch(`${baseUrl}`, {
+    const response: Response = await fetch(`${baseUrl}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify(SaveSeqObj),
     })
-    console.log(response)
+    
+    if(response.ok){
+      return response
+    }
+    else {
+      throw new Error(await response.text())
+    }
+
   } catch (error) {
-    console.error(error)
+    let errorMessage = "Something went wrong: "
+    if (error instanceof Error){
+      errorMessage += error.message
+    }
+    throw new Error(`${errorMessage}`)
   }
 }

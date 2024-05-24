@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button"
 import { NavBarType } from "../../types"
 import SaveDialog from "../SaveDialog"
 
-const NavBar = ({ mobileMenuOpen, setMobileMenuOpen, userMenuOpen, setUserMenuOpen, userIsAuthenticated, loginHandler, setUsername, setPassword, setSeqName, saveHandler, logoutHandler  }: NavBarType) => {
+const NavBar = ({ mobileMenuOpen, setMobileMenuOpen, userMenuOpen, setUserMenuOpen, userIsAuthenticated, loginHandler, setUsername, setPassword, setSeqName, saveHandler, logoutHandler, errorMessage, isSaveDialogOpen, setIsSaveDialogOpen }: NavBarType) => {
 
   return(
     <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -28,12 +28,16 @@ const NavBar = ({ mobileMenuOpen, setMobileMenuOpen, userMenuOpen, setUserMenuOp
                     isMobile={false} 
                     setSeqName={setSeqName}
                     saveHandler={saveHandler} 
-                  />
+                    errorMessage={errorMessage}
+                    isSaveDialogOpen={isSaveDialogOpen}
+                    setIsSaveDialogOpen={setIsSaveDialogOpen}
+                    />
                 : <LoginDialog 
                     isMobile={false} 
                     loginHandler={loginHandler} 
                     setUsername={setUsername} 
                     setPassword={setPassword} 
+                    errorMessage={errorMessage}
                   />
               }
             </div>
