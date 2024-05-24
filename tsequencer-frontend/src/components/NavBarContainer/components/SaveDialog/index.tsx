@@ -12,11 +12,14 @@ import { Label } from "@radix-ui/react-label"
 import { Input } from "@/components/ui/input"
 import { DialogClose } from "@radix-ui/react-dialog"
 import { SaveDialogType } from "../../types"
+import DisplayErrorMessage from "../DisplayErrorMessage"
 
-const SaveDialog = ({ isMobile = false, setSeqName, saveHandler }: SaveDialogType ) => {
+// TODO: THERE IS NO SAVE OPTION ON MOBILE 
+
+const SaveDialog = ({ isMobile = false, setSeqName, saveHandler, errorMessage, isSaveDialogOpen, setIsSaveDialogOpen }: SaveDialogType ) => {
 
   return(
-    <Dialog>
+    <Dialog open={isSaveDialogOpen} onOpenChange={setIsSaveDialogOpen}>
       <DialogTrigger asChild>
         {!isMobile 
         ? <Button className="bg-inherit text-stone-300 hover:bg-stone-600 hover:text-white rounded-md px-3 py-2 text-sm font-medium" >Save</Button>
@@ -41,13 +44,18 @@ const SaveDialog = ({ isMobile = false, setSeqName, saveHandler }: SaveDialogTyp
               id="seq-name"
               className="col-span-3"
               onChange={(e) => setSeqName(e.target.value)}
+              required
             />
           </div>
+            {errorMessage
+              ? <DisplayErrorMessage errorMessage={errorMessage} />
+              : null 
+            }
           <DialogFooter className="p-4">
             <DialogClose asChild>
               <Button type="button" variant={'outline'}>Cancel</Button>
             </DialogClose>
-            <Button type="submit">Save</Button>
+              <Button className={isMobile ? "mb-2": ""} type="submit">Save</Button>
           </DialogFooter>
         </form>
         </DialogContent>
