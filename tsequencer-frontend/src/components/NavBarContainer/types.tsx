@@ -20,6 +20,8 @@ export interface NavBarType {
 export type NavBarMobileMenuType = Pick<NavBarType, "mobileMenuOpen" | "setMobileMenuOpen">
 export type NavBarUserMenuType = Pick<NavBarType, "userMenuOpen" | "setUserMenuOpen">
 
+export type MobileNavMenuType= Pick<NavBarType, "userIsAuthenticated" | "loginHandler" | "setUsername" | "setPassword" | "setSeqName" | "saveHandler" | "logoutHandler" | "errorMessage" | "isSaveDialogOpen" | "setIsSaveDialogOpen">
+
 export type LoginLogicType = Pick<NavBarType, "loginHandler" | "setUsername" | "setPassword" | "errorMessage">
 export interface LoginDialogType extends LoginLogicType { isMobile: boolean }
 
