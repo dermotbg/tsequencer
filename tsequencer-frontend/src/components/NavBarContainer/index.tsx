@@ -116,10 +116,16 @@ const NavBarContainer = () => {
       {
         mobileMenuOpen
           ? <MobileNavMenu 
-              loginHandler={loginHandler} 
-              setUsername={setUsername} 
+              userIsAuthenticated={user.isAuthenticated}
+              loginHandler={loginHandler}
+              setUsername={setUsername}
               setPassword={setPassword}
+              setSeqName={setSeqName}
+              saveHandler={saveHandler}
+              logoutHandler={logoutHandler}
               errorMessage={errorMessage.message}
+              isSaveDialogOpen={isSaveDialogOpen}
+              setIsSaveDialogOpen={setIsSaveDialogOpen}
             />
           : null
       }

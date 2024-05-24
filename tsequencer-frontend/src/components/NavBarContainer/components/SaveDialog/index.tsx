@@ -55,7 +55,7 @@ const SaveDialog = ({ isMobile = false, setSeqName, saveHandler, errorMessage, i
             <DialogClose asChild>
               <Button type="button" variant={'outline'}>Cancel</Button>
             </DialogClose>
-              <Button type="submit">Save</Button>
+              <Button className={isMobile ? "mb-2": ""} type="submit">Save</Button>
           </DialogFooter>
         </form>
         </DialogContent>
