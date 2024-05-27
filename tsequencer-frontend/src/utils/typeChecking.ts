@@ -17,7 +17,7 @@ export const isObject = (object: unknown): object is object => {
 }
 
 export const isInstrument = (instrument: string): instrument is AvailableInstruments => {
-  const allInstruments: AvailableInstruments[] = ['kick', 'clap', 'closedHH', 'ride'] 
+  const allInstruments: AvailableInstruments[] = ['kick', 'clap', 'closedHH', 'snare', 'openHH', 'ride', 'sub', 'perc', 'perc2', 'perc3', 'perc4', 'perc5'] 
   return allInstruments.includes(instrument as AvailableInstruments)
 }
 
