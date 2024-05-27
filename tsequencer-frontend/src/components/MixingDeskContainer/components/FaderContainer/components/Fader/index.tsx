@@ -5,8 +5,9 @@ import FaderDetails from '../FaderDetails'
 import { AvailableInstruments } from '../../../../../../types'
 
 const Fader = ({ disabled, index, instrument, gain, setGain }: { disabled: boolean, index: number, instrument: AvailableInstruments, gain: number, setGain: (index: number, gain: number, instrument: AvailableInstruments) => void  }) => {
+  if(disabled) return null
   return(
-    <div className='flex flex-col items-center touch-none'>
+    <div className='flex flex-col items-center touch-pan-x mx-2'>
       <div className="wrapper">
         <input 
           type="range"
@@ -21,10 +22,7 @@ const Fader = ({ disabled, index, instrument, gain, setGain }: { disabled: boole
         />
       </div>
       <div className='flex flex-col'>
-        {disabled
-          ? <FaderDetails instrument={'Inactive'} gain={gain} />
-          : <FaderDetails instrument={instrument} gain={gain} />
-        }
+        <FaderDetails instrument={instrument} gain={gain} />
       </div>
     </div>
   )

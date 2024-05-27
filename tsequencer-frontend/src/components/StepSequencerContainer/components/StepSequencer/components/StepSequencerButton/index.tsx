@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { StepSeqProps } from "../../../../types"
-import AssignedInstrumentsMobile from "./components/AssignedInstrumentsMobile"
-import AssignedInstrumentsDesktop from "./components/AssignedInstrumentsDesktop"
+import AssignedInstruments from "./components/AssignedInstrumentsDesktop"
 
 const StepSeqButton = ({ index, extraCSS, step, onClickHandler, windowSize }: StepSeqProps) => {
 
@@ -12,9 +11,9 @@ const StepSeqButton = ({ index, extraCSS, step, onClickHandler, windowSize }: St
         onClick={() => onClickHandler(index)}
         >
         {index + 1}
-        {windowSize.width <= 887 
-          ? <AssignedInstrumentsMobile step={step} />
-          : <AssignedInstrumentsDesktop step={step} />
+        {windowSize.width <= 768 
+          ? null
+          : <AssignedInstruments step={step} />
         }
       </Button>
     </div>
