@@ -4,7 +4,7 @@ import FaderDetails from '../FaderDetails'
 
 const MasterFader = ({ volume, setVolume }: { volume: number, setVolume: (gain: number) => void  }) => {
   return(
-    <div className='flex-col'>
+    <div className='flex flex-col items-center touch-pan-x'>
       <div className="wrapper">
         <input 
           type="range"

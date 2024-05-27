@@ -27,7 +27,7 @@ const InstrumentPadContainer = () => {
   }
 
   return(
-    <>
+    <div className='grid grid-cols-4 sm:grid-cols-6'>
       {Array.from(Object.keys(instruments).map((i) => {
         return(
           <InstrumentPad 
@@ -40,7 +40,7 @@ const InstrumentPadContainer = () => {
           />
         )
       }))}
-    </>
+    </div>
   )
 }
 

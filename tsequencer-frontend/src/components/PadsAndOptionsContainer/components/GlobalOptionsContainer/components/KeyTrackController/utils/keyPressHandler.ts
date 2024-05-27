@@ -26,7 +26,7 @@ const latencyCompensator = (stepIndex: number) => {
 
 }
 
-
+// TODO include new samples
 export const keyPressHandler = ({ keyCode, pushToSequencer, volume, recording, stepRef}: keyPressHandlerType) => {
   switch (keyCode) {
     case 'KeyS':

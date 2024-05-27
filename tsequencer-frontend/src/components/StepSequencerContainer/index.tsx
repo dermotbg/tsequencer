@@ -13,6 +13,7 @@ import useWindowSize from "../../hooks/useWindowSize"
 
 import { validateInstrument } from "../../utils/typeChecking"
 import { useState } from "react"
+import { Step } from "./types"
 
 
 const StepSequencerContainer = () => {
@@ -59,12 +60,23 @@ const StepSequencerContainer = () => {
     if(!activePad) return
     const currentPad = validateInstrument(activePad)
     if(sequencer.seq[index].instruments.includes(currentPad)){
-      sequencer.seq[index].instruments.splice(sequencer.seq[index].instruments.indexOf(currentPad), 1)
+      sequencer.setSeq(sequencer.seq.map((s: Step, i) => {
+        if(i === index){
+          s.instruments.splice(sequencer.seq[index].instruments.indexOf(currentPad), 1)
+          return s
+        }
+        return s
+      }))
     }
     else{
-      sequencer.seq[index].instruments.push(currentPad)
-      const instrument = validateInstrument(activePad)
-      sequencer.seq[index].gain[instrument] = volume
+      sequencer.setSeq(sequencer.seq.map((s: Step, i) => {
+        if(i === index){
+          s.instruments.push(currentPad)
+          s.gain[currentPad] = volume
+          return s
+        }
+        return s
+      }))
     }
   }
 
