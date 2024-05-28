@@ -28,17 +28,23 @@ public class SequencerController : Controller
   }
 
   [HttpGet]
-  [Route("user/{id}")]
-  // GET /api/sequencer/user/{UserId}
-  public async Task<List<Sequencer>> Get(string id)
+  [Route("{username}")]
+  // GET /api/sequencer{Username}
+  public async Task<ActionResult<List<Sequencer>>> Get(string username)
   {
-    return await _sequencerService.GetUserSequencersAsync(id);
+    var user = await _userService.GetUserByUsernameAsync(username);
+    if(user == null || user.Id == null)
+    {
+      return Unauthorized("Request must be made by a valid user");
+    }
+    return await _sequencerService.GetUserSequencersAsync(user.Id);
   }
 
   [HttpPost]
   // POST /api/sequencer
   public async Task<IActionResult> Post([FromBody] CreateSequencerDto newSequenceBody)
   {
+    // TODO: handle case where seq name already exists
     if(!ModelState.IsValid)
     {
       return BadRequest("Please enter a sequencer name");

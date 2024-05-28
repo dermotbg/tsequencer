@@ -4,7 +4,8 @@ import StepSeqButton from "./components/StepSequencerButton"
 
 const StepSequencer = ({ seq, onClickHandler, windowSize }: { seq: Sequencer, onClickHandler: (index: number) => void, windowSize: windowSize }) => {
   
-  if(!seq[0]) return <>Loading...</>
+  // TODO: Proper Loading state
+  if(!seq || !seq[0]) return <>Loading...</>
   return (
     <div className='seq-container grid gap-4 grid-cols-4 grid-rows-4'>
     {seq.map((b, i) => {
