@@ -7,14 +7,13 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogClose
 } from "@/components/ui/dialog"
-import { Label } from "@radix-ui/react-label"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 
-import { DialogClose } from "@radix-ui/react-dialog"
 import { LoadDialogType } from "../../types"
 import DisplayErrorMessage from "../DisplayErrorMessage"
 import { LoadedSeqType } from "@/services/sequencerService"
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 
 const LoadDialog = ({ isMobile = false, errorMessage, isLoadDialogOpen, setIsLoadDialogOpen, sequences, setSelection, loadHandler }: LoadDialogType ) => {
@@ -38,16 +37,22 @@ const LoadDialog = ({ isMobile = false, errorMessage, isLoadDialogOpen, setIsLoa
         </DialogHeader>
         <form onSubmit={loadHandler}>
           <div className="gap-4">
-            <RadioGroup defaultValue="option-one" onValueChange={(value) => setSelection(value)}>
-                {sequences?.map((s: LoadedSeqType) => {
+            <Select onValueChange={(value) => setSelection(value)}>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Select a sequence" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  {sequences?.map((s: LoadedSeqType) => {
                   return(
                     <div className="flex items-center space-x-2" key={s.name}>
-                      <RadioGroupItem value={s.name} id={s.name}  />
-                      <Label htmlFor={s.name}>{s.name}</Label>
+                      <SelectItem value={s.name} id={s.name}>{s.name}</SelectItem>
                     </div>
                   )
                 })}
-            </RadioGroup>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
           </div>
               {errorMessage
                 ? <DisplayErrorMessage errorMessage={errorMessage} />

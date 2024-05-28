@@ -14,7 +14,7 @@ const MobileNavMenu = ({ loginHandler, setUsername, setPassword, errorMessage, u
         {userIsAuthenticated
                 ? <div className="flex flex-col items-start"> 
                     <SaveDialog 
-                      isMobile={false} 
+                      isMobile={true} 
                       setSeqName={setSeqName}
                       saveHandler={saveHandler} 
                       errorMessage={errorMessage}
@@ -22,7 +22,7 @@ const MobileNavMenu = ({ loginHandler, setUsername, setPassword, errorMessage, u
                       setIsSaveDialogOpen={setIsSaveDialogOpen}
                     />
                     <LoadDialog 
-                      isMobile={false} 
+                      isMobile={true} 
                       errorMessage={errorMessage}
                       isLoadDialogOpen={isLoadDialogOpen}
                       setIsLoadDialogOpen={setIsLoadDialogOpen}
