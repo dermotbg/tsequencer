@@ -8,7 +8,7 @@ import { prepareSaveSequencerObject } from "./utils/prepareSaveObject"
 import { validateString } from "@/utils/typeChecking"
 import useMessageStore from "@/hooks/StateHooks/useMessageStore"
 import { useToast } from "../ui/use-toast"
-import useSequencer from "@/hooks/useSequencer"
+import useSequencerStore from "@/hooks/StateHooks/useSequencerStore"
 
 
 const NavBarContainer = () => {
@@ -31,7 +31,7 @@ const NavBarContainer = () => {
   const [selection, setSelection] = useState<string | undefined>()
 
 // Global State
-  const sequencer = useSequencer()
+  const sequencer = useSequencerStore()
   const user = useUserStore()
   const errorMessage = useMessageStore()
   const { toast } = useToast()
@@ -151,6 +151,7 @@ const NavBarContainer = () => {
         loadHandler={loadHandler}
         sequences={sequences}
         setSelection={setSelection}
+        isRunning={sequencer.isRunning}
       />
       {
         mobileMenuOpen
@@ -170,6 +171,7 @@ const NavBarContainer = () => {
               loadHandler={loadHandler}
               sequences={sequences}
               setSelection={setSelection}
+              isRunning={sequencer.isRunning}
             />
           : null
       }

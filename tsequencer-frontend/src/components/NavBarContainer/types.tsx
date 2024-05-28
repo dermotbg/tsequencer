@@ -21,12 +21,13 @@ export interface NavBarType {
   sequences: LoadedSeqType[] | undefined
   setSelection: React.Dispatch<React.SetStateAction<string | undefined>>
   loadHandler: (e: FormEvent) => Promise<void>
+  isRunning: boolean
 }
 
 export type NavBarMobileMenuType = Pick<NavBarType, "mobileMenuOpen" | "setMobileMenuOpen">
 export type NavBarUserMenuType = Pick<NavBarType, "userMenuOpen" | "setUserMenuOpen">
 
-export type MobileNavMenuType= Pick<NavBarType, "userIsAuthenticated" | "loginHandler" | "setUsername" | "setPassword" | "setSeqName" | "saveHandler" | "logoutHandler" | "errorMessage" | "isSaveDialogOpen" | "setIsSaveDialogOpen" | "isLoadDialogOpen" | "setIsLoadDialogOpen" | "sequences" | "setSelection" | "loadHandler">
+export type MobileNavMenuType= Pick<NavBarType, "userIsAuthenticated" | "loginHandler" | "setUsername" | "setPassword" | "setSeqName" | "saveHandler" | "logoutHandler" | "errorMessage" | "isSaveDialogOpen" | "setIsSaveDialogOpen" | "isLoadDialogOpen" | "setIsLoadDialogOpen" | "sequences" | "setSelection" | "loadHandler" | "isRunning" >
 
 export type LoginLogicType = Pick<NavBarType, "loginHandler" | "setUsername" | "setPassword" | "errorMessage">
 export interface LoginDialogType extends LoginLogicType { isMobile: boolean }
@@ -34,5 +35,5 @@ export interface LoginDialogType extends LoginLogicType { isMobile: boolean }
 export type SaveLogicType = Pick<NavBarType, "setSeqName" | "saveHandler" | "errorMessage" | "isSaveDialogOpen" | "setIsSaveDialogOpen" >
 export interface SaveDialogType extends SaveLogicType { isMobile: boolean }
 
-export type LoadLogicType = Pick<NavBarType, "errorMessage" | "isLoadDialogOpen" | "setIsLoadDialogOpen" | "sequences" | "setSelection" | "loadHandler">
+export type LoadLogicType = Pick<NavBarType, "errorMessage" | "isLoadDialogOpen" | "setIsLoadDialogOpen" | "sequences" | "setSelection" | "loadHandler" | "isRunning" >
 export interface LoadDialogType extends LoadLogicType { isMobile: boolean }
