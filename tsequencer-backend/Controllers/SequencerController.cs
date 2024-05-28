@@ -76,6 +76,26 @@ public class SequencerController : Controller
     return CreatedAtAction(nameof(Get), new { id = newSequence.Id }, newSequence );
   }
 
+  [HttpPut("{id}")]
+  // PUT /api/sequencer/id
+  public async Task<IActionResult> UpdateSequence([FromBody] UpdateSequencerDto seqObj)
+  {
+    if(!Request.Cookies.TryGetValue("token", out var token))
+    {
+      return Unauthorized("No user token found");
+    }
+    if(!ModelState.IsValid){
+      return BadRequest("Malformed or Missing Data");
+    }
+
+    if(await _userService.GetUserAsync(seqObj.UserId) == null)
+    {
+      return Unauthorized("Request must be sent with valid userId");
+    }
+
+    await _sequencerService.UpdateSequenceAsync(seqObj);
+    return NoContent();
+  }
   [HttpDelete("{id}")]
   // DELETE /api/sequencer/{id}
   public async Task<IActionResult> Delete(string id)

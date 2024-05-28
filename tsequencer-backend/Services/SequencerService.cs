@@ -1,7 +1,7 @@
 using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using TSequencer.Helpers;
+using TSequencer.Dtos;
 using TSequencer.Models;
 
 namespace TSequencer.Services;
@@ -32,6 +32,12 @@ public class SequencerService : MongoDBService<Sequencer>
   public async Task CreateSequencerAsync(Sequencer sequencer)
   {
     await _collection.InsertOneAsync(sequencer);
+  }
+  public async Task UpdateSequenceAsync(UpdateSequencerDto seqObj)
+  {
+    FilterDefinition<Sequencer> filter = Builders<Sequencer>.Filter.Eq("Id", seqObj.Id);
+    UpdateDefinition<Sequencer> updatedSequencer = Builders<Sequencer>.Update.Set("Sequence", seqObj.Sequence);
+    await _collection.UpdateOneAsync(filter, updatedSequencer);
   }
   public async Task DeleteAsync(string id)
   {
