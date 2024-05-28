@@ -6,8 +6,9 @@ import UserMenuContainer from "../UserMenuContainer"
 import { Button } from "@/components/ui/button"
 import { NavBarType } from "../../types"
 import SaveDialog from "../SaveDialog"
+import LoadDialog from "../LoadDialog"
 
-const NavBar = ({ mobileMenuOpen, setMobileMenuOpen, userMenuOpen, setUserMenuOpen, userIsAuthenticated, loginHandler, setUsername, setPassword, setSeqName, saveHandler, logoutHandler, errorMessage, isSaveDialogOpen, setIsSaveDialogOpen }: NavBarType) => {
+const NavBar = ({ mobileMenuOpen, setMobileMenuOpen, userMenuOpen, setUserMenuOpen, userIsAuthenticated, loginHandler, setUsername, setPassword, setSeqName, saveHandler, logoutHandler, errorMessage, isSaveDialogOpen, setIsSaveDialogOpen, isLoadDialogOpen, setIsLoadDialogOpen, sequences, setSelection, loadHandler, isRunning }: NavBarType) => {
 
   return(
     <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -24,14 +25,26 @@ const NavBar = ({ mobileMenuOpen, setMobileMenuOpen, userMenuOpen, setUserMenuOp
               <Link to="/"> <Button className="bg-stone-900 hover: text-white hover:bg-stone-900 rounded-lg px-3 py-2 text-sm font-medium" aria-current="page">Sequencer</Button></Link>
               <Link to="/tutorial" ><Button className="bg-inherit text-stone-300 hover:bg-stone-600 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Tutorial</Button></Link>
               {userIsAuthenticated
-                ? <SaveDialog 
-                    isMobile={false} 
-                    setSeqName={setSeqName}
-                    saveHandler={saveHandler} 
-                    errorMessage={errorMessage}
-                    isSaveDialogOpen={isSaveDialogOpen}
-                    setIsSaveDialogOpen={setIsSaveDialogOpen}
+                ? <> 
+                    <SaveDialog 
+                      isMobile={false} 
+                      setSeqName={setSeqName}
+                      saveHandler={saveHandler} 
+                      errorMessage={errorMessage}
+                      isSaveDialogOpen={isSaveDialogOpen}
+                      setIsSaveDialogOpen={setIsSaveDialogOpen}
                     />
+                    <LoadDialog 
+                      isMobile={false} 
+                      errorMessage={errorMessage}
+                      isLoadDialogOpen={isLoadDialogOpen}
+                      setIsLoadDialogOpen={setIsLoadDialogOpen}
+                      sequences={sequences}
+                      setSelection={setSelection}
+                      loadHandler={loadHandler}
+                      isRunning={isRunning}
+                    />
+                  </>
                 : <LoginDialog 
                     isMobile={false} 
                     loginHandler={loginHandler} 
