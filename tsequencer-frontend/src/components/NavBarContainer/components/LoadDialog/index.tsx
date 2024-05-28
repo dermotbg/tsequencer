@@ -2,18 +2,11 @@ import { Button } from "@/components/ui/button"
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
   DialogTrigger,
-  DialogClose
 } from "@/components/ui/dialog"
 
 import { LoadDialogType } from "../../types"
-import DisplayErrorMessage from "../DisplayErrorMessage"
-import { LoadedSeqType } from "@/services/sequencerService"
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import SelectFormContainer from "../SelectFormContainer"
 
 
 const LoadDialog = ({ isMobile = false, errorMessage, isLoadDialogOpen, setIsLoadDialogOpen, sequences, setSelection, loadHandler, isRunning }: LoadDialogType ) => {
@@ -28,44 +21,16 @@ const LoadDialog = ({ isMobile = false, errorMessage, isLoadDialogOpen, setIsLoa
         }
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>
-            Load
-          </DialogTitle>
-          <DialogDescription>
-            Please choose a sequencer below
-          </DialogDescription>
-        </DialogHeader>
-        <form onSubmit={loadHandler}>
-          <div className="gap-4">
-            <Select onValueChange={(value) => setSelection(value)}>
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Select a sequence" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  {sequences?.map((s: LoadedSeqType) => {
-                  return(
-                    <div className="flex items-center space-x-2" key={s.name}>
-                      <SelectItem value={s.name} id={s.name}>{s.name}</SelectItem>
-                    </div>
-                  )
-                })}
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-          </div>
-              {errorMessage
-                ? <DisplayErrorMessage errorMessage={errorMessage} />
-                : null 
-              }
-            <DialogFooter className="p-4">
-              <DialogClose asChild>
-                <Button type="button" variant={'outline'}>Cancel</Button>
-              </DialogClose>
-                <Button className={isMobile ? "mb-2": ""} type="submit" >Load</Button>
-            </DialogFooter>
-        </form>
+        <SelectFormContainer 
+          title="Load"
+          description="Please choose a sequence below"
+          submitHandler={loadHandler}
+          errorMessage={errorMessage}
+          sequences={sequences}
+          setSelection={setSelection}
+          isMobile={isMobile}
+          confirmText="Load"
+        />
       </DialogContent>
     </Dialog>
   )

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using TSequencer.Dtos;
+using TSequencer.Helpers;
 using TSequencer.Models;
 using TSequencer.Services;
 
@@ -45,7 +46,7 @@ public class SequencerController : Controller
   public async Task<IActionResult> Post([FromBody] CreateSequencerDto newSequenceBody)
   {
     // TODO: handle case where seq name already exists
-    if(!ModelState.IsValid)
+    if(!ModelState.IsValid || newSequenceBody.Name == null)
     {
       return BadRequest("Please enter a sequencer name");
     }
@@ -60,9 +61,13 @@ public class SequencerController : Controller
       return Unauthorized("Request must be assigned to a user");
     }
 
+    if(await _sequencerService.CheckUsersSequencerNamesAsync(user.Id, newSequenceBody.Name)){
+      return BadRequest("Sequencer already exists, please update below");
+    }
+
     Sequencer newSequence = new Sequencer
     {
-      Name = newSequenceBody.Name,
+      Name = newSequenceBody.Name.ToLower(),
       Sequence = newSequenceBody.Sequence,
       UserId = user.Id
     };
@@ -71,6 +76,26 @@ public class SequencerController : Controller
     return CreatedAtAction(nameof(Get), new { id = newSequence.Id }, newSequence );
   }
 
+  [HttpPut("{id}")]
+  // PUT /api/sequencer/id
+  public async Task<IActionResult> UpdateSequence([FromBody] UpdateSequencerDto seqObj)
+  {
+    if(!Request.Cookies.TryGetValue("token", out var token))
+    {
+      return Unauthorized("No user token found");
+    }
+    if(!ModelState.IsValid){
+      return BadRequest("Malformed or Missing Data");
+    }
+
+    if(await _userService.GetUserAsync(seqObj.UserId) == null)
+    {
+      return Unauthorized("Request must be sent with valid userId");
+    }
+
+    await _sequencerService.UpdateSequenceAsync(seqObj);
+    return NoContent();
+  }
   [HttpDelete("{id}")]
   // DELETE /api/sequencer/{id}
   public async Task<IActionResult> Delete(string id)

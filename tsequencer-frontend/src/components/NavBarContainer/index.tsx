@@ -3,7 +3,7 @@ import MobileNavMenu from "./components/MobileMenu"
 import NavBar from "./components/NavBar"
 import { loginRequest, logoutRequest, validateTokenAsync } from "../../services/loginService"
 import useUserStore from "../../hooks/StateHooks/UseUserStore"
-import { LoadedSeqType, loadSequencerAsync, saveSequencerAsync } from "../../services/sequencerService"
+import { LoadedSeqType, loadSequencerAsync, saveSequencerAsync, updateSequencerAsync } from "../../services/sequencerService"
 import { prepareSaveSequencerObject } from "./utils/prepareSaveObject"
 import { validateString } from "@/utils/typeChecking"
 import useMessageStore from "@/hooks/StateHooks/useMessageStore"
@@ -128,6 +128,23 @@ const NavBarContainer = () => {
     }
   }
 
+  const updateHandler = async(e: FormEvent) => {
+    e.preventDefault()
+    try {
+      const selectedSeq = sequences?.find(s => s.name === selection)
+      if(selectedSeq){
+        await updateSequencerAsync(selectedSeq)
+        setIsSaveDialogOpen(false)
+        toast({ description: 'Update successful.' })
+        // TODO: Update state when save/update complete
+      }
+    } catch(error){
+      errorMessage.set(`${error}`.slice(29))
+      setTimeout(() => {
+        errorMessage.set(undefined)
+      }, 5000)
+    }
+  }
   
   return(
     <nav className="bg-stone-400/25">
@@ -152,6 +169,7 @@ const NavBarContainer = () => {
         sequences={sequences}
         setSelection={setSelection}
         isRunning={sequencer.isRunning}
+        updateHandler={updateHandler}
       />
       {
         mobileMenuOpen
@@ -172,6 +190,7 @@ const NavBarContainer = () => {
               sequences={sequences}
               setSelection={setSelection}
               isRunning={sequencer.isRunning}
+              updateHandler={updateHandler}
             />
           : null
       }
