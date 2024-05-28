@@ -3,6 +3,11 @@
 How to run dev build:
 - Clone repository
 - Start Docker daemon
+- Create a .env file in the root directory with the needed variables:
+  - MONGO_URI
+  - JWT_ISSUER
+  - JWT_AUDIENCE
+  - JWT_SECRET
 - From the root run the following command:
 ```
 docker compose -f docker-componse-dev.yml up --watch --build
