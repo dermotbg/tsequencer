@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using TSequencer.Dtos;
+using TSequencer.Helpers;
 using TSequencer.Models;
 using TSequencer.Services;
 
@@ -45,7 +46,7 @@ public class SequencerController : Controller
   public async Task<IActionResult> Post([FromBody] CreateSequencerDto newSequenceBody)
   {
     // TODO: handle case where seq name already exists
-    if(!ModelState.IsValid)
+    if(!ModelState.IsValid || newSequenceBody.Name == null)
     {
       return BadRequest("Please enter a sequencer name");
     }
@@ -60,9 +61,13 @@ public class SequencerController : Controller
       return Unauthorized("Request must be assigned to a user");
     }
 
+    if(await _sequencerService.CheckUsersSequencerNamesAsync(user.Id, newSequenceBody.Name)){
+      return BadRequest("Sequencer already exists, please update below");
+    }
+
     Sequencer newSequence = new Sequencer
     {
-      Name = newSequenceBody.Name,
+      Name = newSequenceBody.Name.ToLower(),
       Sequence = newSequenceBody.Sequence,
       UserId = user.Id
     };

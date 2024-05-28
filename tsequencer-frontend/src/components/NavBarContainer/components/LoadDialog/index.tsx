@@ -47,7 +47,7 @@ const LoadDialog = ({ isMobile = false, errorMessage, isLoadDialogOpen, setIsLoa
                   {sequences?.map((s: LoadedSeqType) => {
                   return(
                     <div className="flex items-center space-x-2" key={s.name}>
-                      <SelectItem value={s.name} id={s.name}>{s.name}</SelectItem>
+                      <SelectItem value={s.name} id={s.name}>{s.name.toUpperCase()}</SelectItem>
                     </div>
                   )
                 })}
