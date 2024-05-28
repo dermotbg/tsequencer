@@ -123,6 +123,7 @@ const NavBarContainer = () => {
       const selectedSequencer = sequences.find((s) => s.name === validateString(selection))
       if(selectedSequencer){
         sequencer.setSeq(selectedSequencer.sequence)
+        setIsLoadDialogOpen(false)
       }
     }
   }
