@@ -12,7 +12,6 @@ import useSequencer from "../../hooks/useSequencer"
 import useWindowSize from "../../hooks/useWindowSize"
 
 import { validateInstrument } from "../../utils/typeChecking"
-import { useState } from "react"
 import { Step } from "./types"
 
 
@@ -28,7 +27,7 @@ const StepSequencerContainer = () => {
   const { record, setRecording} = useRecordStore()
   const activeStep = useActiveStepStore()
 
-  const[isRunning, setIsRunning] = useState(false)
+  const { isRunning, setIsRunning } = useSequencerStore()
   
   const launchHandler = () => {
     setIsRunning(!isRunning)

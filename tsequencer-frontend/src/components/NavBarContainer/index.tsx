@@ -3,23 +3,34 @@ import MobileNavMenu from "./components/MobileMenu"
 import NavBar from "./components/NavBar"
 import { loginRequest, logoutRequest, validateTokenAsync } from "../../services/loginService"
 import useUserStore from "../../hooks/StateHooks/UseUserStore"
-import useSequencerStore from "../../hooks/StateHooks/useSequencerStore"
-import { saveSequencerAsync } from "../../services/sequencerService"
+import { LoadedSeqType, loadSequencerAsync, saveSequencerAsync, updateSequencerAsync } from "../../services/sequencerService"
 import { prepareSaveSequencerObject } from "./utils/prepareSaveObject"
 import { validateString } from "@/utils/typeChecking"
 import useMessageStore from "@/hooks/StateHooks/useMessageStore"
 import { useToast } from "../ui/use-toast"
+import useSequencerStore from "@/hooks/StateHooks/useSequencerStore"
 
 
 const NavBarContainer = () => {
   // Template reconstructed from https://tailwindui.com/components/application-ui/navigation/navbars
+  // Menus open/closed state
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [userMenuOpen, setUserMenuOpen] = useState(false)
+  const [isSaveDialogOpen, setIsSaveDialogOpen] = useState(false)
+  const [isLoadDialogOpen, setIsLoadDialogOpen] = useState(false)
+
+  // login state
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [seqName, setSeqName] = useState('')
-  const [isSaveDialogOpen, setIsSaveDialogOpen] = useState(false)
 
+  // Save Seq State
+  const [seqName, setSeqName] = useState('')
+
+  // Load seq state
+  const [sequences, setSequences] = useState<LoadedSeqType[] | undefined>()
+  const [selection, setSelection] = useState<string | undefined>()
+
+// Global State
   const sequencer = useSequencerStore()
   const user = useUserStore()
   const errorMessage = useMessageStore()
@@ -52,6 +63,17 @@ const NavBarContainer = () => {
     return () => clearInterval(tokenValidationPoll)
     
   },[user, user.isAuthenticated])
+
+    // Load user sequences
+    useEffect(() => {
+      const fetchSequences = async () => {
+        if(user.username){
+          const response = await loadSequencerAsync(validateString(user.username));
+          setSequences(response)
+        }
+      }
+      fetchSequences()
+    },[user.username])
   
   
   const loginHandler = async (e: FormEvent) => {
@@ -95,6 +117,35 @@ const NavBarContainer = () => {
     }
   }
   
+  const loadHandler = async (e: FormEvent) => {
+    e.preventDefault()
+    if(sequences !== undefined){
+      const selectedSequencer = sequences.find((s) => s.name === validateString(selection))
+      if(selectedSequencer){
+        sequencer.setSeq(selectedSequencer.sequence)
+        setIsLoadDialogOpen(false)
+      }
+    }
+  }
+
+  const updateHandler = async(e: FormEvent) => {
+    e.preventDefault()
+    try {
+      const selectedSeq = sequences?.find(s => s.name === selection)
+      if(selectedSeq){
+        await updateSequencerAsync(selectedSeq)
+        setIsSaveDialogOpen(false)
+        toast({ description: 'Update successful.' })
+        // TODO: Update state when save/update complete
+      }
+    } catch(error){
+      errorMessage.set(`${error}`.slice(29))
+      setTimeout(() => {
+        errorMessage.set(undefined)
+      }, 5000)
+    }
+  }
+  
   return(
     <nav className="bg-stone-400/25">
       <NavBar 
@@ -112,6 +163,13 @@ const NavBarContainer = () => {
         errorMessage={errorMessage.message}
         isSaveDialogOpen={isSaveDialogOpen}
         setIsSaveDialogOpen={setIsSaveDialogOpen}
+        isLoadDialogOpen={isLoadDialogOpen}
+        setIsLoadDialogOpen={setIsLoadDialogOpen}
+        loadHandler={loadHandler}
+        sequences={sequences}
+        setSelection={setSelection}
+        isRunning={sequencer.isRunning}
+        updateHandler={updateHandler}
       />
       {
         mobileMenuOpen
@@ -126,6 +184,13 @@ const NavBarContainer = () => {
               errorMessage={errorMessage.message}
               isSaveDialogOpen={isSaveDialogOpen}
               setIsSaveDialogOpen={setIsSaveDialogOpen}
+              isLoadDialogOpen={isLoadDialogOpen}
+              setIsLoadDialogOpen={setIsLoadDialogOpen}
+              loadHandler={loadHandler}
+              sequences={sequences}
+              setSelection={setSelection}
+              isRunning={sequencer.isRunning}
+              updateHandler={updateHandler}
             />
           : null
       }

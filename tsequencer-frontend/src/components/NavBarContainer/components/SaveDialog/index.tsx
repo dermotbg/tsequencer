@@ -13,10 +13,12 @@ import { Input } from "@/components/ui/input"
 import { DialogClose } from "@radix-ui/react-dialog"
 import { SaveDialogType } from "../../types"
 import DisplayErrorMessage from "../DisplayErrorMessage"
+import SelectFormContainer from "../SelectFormContainer"
+import { Separator } from "@/components/ui/separator"
 
-// TODO: THERE IS NO SAVE OPTION ON MOBILE 
+// TODO: Refactor Input form to it's own component
 
-const SaveDialog = ({ isMobile = false, setSeqName, saveHandler, errorMessage, isSaveDialogOpen, setIsSaveDialogOpen }: SaveDialogType ) => {
+const SaveDialog = ({ isMobile = false, setSeqName, saveHandler, errorMessage, isSaveDialogOpen, setIsSaveDialogOpen, sequences, setSelection, updateHandler }: SaveDialogType ) => {
 
   return(
     <Dialog open={isSaveDialogOpen} onOpenChange={setIsSaveDialogOpen}>
@@ -58,6 +60,18 @@ const SaveDialog = ({ isMobile = false, setSeqName, saveHandler, errorMessage, i
               <Button className={isMobile ? "mb-2": ""} type="submit">Save</Button>
           </DialogFooter>
         </form>
+        <Separator className="my-3 rounded-lg" />
+        <SelectFormContainer
+          title="Update"
+          description="Update an existing sequence"
+          isMobile={isMobile}
+          submitHandler={updateHandler} 
+          sequences={sequences} 
+          errorMessage={errorMessage}
+          setSelection={setSelection}
+          confirmText="Update"
+
+        />
         </DialogContent>
     </Dialog>
   )
