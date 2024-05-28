@@ -16,7 +16,7 @@ import DisplayErrorMessage from "../DisplayErrorMessage"
 import SelectFormContainer from "../SelectFormContainer"
 import { Separator } from "@/components/ui/separator"
 
-// TODO: THERE IS NO SAVE OPTION ON MOBILE 
+// TODO: Refactor Input form to it's own component
 
 const SaveDialog = ({ isMobile = false, setSeqName, saveHandler, errorMessage, isSaveDialogOpen, setIsSaveDialogOpen, sequences, setSelection, updateHandler }: SaveDialogType ) => {
 
@@ -65,10 +65,11 @@ const SaveDialog = ({ isMobile = false, setSeqName, saveHandler, errorMessage, i
           title="Update"
           description="Update an existing sequence"
           isMobile={isMobile}
-          updateHandler={updateHandler} 
+          submitHandler={updateHandler} 
           sequences={sequences} 
           errorMessage={errorMessage}
           setSelection={setSelection}
+          confirmText="Update"
 
         />
         </DialogContent>

@@ -5,7 +5,7 @@ import { DialogClose, DialogDescription, DialogFooter, DialogHeader, DialogTitle
 import { Button } from "@/components/ui/button"
 import { SelectFormType } from "../../types"
 
-const SelectFormContainer = ( { title, description, isMobile=false, updateHandler, sequences, errorMessage, setSelection }: SelectFormType ) => {
+const SelectFormContainer = ( { title, description, isMobile=false, submitHandler, sequences, errorMessage, setSelection, confirmText }: SelectFormType ) => {
   return(
     <>
       <DialogHeader>
@@ -16,7 +16,7 @@ const SelectFormContainer = ( { title, description, isMobile=false, updateHandle
               {description}
             </DialogDescription>
       </DialogHeader>
-      <form onSubmit={updateHandler}>
+      <form onSubmit={submitHandler}>
         <div className="gap-4">
           <Select onValueChange={(value) => setSelection(value)}>
             <SelectTrigger className="w-full">
@@ -43,7 +43,7 @@ const SelectFormContainer = ( { title, description, isMobile=false, updateHandle
             <DialogClose asChild>
               <Button type="button" variant={'outline'}>Cancel</Button>
             </DialogClose>
-              <Button className={isMobile ? "mb-2": ""} type="submit" >Update</Button>
+              <Button className={isMobile ? "mb-2": ""} type="submit" >{confirmText}</Button>
           </DialogFooter>
       </form>
     </>
