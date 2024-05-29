@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using TSequencer.Dtos;
+using TSequencer.Helpers;
 using TSequencer.Models;
 using TSequencer.Services;
 
@@ -38,6 +39,11 @@ public class UserController : Controller
   {
     if(!ModelState.IsValid){
       return BadRequest("Malformed Data");
+    }
+
+    if(!ConfirmPassword.PasswordMatch(newUserBody.Password, newUserBody.ConfPassword))
+    {
+      return BadRequest("Passwords do not match");
     }
 
     if(await _userService.CheckUsername(newUserBody.Username)){
