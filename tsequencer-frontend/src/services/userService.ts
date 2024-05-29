@@ -7,7 +7,7 @@ interface createUserType {
 
 const baseUrl = '/api/user'
 
-export const createUser = async (userObj: createUserType) => {
+export const createUserAsync = async (userObj: createUserType) => {
   try {
     const response = await fetch(baseUrl, {
       method: 'POST',

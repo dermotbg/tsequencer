@@ -9,6 +9,8 @@ import { validateString } from "@/utils/typeChecking"
 import useMessageStore from "@/hooks/StateHooks/useMessageStore"
 import { useToast } from "../ui/use-toast"
 import useSequencerStore from "@/hooks/StateHooks/useSequencerStore"
+import { prepareSaveUserObject } from "./utils/prepareSaveUserObject"
+import { createUserAsync } from "@/services/userService"
 
 
 const NavBarContainer = () => {
@@ -18,6 +20,7 @@ const NavBarContainer = () => {
   const [userMenuOpen, setUserMenuOpen] = useState(false)
   const [isSaveDialogOpen, setIsSaveDialogOpen] = useState(false)
   const [isLoadDialogOpen, setIsLoadDialogOpen] = useState(false)
+  const [isRegisterDialogOpen, setIsRegisterDialogOpen] = useState(false)
 
   // login/reg state
   const [username, setUsername] = useState('')
@@ -118,9 +121,20 @@ const NavBarContainer = () => {
     }
   }
 
-  const registerHandler = (e: FormEvent) => {
+  const registerHandler = async (e: FormEvent) => {
     e.preventDefault()
-    console.log('beep boop' + confPassword)
+    try {
+      await createUserAsync(prepareSaveUserObject(username, password, confPassword))
+      toast({ description: 'Registration successful! Please log in.' })
+      setIsRegisterDialogOpen(false)
+      
+    } catch (error) {
+      console.log(error)
+        errorMessage.set(`${error}`)
+        setTimeout(() => {
+          errorMessage.set(undefined)
+        }, 5000)
+    }
   }
   
   const loadHandler = async (e: FormEvent) => {
@@ -177,6 +191,8 @@ const NavBarContainer = () => {
         updateHandler={updateHandler}
         registerHandler={registerHandler}
         setConfPassword={setConfPassword}
+        isRegisterDialogOpen={isRegisterDialogOpen}
+        setIsRegisterDialogOpen={setIsRegisterDialogOpen}
       />
       {
         mobileMenuOpen
@@ -200,6 +216,8 @@ const NavBarContainer = () => {
               updateHandler={updateHandler}
               registerHandler={registerHandler}
               setConfPassword={setConfPassword}
+              isRegisterDialogOpen={isRegisterDialogOpen}
+              setIsRegisterDialogOpen={setIsRegisterDialogOpen}
             />
           : null
       }

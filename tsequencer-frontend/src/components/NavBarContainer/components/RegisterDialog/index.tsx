@@ -13,9 +13,9 @@ import DisplayErrorMessage from "../DisplayErrorMessage"
 import TextInput from "../UtilityComponents/TextInputContainer"
 import type { RegisterDialogType } from "../../types"
 
-const RegisterDialog = ({isMobile = false, errorMessage, registerHandler, setUsername, setPassword, setConfPassword }: RegisterDialogType) => {
+const RegisterDialog = ({isMobile = false, errorMessage, registerHandler, setUsername, setPassword, setConfPassword, isRegisterDialogOpen, setIsRegisterDialogOpen }: RegisterDialogType) => {
   return(
-    <Dialog>
+    <Dialog open={isRegisterDialogOpen} onOpenChange={setIsRegisterDialogOpen}>
       <DialogTrigger asChild>
         {!isMobile 
         ? <Button variant={'link'} className="bg-inherit text-sm justify-end text-blue-400 rounded-md p-0 font-medium" >Register here</Button>

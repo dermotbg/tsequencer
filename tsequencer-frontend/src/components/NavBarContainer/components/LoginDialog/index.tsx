@@ -15,7 +15,7 @@ import TextInput from "../UtilityComponents/TextInputContainer"
 import RegisterDialog from "../RegisterDialog"
 import { Separator } from "@/components/ui/separator"
 
-const LoginDialog = ({ isMobile = false, loginHandler, setUsername, setPassword, setConfPassword, errorMessage, registerHandler }: LoginDialogType ) => {
+const LoginDialog = ({ isMobile = false, loginHandler, setUsername, setPassword, setConfPassword, errorMessage, registerHandler, isRegisterDialogOpen, setIsRegisterDialogOpen }: LoginDialogType ) => {
 
   return(
     <Dialog>
@@ -69,6 +69,8 @@ const LoginDialog = ({ isMobile = false, loginHandler, setUsername, setPassword,
             setConfPassword={setConfPassword}
             registerHandler={registerHandler}
             errorMessage={errorMessage}
+            isRegisterDialogOpen={isRegisterDialogOpen}
+            setIsRegisterDialogOpen={setIsRegisterDialogOpen}
           />
         </div>
         </DialogContent>

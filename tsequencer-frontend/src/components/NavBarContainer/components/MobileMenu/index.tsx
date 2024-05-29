@@ -4,7 +4,7 @@ import { MobileNavMenuType } from "../../types"
 import SaveDialog from "../SaveDialog"
 import LoadDialog from "../LoadDialog"
 
-const MobileNavMenu = ({ loginHandler, setUsername, setPassword, setConfPassword, errorMessage, userIsAuthenticated, setSeqName, saveHandler, isSaveDialogOpen, setIsSaveDialogOpen, isLoadDialogOpen, setIsLoadDialogOpen, sequences, setSelection, loadHandler, isRunning, updateHandler, registerHandler }: MobileNavMenuType) => {
+const MobileNavMenu = ({ loginHandler, setUsername, setPassword, setConfPassword, errorMessage, userIsAuthenticated, setSeqName, saveHandler, isSaveDialogOpen, setIsSaveDialogOpen, isLoadDialogOpen, setIsLoadDialogOpen, sequences, setSelection, loadHandler, isRunning, updateHandler, registerHandler, isRegisterDialogOpen, setIsRegisterDialogOpen }: MobileNavMenuType) => {
 
   return (
     <div className="sm:hidden" id="mobile-menu">
@@ -43,6 +43,8 @@ const MobileNavMenu = ({ loginHandler, setUsername, setPassword, setConfPassword
                     setConfPassword={setConfPassword}
                     errorMessage={errorMessage}
                     registerHandler={registerHandler}
+                    isRegisterDialogOpen={isRegisterDialogOpen}
+                    setIsRegisterDialogOpen={setIsRegisterDialogOpen}
                   />
               }
       </div>

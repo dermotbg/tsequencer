@@ -38,7 +38,13 @@ public class UserController : Controller
   public async Task<IActionResult> Post([FromBody] CreateUserDto newUserBody ) 
   {
     if(!ModelState.IsValid){
-      return BadRequest("Malformed Data");
+      if(newUserBody.Username.Length < 3 )
+      {
+        return BadRequest("Username must be at least 3 characters");
+      }
+      else{
+        return BadRequest("Password must be at least 8 characters");
+      }
     }
 
     if(!ConfirmPassword.PasswordMatch(newUserBody.Password, newUserBody.ConfPassword))
