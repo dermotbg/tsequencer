@@ -19,9 +19,10 @@ const NavBarContainer = () => {
   const [isSaveDialogOpen, setIsSaveDialogOpen] = useState(false)
   const [isLoadDialogOpen, setIsLoadDialogOpen] = useState(false)
 
-  // login state
+  // login/reg state
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [confPassword, setConfPassword] = useState('')
 
   // Save Seq State
   const [seqName, setSeqName] = useState('')
@@ -116,6 +117,11 @@ const NavBarContainer = () => {
       }, 5000)
     }
   }
+
+  const registerHandler = (e: FormEvent) => {
+    e.preventDefault()
+    console.log('beep boop' + confPassword)
+  }
   
   const loadHandler = async (e: FormEvent) => {
     e.preventDefault()
@@ -169,6 +175,8 @@ const NavBarContainer = () => {
         setSelection={setSelection}
         isRunning={sequencer.isRunning}
         updateHandler={updateHandler}
+        registerHandler={registerHandler}
+        setConfPassword={setConfPassword}
       />
       {
         mobileMenuOpen
@@ -190,6 +198,8 @@ const NavBarContainer = () => {
               setSelection={setSelection}
               isRunning={sequencer.isRunning}
               updateHandler={updateHandler}
+              registerHandler={registerHandler}
+              setConfPassword={setConfPassword}
             />
           : null
       }

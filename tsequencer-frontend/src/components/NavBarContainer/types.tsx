@@ -10,6 +10,7 @@ export interface NavBarType {
   loginHandler:  (e: FormEvent) => void
   setUsername: React.Dispatch<React.SetStateAction<string>>
   setPassword: React.Dispatch<React.SetStateAction<string>>
+  setConfPassword: React.Dispatch<React.SetStateAction<string>>
   setSeqName: React.Dispatch<React.SetStateAction<string>> 
   saveHandler: (e: FormEvent) => void 
   logoutHandler: () => void
@@ -23,15 +24,19 @@ export interface NavBarType {
   loadHandler: (e: FormEvent) => Promise<void>
   isRunning: boolean
   updateHandler: (e: FormEvent) => Promise<void>
+  registerHandler: (e: FormEvent) => void
 }
 
 export type NavBarMobileMenuType = Pick<NavBarType, "mobileMenuOpen" | "setMobileMenuOpen">
 export type NavBarUserMenuType = Pick<NavBarType, "userMenuOpen" | "setUserMenuOpen">
 
-export type MobileNavMenuType= Pick<NavBarType, "userIsAuthenticated" | "loginHandler" | "setUsername" | "setPassword" | "setSeqName" | "saveHandler" | "logoutHandler" | "errorMessage" | "isSaveDialogOpen" | "setIsSaveDialogOpen" | "isLoadDialogOpen" | "setIsLoadDialogOpen" | "sequences" | "setSelection" | "loadHandler" | "isRunning" | "updateHandler" >
+export type MobileNavMenuType= Pick<NavBarType, "userIsAuthenticated" | "loginHandler" | "setUsername" | "setPassword" | "setSeqName" | "saveHandler" | "logoutHandler" | "errorMessage" | "isSaveDialogOpen" | "setIsSaveDialogOpen" | "isLoadDialogOpen" | "setIsLoadDialogOpen" | "sequences" | "setSelection" | "loadHandler" | "isRunning" | "updateHandler" | "registerHandler" | "setConfPassword" >
 
-export type LoginLogicType = Pick<NavBarType, "loginHandler" | "setUsername" | "setPassword" | "errorMessage">
+export type LoginLogicType = Pick<NavBarType, "loginHandler" | "setUsername" | "setPassword" | "errorMessage" | "registerHandler" | "setConfPassword" >
 export interface LoginDialogType extends LoginLogicType { isMobile: boolean }
+
+export type RegisterLogicType = Pick<NavBarType, "errorMessage" |"setUsername" | "setPassword" | "setConfPassword" | "registerHandler" >
+export interface RegisterDialogType extends RegisterLogicType { isMobile: boolean }
 
 export type SaveLogicType = Pick<NavBarType, "setSeqName" | "saveHandler" | "errorMessage" | "isSaveDialogOpen" | "setIsSaveDialogOpen" | "sequences" | "setSelection" | "updateHandler" >
 export interface SaveDialogType extends SaveLogicType { isMobile: boolean }
