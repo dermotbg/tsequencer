@@ -6,7 +6,8 @@ import {
 } from "@/components/ui/dialog"
 
 import { LoadDialogType } from "../../types"
-import SelectFormContainer from "../SelectFormContainer"
+import SelectFormContainer from "../UtilityComponents/SelectInputContainer"
+import DisplayErrorMessage from "../DisplayErrorMessage"
 
 
 const LoadDialog = ({ isMobile = false, errorMessage, isLoadDialogOpen, setIsLoadDialogOpen, sequences, setSelection, loadHandler, isRunning }: LoadDialogType ) => {
@@ -25,12 +26,15 @@ const LoadDialog = ({ isMobile = false, errorMessage, isLoadDialogOpen, setIsLoa
           title="Load"
           description="Please choose a sequence below"
           submitHandler={loadHandler}
-          errorMessage={errorMessage}
           sequences={sequences}
           setSelection={setSelection}
           isMobile={isMobile}
           confirmText="Load"
         />
+      {errorMessage
+            ? <DisplayErrorMessage errorMessage={errorMessage} />
+            : null 
+          }
       </DialogContent>
     </Dialog>
   )

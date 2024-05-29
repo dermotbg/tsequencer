@@ -45,7 +45,7 @@ public class SequencerController : Controller
   // POST /api/sequencer
   public async Task<IActionResult> Post([FromBody] CreateSequencerDto newSequenceBody)
   {
-    // TODO: handle case where seq name already exists
+
     if(!ModelState.IsValid || newSequenceBody.Name == null)
     {
       return BadRequest("Please enter a sequencer name");
