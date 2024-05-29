@@ -39,5 +39,12 @@ export interface SaveDialogType extends SaveLogicType { isMobile: boolean }
 export type LoadLogicType = Pick<NavBarType, "errorMessage" | "isLoadDialogOpen" | "setIsLoadDialogOpen" | "sequences" | "setSelection" | "loadHandler" | "isRunning" >
 export interface LoadDialogType extends LoadLogicType { isMobile: boolean }
 
-export type SelectLogicType = Pick<NavBarType, "errorMessage" | "sequences" | "setSelection">
+export type SelectLogicType = Pick<NavBarType, "sequences" | "setSelection">
 export interface SelectFormType extends SelectLogicType { title: string, description: string, isMobile: boolean, confirmText: string, submitHandler: (e: FormEvent) => Promise<void> }
+
+export interface InputFormType {
+  setFormState: React.Dispatch<React.SetStateAction<string>>
+  formTitle: string | undefined
+  type: string | undefined
+  id?: string | undefined
+}

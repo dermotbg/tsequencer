@@ -73,7 +73,7 @@ const NavBarContainer = () => {
         }
       }
       fetchSequences()
-    },[user.username])
+    },[user.username, isSaveDialogOpen])
   
   
   const loginHandler = async (e: FormEvent) => {
@@ -136,7 +136,6 @@ const NavBarContainer = () => {
         await updateSequencerAsync(selectedSeq)
         setIsSaveDialogOpen(false)
         toast({ description: 'Update successful.' })
-        // TODO: Update state when save/update complete
       }
     } catch(error){
       errorMessage.set(`${error}`.slice(29))

@@ -8,11 +8,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { Label } from "@radix-ui/react-label"
-import { Input } from "@/components/ui/input"
 import { DialogClose } from "@radix-ui/react-dialog"
-import { LoginDialogType } from "../../types"
+import type { LoginDialogType } from "../../types"
 import DisplayErrorMessage from "../DisplayErrorMessage"
+import TextInput from "../UtilityComponents/TextInputContainer"
 
 const LoginDialog = ({ isMobile = false, loginHandler, setUsername, setPassword, errorMessage }: LoginDialogType ) => {
 
@@ -34,31 +33,17 @@ const LoginDialog = ({ isMobile = false, loginHandler, setUsername, setPassword,
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={loginHandler}>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="username" className="text-right">
-              Username
-            </Label>
-            <Input
-              id="username"
-              defaultValue={"@username"}
-              className="col-span-3"
-              onChange={(e) => setUsername(e.target.value)}
-              required
-            />
-          </div>
+          <TextInput 
+            formTitle={'username'}
+            setFormState={setUsername}
+            type="text"
+          />
           <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="name" className="text-right">
-                Password
-              </Label>
-              <Input
-                id="name"
-                type="password"
-                className="col-span-3"
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </div>
+            <TextInput 
+              formTitle={'password'}
+              setFormState={setPassword}
+              type="password"
+            />
             {
               errorMessage
               ? <DisplayErrorMessage errorMessage={errorMessage} />

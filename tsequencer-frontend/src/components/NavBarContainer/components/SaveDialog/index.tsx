@@ -8,13 +8,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { Label } from "@radix-ui/react-label"
-import { Input } from "@/components/ui/input"
-import { DialogClose } from "@radix-ui/react-dialog"
-import { SaveDialogType } from "../../types"
+import type { SaveDialogType } from "../../types"
 import DisplayErrorMessage from "../DisplayErrorMessage"
-import SelectFormContainer from "../SelectFormContainer"
+import SelectFormContainer from "../UtilityComponents/SelectInputContainer"
 import { Separator } from "@/components/ui/separator"
+import TextInput from "../UtilityComponents/TextInputContainer"
 
 // TODO: Refactor Input form to it's own component
 
@@ -38,25 +36,17 @@ const SaveDialog = ({ isMobile = false, setSeqName, saveHandler, errorMessage, i
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={saveHandler}>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="username" className="text-right">
-              Sequence Name
-            </Label>
-            <Input
-              id="seq-name"
-              className="col-span-3"
-              onChange={(e) => setSeqName(e.target.value)}
-              required
-            />
-          </div>
-            {errorMessage
-              ? <DisplayErrorMessage errorMessage={errorMessage} />
-              : null 
-            }
+          <TextInput 
+            id="seq-name"
+            formTitle={'sequence name'}
+            setFormState={setSeqName}
+            type="text"
+          />
+          {errorMessage
+            ? <DisplayErrorMessage errorMessage={errorMessage} />
+            : null 
+          }
           <DialogFooter className="p-4">
-            <DialogClose asChild>
-              <Button type="button" variant={'outline'}>Cancel</Button>
-            </DialogClose>
               <Button className={isMobile ? "mb-2": ""} type="submit">Save</Button>
           </DialogFooter>
         </form>
@@ -67,10 +57,8 @@ const SaveDialog = ({ isMobile = false, setSeqName, saveHandler, errorMessage, i
           isMobile={isMobile}
           submitHandler={updateHandler} 
           sequences={sequences} 
-          errorMessage={errorMessage}
           setSelection={setSelection}
           confirmText="Update"
-
         />
         </DialogContent>
     </Dialog>
