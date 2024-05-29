@@ -12,8 +12,10 @@ import { DialogClose } from "@radix-ui/react-dialog"
 import type { LoginDialogType } from "../../types"
 import DisplayErrorMessage from "../DisplayErrorMessage"
 import TextInput from "../UtilityComponents/TextInputContainer"
+import RegisterDialog from "../RegisterDialog"
+import { Separator } from "@/components/ui/separator"
 
-const LoginDialog = ({ isMobile = false, loginHandler, setUsername, setPassword, errorMessage }: LoginDialogType ) => {
+const LoginDialog = ({ isMobile = false, loginHandler, setUsername, setPassword, setConfPassword, errorMessage, registerHandler, isRegisterDialogOpen, setIsRegisterDialogOpen }: LoginDialogType ) => {
 
   return(
     <Dialog>
@@ -49,17 +51,28 @@ const LoginDialog = ({ isMobile = false, loginHandler, setUsername, setPassword,
               ? <DisplayErrorMessage errorMessage={errorMessage} />
               : null 
             }
-            <div className="text-right py-4">
-              Don't have an account?
-            </div>
           </div>
           <DialogFooter>
             <DialogClose asChild>
               <Button type="button" variant={'outline'}>Cancel</Button>
             </DialogClose>
-            <Button type="submit">Login</Button>
+            <Button className={isMobile ? "mb-2": ""}  type="submit">Login</Button>
           </DialogFooter>
         </form>
+        <Separator />
+        <div className="flex flex-col text-right py-4">
+          <p>Don't have an account? </p>
+          <RegisterDialog
+            isMobile={isMobile}
+            setUsername={setUsername}
+            setPassword={setPassword}
+            setConfPassword={setConfPassword}
+            registerHandler={registerHandler}
+            errorMessage={errorMessage}
+            isRegisterDialogOpen={isRegisterDialogOpen}
+            setIsRegisterDialogOpen={setIsRegisterDialogOpen}
+          />
+        </div>
         </DialogContent>
     </Dialog>
   )

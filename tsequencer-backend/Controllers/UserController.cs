@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using TSequencer.Dtos;
+using TSequencer.Helpers;
 using TSequencer.Models;
 using TSequencer.Services;
 
@@ -37,7 +38,18 @@ public class UserController : Controller
   public async Task<IActionResult> Post([FromBody] CreateUserDto newUserBody ) 
   {
     if(!ModelState.IsValid){
-      return BadRequest("Malformed Data");
+      if(newUserBody.Username.Length < 3 )
+      {
+        return BadRequest("Username must be at least 3 characters");
+      }
+      else{
+        return BadRequest("Password must be at least 8 characters");
+      }
+    }
+
+    if(!ConfirmPassword.PasswordMatch(newUserBody.Password, newUserBody.ConfPassword))
+    {
+      return BadRequest("Passwords do not match");
     }
 
     if(await _userService.CheckUsername(newUserBody.Username)){

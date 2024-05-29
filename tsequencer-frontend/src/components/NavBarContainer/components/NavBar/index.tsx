@@ -8,7 +8,7 @@ import { NavBarType } from "../../types"
 import SaveDialog from "../SaveDialog"
 import LoadDialog from "../LoadDialog"
 
-const NavBar = ({ mobileMenuOpen, setMobileMenuOpen, userMenuOpen, setUserMenuOpen, userIsAuthenticated, loginHandler, setUsername, setPassword, setSeqName, saveHandler, logoutHandler, errorMessage, isSaveDialogOpen, setIsSaveDialogOpen, isLoadDialogOpen, setIsLoadDialogOpen, sequences, setSelection, loadHandler, isRunning, updateHandler }: NavBarType) => {
+const NavBar = ({ mobileMenuOpen, setMobileMenuOpen, userMenuOpen, setUserMenuOpen, userIsAuthenticated, loginHandler, setUsername, setPassword, setConfPassword, setSeqName, saveHandler, logoutHandler, errorMessage, isSaveDialogOpen, setIsSaveDialogOpen, isLoadDialogOpen, setIsLoadDialogOpen, sequences, setSelection, loadHandler, isRunning, updateHandler, registerHandler, isRegisterDialogOpen, setIsRegisterDialogOpen }: NavBarType) => {
 
   return(
     <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -53,7 +53,11 @@ const NavBar = ({ mobileMenuOpen, setMobileMenuOpen, userMenuOpen, setUserMenuOp
                     loginHandler={loginHandler} 
                     setUsername={setUsername} 
                     setPassword={setPassword} 
+                    setConfPassword={setConfPassword}
                     errorMessage={errorMessage}
+                    registerHandler={registerHandler}
+                    isRegisterDialogOpen={isRegisterDialogOpen}
+                    setIsRegisterDialogOpen={setIsRegisterDialogOpen}
                   />
               }
             </div>

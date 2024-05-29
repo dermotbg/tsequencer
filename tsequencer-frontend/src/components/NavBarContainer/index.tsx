@@ -9,6 +9,8 @@ import { validateString } from "@/utils/typeChecking"
 import useMessageStore from "@/hooks/StateHooks/useMessageStore"
 import { useToast } from "../ui/use-toast"
 import useSequencerStore from "@/hooks/StateHooks/useSequencerStore"
+import { prepareSaveUserObject } from "./utils/prepareSaveUserObject"
+import { createUserAsync } from "@/services/userService"
 
 
 const NavBarContainer = () => {
@@ -18,10 +20,12 @@ const NavBarContainer = () => {
   const [userMenuOpen, setUserMenuOpen] = useState(false)
   const [isSaveDialogOpen, setIsSaveDialogOpen] = useState(false)
   const [isLoadDialogOpen, setIsLoadDialogOpen] = useState(false)
+  const [isRegisterDialogOpen, setIsRegisterDialogOpen] = useState(false)
 
-  // login state
+  // login/reg state
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [confPassword, setConfPassword] = useState('')
 
   // Save Seq State
   const [seqName, setSeqName] = useState('')
@@ -116,6 +120,22 @@ const NavBarContainer = () => {
       }, 5000)
     }
   }
+
+  const registerHandler = async (e: FormEvent) => {
+    e.preventDefault()
+    try {
+      await createUserAsync(prepareSaveUserObject(username, password, confPassword))
+      toast({ description: 'Registration successful! Please log in.' })
+      setIsRegisterDialogOpen(false)
+      
+    } catch (error) {
+      console.log(error)
+        errorMessage.set(`${error}`)
+        setTimeout(() => {
+          errorMessage.set(undefined)
+        }, 5000)
+    }
+  }
   
   const loadHandler = async (e: FormEvent) => {
     e.preventDefault()
@@ -169,6 +189,10 @@ const NavBarContainer = () => {
         setSelection={setSelection}
         isRunning={sequencer.isRunning}
         updateHandler={updateHandler}
+        registerHandler={registerHandler}
+        setConfPassword={setConfPassword}
+        isRegisterDialogOpen={isRegisterDialogOpen}
+        setIsRegisterDialogOpen={setIsRegisterDialogOpen}
       />
       {
         mobileMenuOpen
@@ -190,6 +214,10 @@ const NavBarContainer = () => {
               setSelection={setSelection}
               isRunning={sequencer.isRunning}
               updateHandler={updateHandler}
+              registerHandler={registerHandler}
+              setConfPassword={setConfPassword}
+              isRegisterDialogOpen={isRegisterDialogOpen}
+              setIsRegisterDialogOpen={setIsRegisterDialogOpen}
             />
           : null
       }

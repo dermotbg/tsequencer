@@ -1,0 +1,69 @@
+import { Button } from "@/components/ui/button"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { DialogClose } from "@radix-ui/react-dialog"
+import DisplayErrorMessage from "../DisplayErrorMessage"
+import TextInput from "../UtilityComponents/TextInputContainer"
+import type { RegisterDialogType } from "../../types"
+
+const RegisterDialog = ({isMobile = false, errorMessage, registerHandler, setUsername, setPassword, setConfPassword, isRegisterDialogOpen, setIsRegisterDialogOpen }: RegisterDialogType) => {
+  return(
+    <Dialog open={isRegisterDialogOpen} onOpenChange={setIsRegisterDialogOpen}>
+      <DialogTrigger asChild>
+        {!isMobile 
+        ? <Button variant={'link'} className="bg-inherit text-sm justify-end text-blue-400 rounded-md p-0 font-medium" >Register here</Button>
+        : <Button variant={'link'} className="bg-inherit text-sm justify-end text-blue-400 rounded-md p-0 font-medium" >Register here</Button>
+        }
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>
+            Register
+          </DialogTitle>
+          <DialogDescription>
+            Please enter a username and password below
+          </DialogDescription>
+        </DialogHeader>
+        <form onSubmit={registerHandler}>
+          <TextInput 
+            formTitle={'username '}
+            setFormState={setUsername}
+            type="text"
+          />
+          <div className="grid gap-4 py-4">
+            <TextInput 
+              formTitle={'password'}
+              setFormState={setPassword}
+              type="password"
+            />
+            <TextInput 
+              formTitle={'confirm Password'}
+              setFormState={setConfPassword}
+              type="password"
+            />
+            {
+              errorMessage
+              ? <DisplayErrorMessage errorMessage={errorMessage} />
+              : null 
+            }
+          </div>
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button type="button"  variant={'outline'}>Cancel</Button>
+            </DialogClose>
+            <Button type="submit">Register</Button>
+          </DialogFooter>
+        </form>
+        </DialogContent>
+    </Dialog>
+  )
+}
+
+export default RegisterDialog
