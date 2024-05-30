@@ -1,57 +1,57 @@
-import { useEffect, useRef, useState } from "react"
-import BpmController from "./components/BpmController"
-import MetronomeController from "./components/MetromeController"
-import KeyTrackController from "./components/KeyTrackController"
-import useInstruments from "../../../../hooks/useInstruments"
-import useSequencer from "../../../../hooks/useSequencer"
-import { keyPressHandler } from "./components/KeyTrackController/utils/keyPressHandler"
-import useVolumeStore from "../../../../hooks/StateHooks/useVolumeStore"
-import useRecordStore from "../../../../hooks/StateHooks/useRecordStore"
-import { validateInstrumentRack } from "../../../../utils/typeChecking"
+import { useEffect, useRef, useState } from "react";
+
+import useRecordStore from "@/hooks/StateHooks/useRecordStore";
+import useVolumeStore from "@/hooks/StateHooks/useVolumeStore";
+import useInstruments from "@/hooks/useInstruments";
+import useSequencer from "@/hooks/useSequencer";
+
+import { validateInstrumentRack } from "@/utils/typeChecking";
+import { keyPressHandler } from "./components/KeyTrackController/utils/keyPressHandler";
+
+import BpmController from "./components/BpmController";
+import KeyTrackController from "./components/KeyTrackController";
+import MetronomeController from "./components/MetromeController";
 
 const GlobalOptionsContainer = () => {
-  const [keysActive, setKeysActive] = useState<boolean>(false)
-  
-  
-  const instruments = useInstruments()
-  const { pushToSequencer, isPlaying } = useSequencer()
-  const { level } = useVolumeStore()
-  const { record, stepRef } = useRecordStore()
+  const [keysActive, setKeysActive] = useState<boolean>(false);
 
-  const recordingRef = useRef(record)
+  const instruments = useInstruments();
+  const { pushToSequencer, isPlaying } = useSequencer();
+  const { level } = useVolumeStore();
+  const { record, stepRef } = useRecordStore();
+
+  const recordingRef = useRef(record);
 
   useEffect(() => {
-    recordingRef.current = record
-  }, [record])
+    recordingRef.current = record;
+  }, [record]);
 
   // TODO: add condition where key tracking on launches sample when isPLaying false
   useEffect(() => {
-    if(!instruments || !keysActive) return
+    if (!instruments || !keysActive) return;
     const keyPressFunction = (e: KeyboardEvent) => {
-      keyPressHandler({ 
-        instruments: validateInstrumentRack(instruments), 
-        keyCode: e.code, 
-        pushToSequencer, 
-        volume: level, 
-        recording: recordingRef.current, 
-        stepRef
-      })
-    }
+      keyPressHandler({
+        instruments: validateInstrumentRack(instruments),
+        keyCode: e.code,
+        pushToSequencer,
+        volume: level,
+        recording: recordingRef.current,
+        stepRef,
+      });
+    };
 
-    window.addEventListener('keydown', keyPressFunction)
+    window.addEventListener("keydown", keyPressFunction);
 
-    return () => window.removeEventListener('keydown', keyPressFunction)
-  
-  },[instruments, level, pushToSequencer, stepRef, keysActive, isPlaying])
+    return () => window.removeEventListener("keydown", keyPressFunction);
+  }, [instruments, level, pushToSequencer, stepRef, keysActive, isPlaying]);
 
-  return(
+  return (
     <div className="flex flex-col items-start">
       <KeyTrackController keysActive={keysActive} setKeysActive={setKeysActive} />
       <MetronomeController />
       <BpmController />
     </div>
-  )
-  
-}
+  );
+};
 
-export default GlobalOptionsContainer
+export default GlobalOptionsContainer;

@@ -1,18 +1,17 @@
-import { create } from "zustand"
+import { create } from "zustand";
 
 interface RecordStateType {
-  record: boolean
-  stepRef: number 
-  setStepRef: (stepIndex: number) => void
-  setRecording: () => void
+  record: boolean;
+  stepRef: number;
+  setStepRef: (stepIndex: number) => void;
+  setRecording: () => void;
 }
 
 const useRecordStore = create<RecordStateType>()((set) => ({
   record: false,
   stepRef: 0,
   setStepRef: (stepIndex: number) => set(() => ({ stepRef: stepIndex })),
-  setRecording: () => set((state) => ({ record: !state.record }))
-})
-)
+  setRecording: () => set((state) => ({ record: !state.record })),
+}));
 
-export default useRecordStore
+export default useRecordStore;

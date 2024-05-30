@@ -136,3 +136,5 @@ src/.vs/config/applicationhost.config
 
 .env
 /mongo_data
+
+.prettier*

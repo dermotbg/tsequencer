@@ -8,5 +8,7 @@ public record class CreateUserDto(
   string Username,
   [Required]
   [MinLength(8, ErrorMessage = "Password must be at least 8 characters long.")]
-  string Password
+  string Password,
+  [Required]
+  string ConfPassword
 );

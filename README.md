@@ -1,6 +1,6 @@
 ### Drum / Sample sequencer made with typescript and the [Web Audio Api](https://webaudioapi.com/)
 
-How to run dev build:
+## How to run full dev build:
 - Clone repository
 - Start Docker daemon
 - Create a .env file in the root directory with the needed variables:
@@ -13,6 +13,10 @@ How to run dev build:
 docker compose -f docker-componse-dev.yml up --watch --build
 ```
 - visit http://localhost:8080/ in your browser
+
+## To just play with the sequencer:
+  - 'npm run dev' after install from the FE directory will work fine, excluding user or save/load functionality
+
 ## Current State:
 ### Landing:
 ![image](https://github.com/dermotbg/tsequencer/assets/123154617/fdd12c75-8e69-4869-93c0-11132778b94e)

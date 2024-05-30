@@ -1,13 +1,13 @@
-import plugin from 'tailwindcss/plugin'
-import type { Config } from "tailwindcss"
+import type { Config } from "tailwindcss";
+import plugin from "tailwindcss/plugin";
 
 const config = {
   darkMode: ["class"],
   content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
   ],
   prefix: "",
   theme: {
@@ -20,18 +20,18 @@ const config = {
     },
     extend: {
       maxWidth: {
-        '1/4': '25%',
-        '1/2': '300px',
-        '3/4': '75%',
-        '4/5': '80%'
+        "1/4": "25%",
+        "1/2": "300px",
+        "3/4": "75%",
+        "4/5": "80%",
       },
       colors: {
-        transparent: 'transparent',
-        current: 'currentColor',
-        'blue-custom': '#001C35',
-        'orange-custom': '#CC5803',
-        'red-custom': '#ff0000',
-        'green-custom': '#00f529'
+        transparent: "transparent",
+        current: "currentColor",
+        "blue-custom": "#001C35",
+        "orange-custom": "#CC5803",
+        "red-custom": "#ff0000",
+        "green-custom": "#00f529",
       },
       keyframes: {
         "accordion-down": {
@@ -48,14 +48,14 @@ const config = {
         "accordion-up": "accordion-up 0.2s ease-out",
       },
       boxShadow: {
-        '1-stack': '0px 10px 15px -3px #a3e635',
-        '2-stack': '0px 10px 15px -3px #3730a3',
-        '3-stack': '0px 10px 15px -3px #fbbf24',
+        "1-stack": "0px 10px 15px -3px #a3e635",
+        "2-stack": "0px 10px 15px -3px #3730a3",
+        "3-stack": "0px 10px 15px -3px #fbbf24",
       },
       textShadow: {
-        sm: '0 1px 2px var(--tw-shadow-color)',
-        DEFAULT: '0 2px 4px var(--tw-shadow-color)',
-        lg: '0 8px 16px var(--tw-shadow-color)',
+        sm: "0 1px 2px var(--tw-shadow-color)",
+        DEFAULT: "0 2px 4px var(--tw-shadow-color)",
+        lg: "0 8px 16px var(--tw-shadow-color)",
       },
     },
   },
@@ -64,14 +64,14 @@ const config = {
     plugin(function ({ matchUtilities, theme }) {
       matchUtilities(
         {
-          'text-shadow': (value) => ({
+          "text-shadow": (value) => ({
             textShadow: value,
           }),
         },
-        { values: theme('textShadow') }
-      )
+        { values: theme("textShadow") },
+      );
     }),
   ],
-} satisfies Config
+} satisfies Config;
 
-export default config
+export default config;
