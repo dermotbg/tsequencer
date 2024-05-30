@@ -1,14 +1,13 @@
-import { create } from "zustand"
+import { create } from "zustand";
 
 interface ActiveStepStateType {
-  activeStep: number | undefined
-  set: (step: number | undefined) => void
+  activeStep: number | undefined;
+  set: (step: number | undefined) => void;
 }
 
 const useActiveStepStore = create<ActiveStepStateType>()((set) => ({
   activeStep: undefined,
-  set: (step) => set(() => ({ activeStep: step }))
-})
-)
+  set: (step) => set(() => ({ activeStep: step })),
+}));
 
-export default useActiveStepStore
+export default useActiveStepStore;

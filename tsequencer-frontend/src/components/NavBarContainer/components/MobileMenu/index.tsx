@@ -1,55 +1,89 @@
-import { Link } from "@tanstack/react-router"
-import LoginDialog from "../LoginDialog"
-import { MobileNavMenuType } from "../../types"
-import SaveDialog from "../SaveDialog"
-import LoadDialog from "../LoadDialog"
+import { Link } from "@tanstack/react-router";
 
-const MobileNavMenu = ({ loginHandler, setUsername, setPassword, setConfPassword, errorMessage, userIsAuthenticated, setSeqName, saveHandler, isSaveDialogOpen, setIsSaveDialogOpen, isLoadDialogOpen, setIsLoadDialogOpen, sequences, setSelection, loadHandler, isRunning, updateHandler, registerHandler, isRegisterDialogOpen, setIsRegisterDialogOpen }: MobileNavMenuType) => {
+import LoadDialog from "../LoadDialog";
+import LoginDialog from "../LoginDialog";
+import SaveDialog from "../SaveDialog";
 
+import type { MobileNavMenuType } from "../../types";
+
+const MobileNavMenu = ({
+  loginHandler,
+  setUsername,
+  setPassword,
+  setConfPassword,
+  errorMessage,
+  userIsAuthenticated,
+  setSeqName,
+  saveHandler,
+  isSaveDialogOpen,
+  setIsSaveDialogOpen,
+  isLoadDialogOpen,
+  setIsLoadDialogOpen,
+  sequences,
+  setSelection,
+  loadHandler,
+  isRunning,
+  updateHandler,
+  registerHandler,
+  isRegisterDialogOpen,
+  setIsRegisterDialogOpen,
+}: MobileNavMenuType) => {
   return (
     <div className="sm:hidden" id="mobile-menu">
       <div className="space-y-1 px-2 pb-3 pt-2">
-        <Link to="/" className="bg-stone-900 text-white block rounded-md px-3 py-2 text-base font-medium" aria-current="page">Sequencer</Link>
-        <Link to="/tutorial" className="text-stone-300 hover:bg-stone-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Tutorial</Link>
-        {userIsAuthenticated
-                ? <div className="flex flex-col items-start"> 
-                    <SaveDialog 
-                      isMobile={true} 
-                      setSeqName={setSeqName}
-                      saveHandler={saveHandler} 
-                      errorMessage={errorMessage}
-                      isSaveDialogOpen={isSaveDialogOpen}
-                      setIsSaveDialogOpen={setIsSaveDialogOpen}
-                      sequences={sequences}
-                      setSelection={setSelection}
-                      updateHandler={updateHandler}
-                    />
-                    <LoadDialog 
-                      isMobile={true} 
-                      errorMessage={errorMessage}
-                      isLoadDialogOpen={isLoadDialogOpen}
-                      setIsLoadDialogOpen={setIsLoadDialogOpen}
-                      sequences={sequences}
-                      setSelection={setSelection}
-                      loadHandler={loadHandler}
-                      isRunning={isRunning}
-                    />
-                  </div>
-                : <LoginDialog 
-                    isMobile={true} 
-                    loginHandler={loginHandler} 
-                    setUsername={setUsername} 
-                    setPassword={setPassword} 
-                    setConfPassword={setConfPassword}
-                    errorMessage={errorMessage}
-                    registerHandler={registerHandler}
-                    isRegisterDialogOpen={isRegisterDialogOpen}
-                    setIsRegisterDialogOpen={setIsRegisterDialogOpen}
-                  />
-              }
+        <Link
+          to="/"
+          className="bg-stone-900 text-white block rounded-md px-3 py-2 text-base font-medium"
+          aria-current="page"
+        >
+          Sequencer
+        </Link>
+        <Link
+          to="/tutorial"
+          className="text-stone-300 hover:bg-stone-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
+        >
+          Tutorial
+        </Link>
+        {userIsAuthenticated ? (
+          <div className="flex flex-col items-start">
+            <SaveDialog
+              isMobile={true}
+              setSeqName={setSeqName}
+              saveHandler={saveHandler}
+              errorMessage={errorMessage}
+              isSaveDialogOpen={isSaveDialogOpen}
+              setIsSaveDialogOpen={setIsSaveDialogOpen}
+              sequences={sequences}
+              setSelection={setSelection}
+              updateHandler={updateHandler}
+            />
+            <LoadDialog
+              isMobile={true}
+              errorMessage={errorMessage}
+              isLoadDialogOpen={isLoadDialogOpen}
+              setIsLoadDialogOpen={setIsLoadDialogOpen}
+              sequences={sequences}
+              setSelection={setSelection}
+              loadHandler={loadHandler}
+              isRunning={isRunning}
+            />
+          </div>
+        ) : (
+          <LoginDialog
+            isMobile={true}
+            loginHandler={loginHandler}
+            setUsername={setUsername}
+            setPassword={setPassword}
+            setConfPassword={setConfPassword}
+            errorMessage={errorMessage}
+            registerHandler={registerHandler}
+            isRegisterDialogOpen={isRegisterDialogOpen}
+            setIsRegisterDialogOpen={setIsRegisterDialogOpen}
+          />
+        )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default MobileNavMenu
+export default MobileNavMenu;

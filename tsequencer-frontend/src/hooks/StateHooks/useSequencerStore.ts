@@ -1,14 +1,14 @@
-import { create } from "zustand"
-import { Sequencer } from "../../components/StepSequencerContainer/types"
-import { getInitialSeqState } from "../../utils/getInitialSeqState"
+import { create } from "zustand";
 
+import type { Sequencer } from "../../components/StepSequencerContainer/types";
+import { getInitialSeqState } from "../../utils/getInitialSeqState";
 
 interface SequencerStateType {
-  seq: Sequencer
-  isRunning: boolean
-  setSeq: (newSeq: Sequencer) => void
-  setIsRunning: (toggle: boolean) => void
-  clearSequencer: () => void
+  seq: Sequencer;
+  isRunning: boolean;
+  setSeq: (newSeq: Sequencer) => void;
+  setIsRunning: (toggle: boolean) => void;
+  clearSequencer: () => void;
 }
 
 const useSequencerStore = create<SequencerStateType>()((set) => ({
@@ -16,8 +16,7 @@ const useSequencerStore = create<SequencerStateType>()((set) => ({
   isRunning: false,
   setSeq: (newSeq: Sequencer) => set(() => ({ seq: newSeq })),
   setIsRunning: (toggle: boolean) => set(() => ({ isRunning: toggle })),
-  clearSequencer: () => set(() => ({ seq: getInitialSeqState() }))
-}))
+  clearSequencer: () => set(() => ({ seq: getInitialSeqState() })),
+}));
 
-export default useSequencerStore
-
+export default useSequencerStore;

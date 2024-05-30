@@ -1,14 +1,13 @@
-import GlobalOptionsContainer from "./components/GlobalOptionsContainer"
-import InstrumentPadContainer from "./components/InstrumentPadContainer"
+import GlobalOptionsContainer from "./components/GlobalOptionsContainer";
+import InstrumentPadContainer from "./components/InstrumentPadContainer";
 
 const PadsAndOptionsContainer = () => {
-
-  return(
+  return (
     <div className="flex flex-col items-center justify-center">
       <GlobalOptionsContainer />
       <InstrumentPadContainer />
     </div>
-  )
-}
+  );
+};
 
-export default PadsAndOptionsContainer
+export default PadsAndOptionsContainer;

@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -7,63 +7,66 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { DialogClose } from "@radix-ui/react-dialog"
-import type { LoginDialogType } from "../../types"
-import DisplayErrorMessage from "../DisplayErrorMessage"
-import TextInput from "../UtilityComponents/TextInputContainer"
-import RegisterDialog from "../RegisterDialog"
-import { Separator } from "@/components/ui/separator"
+} from "@/components/ui/dialog";
+import { DialogClose } from "@radix-ui/react-dialog";
+import { Separator } from "@/components/ui/separator";
 
-const LoginDialog = ({ isMobile = false, loginHandler, setUsername, setPassword, setConfPassword, errorMessage, registerHandler, isRegisterDialogOpen, setIsRegisterDialogOpen }: LoginDialogType ) => {
+import DisplayErrorMessage from "../DisplayErrorMessage";
+import RegisterDialog from "../RegisterDialog";
+import TextInput from "../UtilityComponents/TextInputContainer";
 
-  return(
+import type { LoginDialogType } from "../../types";
+
+const LoginDialog = ({
+  isMobile = false,
+  loginHandler,
+  setUsername,
+  setPassword,
+  setConfPassword,
+  errorMessage,
+  registerHandler,
+  isRegisterDialogOpen,
+  setIsRegisterDialogOpen,
+}: LoginDialogType) => {
+  return (
     <Dialog>
       <DialogTrigger asChild>
-        {!isMobile 
-        ? <Button className="bg-inherit text-stone-300 hover:bg-stone-600 hover:text-white rounded-md px-3 py-2 text-sm font-medium" >Login</Button>
-        : <Button className="bg-inherit min-w-full block text-left text-stone-300 hover:bg-stone-700 hover:text-white rounded-md px-3 py-2 text-md font-medium" >Login</Button>
-        }
+        {!isMobile ? (
+          <Button className="bg-inherit text-stone-300 hover:bg-stone-600 hover:text-white rounded-md px-3 py-2 text-sm font-medium">
+            Login
+          </Button>
+        ) : (
+          <Button className="bg-inherit min-w-full block text-left text-stone-300 hover:bg-stone-700 hover:text-white rounded-md px-3 py-2 text-md font-medium">
+            Login
+          </Button>
+        )}
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>
-            Login
-          </DialogTitle>
-          <DialogDescription>
-            Please enter your username and password below
-          </DialogDescription>
+          <DialogTitle>Login</DialogTitle>
+          <DialogDescription>Please enter your username and password below</DialogDescription>
         </DialogHeader>
         <form onSubmit={loginHandler}>
-          <TextInput 
-            formTitle={'username'}
-            setFormState={setUsername}
-            type="text"
-          />
+          <TextInput formTitle={"username"} setFormState={setUsername} type="text" />
           <div className="grid gap-4 py-4">
-            <TextInput 
-              formTitle={'password'}
-              setFormState={setPassword}
-              type="password"
-            />
-            {
-              errorMessage
-              ? <DisplayErrorMessage errorMessage={errorMessage} />
-              : null 
-            }
+            <TextInput formTitle={"password"} setFormState={setPassword} type="password" />
+            {errorMessage ? <DisplayErrorMessage errorMessage={errorMessage} /> : null}
           </div>
           <DialogFooter>
             <DialogClose asChild>
-              <Button type="button" variant={'outline'}>Cancel</Button>
+              <Button type="button" variant={"outline"}>
+                Cancel
+              </Button>
             </DialogClose>
-            <Button className={isMobile ? "mb-2": ""}  type="submit">Login</Button>
+            <Button className={isMobile ? "mb-2" : ""} type="submit">
+              Login
+            </Button>
           </DialogFooter>
         </form>
         <Separator />
         <div className="flex flex-col text-right py-4">
           <p>Don't have an account? </p>
           <RegisterDialog
-            isMobile={isMobile}
             setUsername={setUsername}
             setPassword={setPassword}
             setConfPassword={setConfPassword}
@@ -73,10 +76,9 @@ const LoginDialog = ({ isMobile = false, loginHandler, setUsername, setPassword,
             setIsRegisterDialogOpen={setIsRegisterDialogOpen}
           />
         </div>
-        </DialogContent>
+      </DialogContent>
     </Dialog>
-  )
+  );
+};
 
-}
-
-export default LoginDialog
+export default LoginDialog;
