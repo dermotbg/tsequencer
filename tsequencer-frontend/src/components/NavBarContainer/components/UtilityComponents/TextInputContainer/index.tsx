@@ -1,10 +1,11 @@
-import type { InputFormType } from "@/components/NavBarContainer/types"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { validateString } from "@/utils/typeChecking"
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
-const TextInput = ({setFormState, formTitle, type, id}: InputFormType) => {
+import { validateString } from "@/utils/typeChecking";
 
+import type { InputFormType } from "@/components/NavBarContainer/types";
+
+const TextInput = ({ setFormState, formTitle, type, id }: InputFormType) => {
   return (
     <div className="grid grid-cols-4 items-center gap-4">
       <Label htmlFor={`${formTitle}`} className="text-right">
@@ -12,14 +13,14 @@ const TextInput = ({setFormState, formTitle, type, id}: InputFormType) => {
       </Label>
       <Input
         id={id ? id : `${formTitle}`}
-        defaultValue={formTitle == "username" ? "@username" : ''}
+        defaultValue={formTitle == "username" ? "@username" : ""}
         type={type}
         className="col-span-3"
         onChange={(e) => setFormState(e.target.value)}
         required
       />
-  </div>
-  )
-}
+    </div>
+  );
+};
 
-export default TextInput
+export default TextInput;

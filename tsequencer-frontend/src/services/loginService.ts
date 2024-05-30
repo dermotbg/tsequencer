@@ -1,67 +1,63 @@
-const baseUrl = '/api/login'
+const baseUrl = "/api/login";
 
 interface LoginData {
-  username: string
-  password: string
+  username: string;
+  password: string;
 }
 
-export const loginRequest = async (loginObj: LoginData) => {
+export const loginRequestAsync = async (loginObj: LoginData) => {
   try {
     const response = await fetch(baseUrl, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        ...loginObj, 
-        username: loginObj.username.toLowerCase().trim()
+        ...loginObj,
+        username: loginObj.username.toLowerCase().trim(),
       }),
-    })
+    });
 
-    if(response.ok){
-      return response.json()
+    if (response.ok) {
+      return response.json();
+    } else {
+      throw new Error(await response.text());
     }
-    else {
-      throw new Error(await response.text())
+  } catch (error) {
+    let errorMessage = "";
+    if (error instanceof Error) {
+      errorMessage += error.message;
     }
-  } 
-  catch (error) {
-    let errorMessage = ""
-    if (error instanceof Error){
-      errorMessage += error.message
-    }
-    throw new Error(`${errorMessage}`)
+    throw new Error(`${errorMessage}`);
   }
-}
+};
 
 export const validateTokenAsync = async () => {
-  try{
+  try {
     const response = await fetch(`${baseUrl}/validate-token`, {
-      method: 'POST'
-    })
+      method: "POST",
+    });
     const respObject = {
       status: response.status,
-      username: await response.text()
-    }
-    return respObject
+      username: await response.text(),
+    };
+    return respObject;
+  } catch (err) {
+    console.error(err);
   }
-  catch(err){
-    console.error(err)
-  }
-} 
+};
 
-export const logoutRequest = async () => {
-  try{
+export const logoutRequestAsync = async () => {
+  try {
     const response = await fetch(`${baseUrl}/logout`, {
-      method: 'POST'
-    })
-    return response.status
-  }
-  catch (error) {
-    let errorMessage = ""
-    if (error instanceof Error){
-      errorMessage += error.message
+      method: "POST",
+    });
+    return response.status;
+  } catch (error) {
+    let errorMessage = "";
+    if (error instanceof Error) {
+      errorMessage += error.message;
     }
-    throw new Error(`${errorMessage}`)
+    throw new Error(`${errorMessage}`);
   }
-}
+};

@@ -1,1 +1,1 @@
-export const audioContext = new AudioContext()
+export const audioContext = new AudioContext();
