@@ -11,11 +11,11 @@ import {
 import { DialogClose } from "@radix-ui/react-dialog";
 import { Separator } from "@/components/ui/separator";
 
-import DisplayErrorMessage from "../DisplayErrorMessage";
+import DisplayErrorMessage from "../../../../../UtilityComponents/DisplayErrorMessage";
 import RegisterDialog from "../RegisterDialog";
-import TextInput from "../UtilityComponents/TextInputContainer";
+import TextInput from "../../../../../UtilityComponents/TextInputContainer";
 
-import type { LoginDialogType } from "../../types";
+import type { LoginDialogType } from "../../../../types";
 
 const LoginDialog = ({
   isMobile = false,

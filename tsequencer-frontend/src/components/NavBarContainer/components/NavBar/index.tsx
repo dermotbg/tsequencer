@@ -3,10 +3,10 @@ import { Disc3 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 
-import LoadDialog from "../LoadDialog";
-import LoginDialog from "../LoginDialog";
+import LoadDialog from "./components/LoadDialog";
+import LoginDialog from "./components/LoginDialog";
 import MobileMenuAccessButton from "../MobileMenuAccessButton";
-import SaveDialog from "../SaveDialog";
+import SaveDialog from "./components/SaveDialog";
 import UserMenuContainer from "../UserMenuContainer";
 
 import type { NavBarType } from "../../types";

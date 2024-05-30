@@ -1,8 +1,8 @@
 import { Link } from "@tanstack/react-router";
 
-import LoadDialog from "../LoadDialog";
-import LoginDialog from "../LoginDialog";
-import SaveDialog from "../SaveDialog";
+import LoadDialog from "../NavBar/components/LoadDialog";
+import LoginDialog from "../NavBar/components/LoginDialog";
+import SaveDialog from "../NavBar/components/SaveDialog";
 
 import type { MobileNavMenuType } from "../../types";
 

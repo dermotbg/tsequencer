@@ -10,10 +10,10 @@ import {
 } from "@/components/ui/dialog";
 import { DialogClose } from "@radix-ui/react-dialog";
 
-import DisplayErrorMessage from "../DisplayErrorMessage";
-import TextInput from "../UtilityComponents/TextInputContainer";
+import DisplayErrorMessage from "../../../../../UtilityComponents/DisplayErrorMessage";
+import TextInput from "../../../../../UtilityComponents/TextInputContainer";
 
-import type { RegisterDialogType } from "../../types";
+import type { RegisterDialogType } from "../../../../types";
 
 const RegisterDialog = ({
   errorMessage,

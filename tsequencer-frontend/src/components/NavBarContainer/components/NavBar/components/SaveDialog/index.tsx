@@ -10,11 +10,11 @@ import {
 } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
 
-import DisplayErrorMessage from "../DisplayErrorMessage";
-import SelectFormContainer from "../UtilityComponents/SelectInputContainer";
-import TextInput from "../UtilityComponents/TextInputContainer";
+import DisplayErrorMessage from "../../../../../UtilityComponents/DisplayErrorMessage";
+import SelectFormContainer from "../../../../../UtilityComponents/SelectInputContainer";
+import TextInput from "../../../../../UtilityComponents/TextInputContainer";
 
-import type { SaveDialogType } from "../../types";
+import type { SaveDialogType } from "../../../../types";
 
 const SaveDialog = ({
   isMobile = false,

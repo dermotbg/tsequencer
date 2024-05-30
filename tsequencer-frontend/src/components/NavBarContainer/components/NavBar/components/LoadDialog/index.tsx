@@ -1,10 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
-import DisplayErrorMessage from "../DisplayErrorMessage";
-import SelectFormContainer from "../UtilityComponents/SelectInputContainer";
+import DisplayErrorMessage from "../../../../../UtilityComponents/DisplayErrorMessage";
+import SelectFormContainer from "../../../../../UtilityComponents/SelectInputContainer";
 
-import type { LoadDialogType } from "../../types";
+import type { LoadDialogType } from "../../../../types";
 
 const LoadDialog = ({
   isMobile = false,

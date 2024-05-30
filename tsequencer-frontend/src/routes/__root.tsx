@@ -1,14 +1,16 @@
 import { Outlet, createRootRoute } from "@tanstack/react-router";
-import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 
 import NavBarContainer from "../components/NavBarContainer/index";
+import PageNotFoundComponent from "@/components/UtilityComponents/PageNotFoundComponent";
 
 export const Route = createRootRoute({
   component: () => (
     <>
       <NavBarContainer />
       <Outlet />
-      <TanStackRouterDevtools />
     </>
   ),
+  notFoundComponent: () => {
+    return <PageNotFoundComponent />;
+  },
 });
