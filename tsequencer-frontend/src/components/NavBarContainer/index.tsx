@@ -1,26 +1,19 @@
-import type { FormEvent } from "react";
 import { useEffect, useState } from "react";
-
-import { useToast } from "../ui/use-toast";
 
 import MobileNavMenu from "./components/MobileMenu";
 import NavBar from "./components/NavBar";
 
-import useUserStore from "@/hooks/StateHooks/UseUserStore";
-import useMessageStore from "@/hooks/StateHooks/useMessageStore";
-import useSequencerStore from "@/hooks/StateHooks/useSequencerStore";
 import useLogin from "@/hooks/useLogin";
+import useMessageStore from "@/hooks/StateHooks/useMessageStore";
 import useRegisterUser from "@/hooks/useRegisterUser";
+import useSequencerStore from "@/hooks/StateHooks/useSequencerStore";
+import useSequencerActions from "@/hooks/useSequencerActions";
+import useUserStore from "@/hooks/StateHooks/UseUserStore";
 
-import {
-  loadSequencerAsync,
-  saveSequencerAsync,
-  updateSequencerAsync,
-} from "@/services/sequencerService";
+import { loadSequencerAsync } from "@/services/sequencerService";
 import { validateTokenAsync } from "@/services/loginService";
 
 import { validateString } from "@/utils/typeChecking";
-import { prepareSaveSequencerObject } from "./utils/prepareSaveObject";
 
 import type { LoadedSeqType } from "@/services/sequencerService";
 
@@ -61,7 +54,13 @@ const NavBarContainer = () => {
   const sequencer = useSequencerStore();
   const user = useUserStore();
   const errorMessage = useMessageStore();
-  const { toast } = useToast();
+  const { saveHandler, loadHandler, updateHandler } = useSequencerActions({
+    sequences,
+    seqName,
+    selection,
+    setIsSaveDialogOpen,
+    setIsLoadDialogOpen,
+  });
 
   // Login Validation Effect
   useEffect(() => {
@@ -98,48 +97,6 @@ const NavBarContainer = () => {
     };
     fetchSequences();
   }, [user.username, isSaveDialogOpen]);
-
-  const saveHandler = async (e: FormEvent) => {
-    e.preventDefault();
-    try {
-      await saveSequencerAsync(prepareSaveSequencerObject(sequencer.seq, user.username, seqName));
-      toast({ description: "Save successful." });
-      setIsSaveDialogOpen(false);
-    } catch (error) {
-      errorMessage.set(`${error}`.slice(29));
-      setTimeout(() => {
-        errorMessage.set(undefined);
-      }, 5000);
-    }
-  };
-
-  const loadHandler = async (e: FormEvent) => {
-    e.preventDefault();
-    if (sequences !== undefined) {
-      const selectedSequencer = sequences.find((s) => s.name === validateString(selection));
-      if (selectedSequencer) {
-        sequencer.setSeq(selectedSequencer.sequence);
-        setIsLoadDialogOpen(false);
-      }
-    }
-  };
-
-  const updateHandler = async (e: FormEvent) => {
-    e.preventDefault();
-    try {
-      const selectedSeq = sequences?.find((s) => s.name === selection);
-      if (selectedSeq) {
-        await updateSequencerAsync(selectedSeq);
-        setIsSaveDialogOpen(false);
-        toast({ description: "Update successful." });
-      }
-    } catch (error) {
-      errorMessage.set(`${error}`.slice(29));
-      setTimeout(() => {
-        errorMessage.set(undefined);
-      }, 5000);
-    }
-  };
 
   return (
     <nav className="bg-stone-400/25">

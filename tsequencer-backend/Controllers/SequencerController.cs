@@ -87,7 +87,6 @@ public class SequencerController : Controller
     if(!ModelState.IsValid){
       return BadRequest("Malformed or Missing Data");
     }
-
     if(await _userService.GetUserAsync(seqObj.UserId) == null)
     {
       return Unauthorized("Request must be sent with valid userId");
