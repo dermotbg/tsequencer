@@ -61,6 +61,7 @@ const useSequencerActions = ({
     try {
       const selectedSeq = sequences?.find((s) => s.name === selection);
       if (selectedSeq) {
+        selectedSeq.sequence = sequencer.seq;
         await updateSequencerAsync(selectedSeq);
         toast({ description: "Update successful." });
         setIsSaveDialogOpen(false);
