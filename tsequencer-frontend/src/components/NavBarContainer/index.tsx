@@ -9,6 +9,7 @@ import NavBar from "./components/NavBar";
 import useUserStore from "@/hooks/StateHooks/UseUserStore";
 import useMessageStore from "@/hooks/StateHooks/useMessageStore";
 import useSequencerStore from "@/hooks/StateHooks/useSequencerStore";
+import useLogin from "@/hooks/useLogin";
 
 import {
   loadSequencerAsync,
@@ -37,6 +38,12 @@ const NavBarContainer = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confPassword, setConfPassword] = useState("");
+  const { loginHandler, logoutHandler } = useLogin({
+    username,
+    password,
+    setUsername,
+    setPassword,
+  });
 
   // Save Seq State
   const [seqName, setSeqName] = useState("");
@@ -86,31 +93,6 @@ const NavBarContainer = () => {
     };
     fetchSequences();
   }, [user.username, isSaveDialogOpen]);
-
-  const loginHandler = async (e: FormEvent) => {
-    e.preventDefault();
-    try {
-      const resp = await loginRequestAsync({ username, password });
-      // set string to LS only to fire token validation when it's defined
-      localStorage.setItem("user", JSON.stringify("loggedIn"));
-      user.setUsername(resp.username);
-      user.setAuthenticated(true);
-      toast({ description: "You are now logged in." });
-    } catch (error) {
-      errorMessage.set(`${error}`.slice(7));
-      setTimeout(() => {
-        errorMessage.set(undefined);
-      }, 10000);
-    }
-  };
-
-  const logoutHandler = () => {
-    setUsername("");
-    setPassword("");
-    user.setAuthenticated(false);
-    localStorage.removeItem("user");
-    logoutRequestAsync();
-  };
 
   const saveHandler = async (e: FormEvent) => {
     e.preventDefault();
