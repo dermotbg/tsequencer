@@ -10,18 +10,17 @@ import useUserStore from "@/hooks/StateHooks/UseUserStore";
 import useMessageStore from "@/hooks/StateHooks/useMessageStore";
 import useSequencerStore from "@/hooks/StateHooks/useSequencerStore";
 import useLogin from "@/hooks/useLogin";
+import useRegisterUser from "@/hooks/useRegisterUser";
 
 import {
   loadSequencerAsync,
   saveSequencerAsync,
   updateSequencerAsync,
 } from "@/services/sequencerService";
-import { createUserAsync } from "@/services/userService";
-import { loginRequestAsync, logoutRequestAsync, validateTokenAsync } from "@/services/loginService";
+import { validateTokenAsync } from "@/services/loginService";
 
 import { validateString } from "@/utils/typeChecking";
 import { prepareSaveSequencerObject } from "./utils/prepareSaveObject";
-import { prepareSaveUserObject } from "./utils/prepareSaveUserObject";
 
 import type { LoadedSeqType } from "@/services/sequencerService";
 
@@ -43,6 +42,12 @@ const NavBarContainer = () => {
     password,
     setUsername,
     setPassword,
+  });
+  const { registerHandler } = useRegisterUser({
+    username,
+    password,
+    confPassword,
+    setIsRegisterDialogOpen,
   });
 
   // Save Seq State
@@ -102,21 +107,6 @@ const NavBarContainer = () => {
       setIsSaveDialogOpen(false);
     } catch (error) {
       errorMessage.set(`${error}`.slice(29));
-      setTimeout(() => {
-        errorMessage.set(undefined);
-      }, 5000);
-    }
-  };
-
-  const registerHandler = async (e: FormEvent) => {
-    e.preventDefault();
-    try {
-      await createUserAsync(prepareSaveUserObject(username, password, confPassword));
-      toast({ description: "Registration successful! Please log in." });
-      setIsRegisterDialogOpen(false);
-    } catch (error) {
-      console.log(error);
-      errorMessage.set(`${error}`);
       setTimeout(() => {
         errorMessage.set(undefined);
       }, 5000);
