@@ -10,6 +10,7 @@ import useWindowSize from "@/hooks/useWindowSize";
 import { validateInstrument } from "@/utils/typeChecking";
 
 import ControllerContainer from "./components/ControllerContainer";
+import LoadingSpinner from "../UtilityComponents/LoadingSpinner";
 import StepSequencer from "./components/StepSequencer";
 
 import type { Step } from "./types";
@@ -79,7 +80,8 @@ const StepSequencerContainer = () => {
     }
   };
 
-  if (!instruments) return <>Loading...</>;
+  if (!instruments) return <LoadingSpinner />;
+
   return (
     <>
       <StepSequencer seq={sequencer.seq} onClickHandler={onClickHandler} windowSize={windowSize} />

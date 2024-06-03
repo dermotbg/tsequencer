@@ -6,6 +6,7 @@ import useInstruments from "@/hooks/useInstruments";
 import { validateInstrumentRack } from "@/utils/typeChecking";
 
 import FaderContainer from "./components/FaderContainer";
+import LoadingSpinner from "../UtilityComponents/LoadingSpinner";
 import StepIndicator from "./components/StepIndicator";
 
 import type { AvailableInstruments } from "@/types";
@@ -22,11 +23,10 @@ const MixingDeskContainer = () => {
     setSeq(newSeq);
   };
 
-  if (!instruments) return <>Loading...</>;
+  if (!instruments) return <LoadingSpinner />;
 
   return (
     <div className="flex flex-col">
-      {/* TODO: Proper step number component */}
       {activeStep !== undefined && activeStep >= 0 ? (
         <StepIndicator stepNumber={activeStep + 1} />
       ) : null}
