@@ -1,35 +1,88 @@
 import { create } from "zustand";
 
-interface AssignedKeysType {
-  kick: string;
-  clap: string;
-  snare: string;
-  closedHH: string;
-  openHH: string;
-  ride: string;
-  sub: string;
-  perc: string;
-  perc2: string;
-  perc3: string;
-  perc4: string;
-  perc5: string;
-  set: (instrument: string, keyCode: string) => void;
+export interface AssignedKeysInstrumentType {
+  default: string;
+  active: string;
+  inputVal: string;
+  previousVal: string;
 }
 
-const useAssignedKeysStore = create<AssignedKeysType>()((set) => ({
-  kick: "KeyK",
-  clap: "KeyC",
-  snare: "KeyS",
-  closedHH: "KeyC",
-  openHH: "KeyO",
-  ride: "KeyR",
-  sub: "KeyL",
-  perc: "KeyY",
-  perc2: "KeyU",
-  perc3: "KeyI",
-  perc4: "KeyO",
-  perc5: "Keyp",
-  set: (instrument, keyCode) => set(() => ({ [instrument]: keyCode })),
+export interface AssignedKeysType {
+  kick: AssignedKeysInstrumentType;
+  clap: AssignedKeysInstrumentType;
+  snare: AssignedKeysInstrumentType;
+  closedHH: AssignedKeysInstrumentType;
+  openHH: AssignedKeysInstrumentType;
+  ride: AssignedKeysInstrumentType;
+  sub: AssignedKeysInstrumentType;
+  perc: AssignedKeysInstrumentType;
+  perc2: AssignedKeysInstrumentType;
+  perc3: AssignedKeysInstrumentType;
+  perc4: AssignedKeysInstrumentType;
+  perc5: AssignedKeysInstrumentType;
+}
+export interface AssignedKeyDefaultBoolean {
+  isDefault: boolean;
+}
+export interface AssignedKeysActionType {
+  setIsDefault: (toggle: boolean) => void;
+  setActiveKey: (instrument: keyof AssignedKeysType, keyCode: string) => void;
+  setInputValue: (instrument: keyof AssignedKeysType, keyCode: string) => void;
+  setPrevValue: () => void;
+}
+
+const initialState: AssignedKeysType | boolean = {
+  kick: { default: "K", active: "K", inputVal: "", previousVal: "" },
+  clap: { default: "C", active: "C", inputVal: "", previousVal: "" },
+  snare: { default: "S", active: "S", inputVal: "", previousVal: "" },
+  closedHH: { default: "X", active: "X", inputVal: "", previousVal: "" },
+  openHH: { default: "Z", active: "Z", inputVal: "", previousVal: "" },
+  ride: { default: "R", active: "R", inputVal: "", previousVal: "" },
+  sub: { default: "L", active: "L", inputVal: "", previousVal: "" },
+  perc: { default: "Y", active: "Y", inputVal: "", previousVal: "" },
+  perc2: { default: "U", active: "U", inputVal: "", previousVal: "" },
+  perc3: { default: "I", active: "I", inputVal: "", previousVal: "" },
+  perc4: { default: "O", active: "O", inputVal: "", previousVal: "" },
+  perc5: { default: "P", active: "P", inputVal: "", previousVal: "" },
+};
+
+const useAssignedKeysStore = create<
+  AssignedKeysType & AssignedKeysActionType & AssignedKeyDefaultBoolean
+>()((set) => ({
+  ...initialState,
+  isDefault: true,
+  setIsDefault: (toggle: boolean) => set(() => ({ isDefault: toggle })),
+  setActiveKey: (instrument, keyCode) =>
+    set((state) => ({
+      ...state,
+      [instrument]: { ...state[instrument], active: keyCode.toUpperCase() },
+    })),
+  setInputValue: (instrument, keyCode) =>
+    set((state) => ({
+      ...state,
+      [instrument]: { ...state[instrument], inputVal: keyCode.toUpperCase() },
+    })),
+  setPrevValue: () =>
+    set((state) => {
+      const updatedState = Object.keys(state).reduce((acc, key) => {
+        const instrument = state[key as keyof AssignedKeysType];
+        if (typeof instrument !== "boolean" && typeof instrument !== "function") {
+          if (!instrument.inputVal) {
+            acc[key as keyof AssignedKeysType] = {
+              ...instrument,
+              previousVal: instrument.default,
+            };
+          } else if (instrument.previousVal !== instrument.inputVal) {
+            acc[key as keyof AssignedKeysType] = {
+              ...instrument,
+              previousVal: instrument.inputVal,
+            };
+          }
+        }
+        return acc;
+      }, {} as AssignedKeysType);
+      return { ...state, ...updatedState };
+    }),
 }));
 
 export default useAssignedKeysStore;
