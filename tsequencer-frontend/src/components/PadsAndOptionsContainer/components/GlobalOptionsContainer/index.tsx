@@ -11,6 +11,7 @@ import { keyPressHandler } from "./components/KeyTrackController/utils/keyPressH
 import BpmController from "./components/BpmController";
 import KeyTrackController from "./components/KeyTrackController";
 import MetronomeController from "./components/MetromeController";
+import KeyAssignDialog from "./components/KeyAssignDialog";
 
 const GlobalOptionsContainer = () => {
   const [keysActive, setKeysActive] = useState<boolean>(false);
@@ -46,10 +47,15 @@ const GlobalOptionsContainer = () => {
   }, [instruments, level, pushToSequencer, stepRef, keysActive, isPlaying]);
 
   return (
-    <div className="flex flex-col items-start">
-      <KeyTrackController keysActive={keysActive} setKeysActive={setKeysActive} />
-      <MetronomeController />
-      <BpmController />
+    <div className="flex flex-row">
+      <div className="flex flex-col items-start">
+        <KeyTrackController keysActive={keysActive} setKeysActive={setKeysActive} />
+        <MetronomeController />
+        <BpmController />
+      </div>
+      <div className="flex flex-col items-start space-x-2 pb-3 mt-2">
+        <KeyAssignDialog />
+      </div>
     </div>
   );
 };
