@@ -12,8 +12,8 @@ export interface LoadedInstruments {
 
 const fetchInstruments = async () => {
   // const kick = await setSamples('src/audio/91627__suicidity__dirty-tonys-kick-drum-mx-055.wav')
-  // const kick = await setSamples('src/audio/kickDistPitched.wav')
-  const kick = await setSamples("src/audio/kickWTail.wav");
+  const kick = await setSamples("src/audio/kickDistPitched.wav");
+  // const kick = await setSamples("src/audio/kickWTail.wav");
   const sub = await setSamples("src/audio/sub.wav");
   const clap = await setSamples("src/audio/561119__sorinious_genious__clap-9.wav");
   const snare = await setSamples("src/audio/snare.wav");
