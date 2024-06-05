@@ -13,6 +13,7 @@ import KeyTrackController from "./components/KeyTrackController";
 import MetronomeController from "./components/MetromeController";
 import KeyAssignDialog from "./components/KeyAssignDialog";
 import useAssignedKeysStore from "@/hooks/StateHooks/useAssignedKeysStore";
+import useWindowSize from "@/hooks/useWindowSize";
 
 const GlobalOptionsContainer = () => {
   const [keysActive, setKeysActive] = useState<boolean>(false);
@@ -22,6 +23,7 @@ const GlobalOptionsContainer = () => {
   const { pushToSequencer, isPlaying } = useSequencer();
   const { level } = useVolumeStore();
   const { record, stepRef } = useRecordStore();
+  const windowSize = useWindowSize();
 
   const recordingRef = useRef(record);
 
@@ -52,11 +54,15 @@ const GlobalOptionsContainer = () => {
   return (
     <div className="flex flex-row">
       <div className="flex flex-col items-start">
-        <KeyTrackController keysActive={keysActive} setKeysActive={setKeysActive} />
+        <KeyTrackController
+          disabled={windowSize.width < 640}
+          keysActive={keysActive}
+          setKeysActive={setKeysActive}
+        />
         <MetronomeController />
         <BpmController />
       </div>
-      <div className="flex flex-col items-start space-x-2 pb-3 mt-2">
+      <div className="sm:flex flex-col items-start space-x-2 pb-3 mt-2 hidden">
         <KeyAssignDialog />
       </div>
     </div>
