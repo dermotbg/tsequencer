@@ -29,9 +29,10 @@ export interface AssignedKeysActionType {
   setActiveKey: (instrument: keyof AssignedKeysType, keyCode: string) => void;
   setInputValue: (instrument: keyof AssignedKeysType, keyCode: string) => void;
   setPrevValue: () => void;
+  isDuplicate: (key: string) => boolean | undefined;
 }
 
-const initialState: AssignedKeysType | boolean = {
+const initialState: AssignedKeysType = {
   kick: { default: "K", active: "K", inputVal: "", previousVal: "" },
   clap: { default: "C", active: "C", inputVal: "", previousVal: "" },
   snare: { default: "S", active: "S", inputVal: "", previousVal: "" },
@@ -48,7 +49,7 @@ const initialState: AssignedKeysType | boolean = {
 
 const useAssignedKeysStore = create<
   AssignedKeysType & AssignedKeysActionType & AssignedKeyDefaultBoolean
->()((set) => ({
+>()((set, get) => ({
   ...initialState,
   isDefault: true,
   setIsDefault: (toggle: boolean) => set(() => ({ isDefault: toggle })),
@@ -83,6 +84,21 @@ const useAssignedKeysStore = create<
       }, {} as AssignedKeysType);
       return { ...state, ...updatedState };
     }),
+  isDuplicate: (value) => {
+    for (const key of Object.keys(get())) {
+      if (
+        key === "isDefault" ||
+        key === "setIsDefault" ||
+        key === "setInputValue" ||
+        key === "setPrevValue" ||
+        key === "isDuplicate"
+      ) {
+        return;
+      }
+      if (Object.values(get()[key as keyof AssignedKeysType].inputVal).includes(value)) return true;
+    }
+    return false;
+  },
 }));
 
 export default useAssignedKeysStore;

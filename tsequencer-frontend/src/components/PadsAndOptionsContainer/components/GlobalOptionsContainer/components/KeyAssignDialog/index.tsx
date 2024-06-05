@@ -10,39 +10,43 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { ArrowRight, Keyboard } from "lucide-react";
-
-import useAssignedKeysStore from "@/hooks/StateHooks/useAssignedKeysStore";
-import useInstruments from "@/hooks/useInstruments";
+import { Link } from "@tanstack/react-router";
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+
 import LoadingSpinner from "@/components/UtilityComponents/LoadingSpinner";
+import DisplayErrorMessage from "@/components/UtilityComponents/DisplayErrorMessage";
 
-import type { AssignedKeysType } from "@/hooks/StateHooks/useAssignedKeysStore";
-import { Link } from "@tanstack/react-router";
+import type {
+  AssignedKeyDefaultBoolean,
+  AssignedKeysActionType,
+  AssignedKeysType,
+} from "@/hooks/StateHooks/useAssignedKeysStore";
+import type { LoadedInstruments } from "@/hooks/useInstruments";
 
-const KeyAssignDialog = () => {
-  const instruments = useInstruments();
-  const assignedKeys = useAssignedKeysStore();
-
-  const handleKeyPress = (i: string, key: string) => {
-    if (!/^[a-zA-Z0-9]$/.test(key)) {
-      return;
-    }
-    assignedKeys.setInputValue(i as keyof AssignedKeysType, key.toUpperCase());
-    assignedKeys.setActiveKey(i as keyof AssignedKeysType, key.toUpperCase());
-  };
-
-  const onFalseSubmit = () => {
-    assignedKeys.setPrevValue();
-    assignedKeys.setIsDefault(false);
-  };
-
+const KeyAssignDialog = ({
+  instruments,
+  assignedKeys,
+  isKeyDialogOpen,
+  setIsKeyDialogOpen,
+  setKeyTrackingKeyHandler,
+  submitAssignedKeysHandler,
+  errorMessage,
+}: {
+  instruments: LoadedInstruments[];
+  assignedKeys: AssignedKeysType & AssignedKeysActionType & AssignedKeyDefaultBoolean;
+  isKeyDialogOpen: boolean;
+  setIsKeyDialogOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setKeyTrackingKeyHandler: (i: string, key: string) => void;
+  submitAssignedKeysHandler: () => void;
+  errorMessage: string | undefined;
+}) => {
   if (!instruments) return <LoadingSpinner />;
   if (!assignedKeys) return <LoadingSpinner />;
 
   return (
-    <Dialog>
+    <Dialog open={isKeyDialogOpen} onOpenChange={setIsKeyDialogOpen}>
       <DialogTrigger asChild>
         <Button className="hidden sm:flex bg-inherit text-stone-300 hover:bg-stone-600 hover:text-white rounded-md px-3 py-2 text-sm font-medium">
           <div className="flex items-center justify-around space-x-2 pb-3 mt-4">
@@ -58,7 +62,7 @@ const KeyAssignDialog = () => {
             Please select the keys you wish to assign to each instrument.
           </div>
           <DialogDescription>
-            <div className="pt-3 italic">
+            <span className="pt-3 italic">
               For more detailed instructions on how to use key tracking, please visit the tutorial
               <Link to="/tutorial">
                 <Button
@@ -68,7 +72,7 @@ const KeyAssignDialog = () => {
                   here.
                 </Button>
               </Link>
-            </div>
+            </span>
           </DialogDescription>
         </DialogHeader>
         {Object.keys(instruments).map((i) => {
@@ -101,21 +105,21 @@ const KeyAssignDialog = () => {
                       ? `${assignedKeys[i as keyof AssignedKeysType].default}`.toUpperCase()
                       : `${assignedKeys[i as keyof AssignedKeysType].previousVal}`.toUpperCase()
                   }
-                  onKeyDown={(e) => handleKeyPress(i, e.key)}
+                  onKeyDown={(e) => setKeyTrackingKeyHandler(i, e.key)}
                   onChange={() => {}}
                 />
               </div>
             </div>
           );
         })}
-        {/* {errorMessage ? <DisplayErrorMessage errorMessage={errorMessage} /> : null} */}
+        {errorMessage ? <DisplayErrorMessage errorMessage={errorMessage} /> : null}
         <DialogFooter className="p-4">
           <DialogClose asChild>
             <Button type="button" variant={"outline"}>
               Cancel
             </Button>
           </DialogClose>
-          <Button type="submit" onClick={onFalseSubmit}>
+          <Button type="submit" onClick={submitAssignedKeysHandler}>
             Submit
           </Button>
         </DialogFooter>
