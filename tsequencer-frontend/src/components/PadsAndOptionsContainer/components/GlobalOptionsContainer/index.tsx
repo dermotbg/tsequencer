@@ -12,11 +12,13 @@ import BpmController from "./components/BpmController";
 import KeyTrackController from "./components/KeyTrackController";
 import MetronomeController from "./components/MetromeController";
 import KeyAssignDialog from "./components/KeyAssignDialog";
+import useAssignedKeysStore from "@/hooks/StateHooks/useAssignedKeysStore";
 
 const GlobalOptionsContainer = () => {
   const [keysActive, setKeysActive] = useState<boolean>(false);
 
   const instruments = useInstruments();
+  const assignedKeys = useAssignedKeysStore();
   const { pushToSequencer, isPlaying } = useSequencer();
   const { level } = useVolumeStore();
   const { record, stepRef } = useRecordStore();
@@ -33,11 +35,12 @@ const GlobalOptionsContainer = () => {
     const keyPressFunction = (e: KeyboardEvent) => {
       keyPressHandler({
         instruments: validateInstrumentRack(instruments),
-        keyCode: e.code,
+        keyCode: e.key.toUpperCase(),
         pushToSequencer,
         volume: level,
         recording: recordingRef.current,
         stepRef,
+        assignedKeys,
       });
     };
 
