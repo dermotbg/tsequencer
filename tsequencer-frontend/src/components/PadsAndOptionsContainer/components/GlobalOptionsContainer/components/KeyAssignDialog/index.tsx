@@ -19,6 +19,7 @@ import { Label } from "@/components/ui/label";
 import LoadingSpinner from "@/components/UtilityComponents/LoadingSpinner";
 
 import type { AssignedKeysType } from "@/hooks/StateHooks/useAssignedKeysStore";
+import { Link } from "@tanstack/react-router";
 
 const KeyAssignDialog = () => {
   const instruments = useInstruments();
@@ -43,7 +44,7 @@ const KeyAssignDialog = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="bg-inherit text-stone-300 hover:bg-stone-600 hover:text-white rounded-md px-3 py-2 text-sm font-medium">
+        <Button className="hidden sm:flex bg-inherit text-stone-300 hover:bg-stone-600 hover:text-white rounded-md px-3 py-2 text-sm font-medium">
           <div className="flex items-center justify-around space-x-2 pb-3 mt-4">
             <Keyboard />
             <div>Assign Keys</div>
@@ -52,9 +53,22 @@ const KeyAssignDialog = () => {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Assign instruments to keyboard</DialogTitle>
+          <DialogTitle className="text-lg">Assign instruments to keyboard</DialogTitle>
+          <div className="pt-3 text-md">
+            Please select the keys you wish to assign to each instrument.
+          </div>
           <DialogDescription>
-            Please select the instrument and then press the key you wish to assign to it.
+            <div className="pt-3 italic">
+              For more detailed instructions on how to use key tracking, please visit the tutorial
+              <Link to="/tutorial">
+                <Button
+                  variant={"link"}
+                  className="bg-inherit text-sm justify-end text-blue-400 rounded-md pl-1 font-medium"
+                >
+                  here.
+                </Button>
+              </Link>
+            </div>
           </DialogDescription>
         </DialogHeader>
         {Object.keys(instruments).map((i) => {

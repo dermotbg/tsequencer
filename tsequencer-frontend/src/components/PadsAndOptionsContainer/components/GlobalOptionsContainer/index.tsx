@@ -52,18 +52,18 @@ const GlobalOptionsContainer = () => {
   }, [instruments, level, pushToSequencer, stepRef, keysActive, isPlaying]);
 
   return (
-    <div className="flex flex-row">
-      <div className="flex flex-col items-start">
+    <div className="flex flex-row gap-6">
+      <div className="hidden sm:flex flex-col items-start">
         <KeyTrackController
           disabled={windowSize.width < 640}
           keysActive={keysActive}
           setKeysActive={setKeysActive}
         />
+        <KeyAssignDialog />
+      </div>
+      <div className="flex flex-col items-start">
         <MetronomeController />
         <BpmController />
-      </div>
-      <div className="sm:flex flex-col items-start space-x-2 pb-3 mt-2 hidden">
-        <KeyAssignDialog />
       </div>
     </div>
   );

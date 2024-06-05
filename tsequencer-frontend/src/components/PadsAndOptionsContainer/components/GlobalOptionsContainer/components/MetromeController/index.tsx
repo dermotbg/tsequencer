@@ -6,7 +6,7 @@ import useMetronomeStore from "@/hooks/StateHooks/useMetronomeStore";
 const MetronomeController = () => {
   const metronome = useMetronomeStore();
   return (
-    <div className="flex items-center space-x-2 pb-3">
+    <div className="flex items-center space-x-2 pb-3 mt-4">
       <Switch id="metronome" name="metronome" onCheckedChange={() => metronome.set()} />
       <Label htmlFor="metronome">Metronome</Label>
     </div>
