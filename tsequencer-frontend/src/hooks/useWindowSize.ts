@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 
-// TODO: drop this
 const useWindowSize = () => {
   const [size, setSize] = useState([0, 0]);
 

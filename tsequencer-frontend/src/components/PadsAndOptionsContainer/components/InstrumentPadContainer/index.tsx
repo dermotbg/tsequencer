@@ -6,6 +6,7 @@ import { audioContext } from "@/utils/audioContext";
 import { playSample } from "@/utils/playSample";
 
 import InstrumentPad from "./components/InstrumentPad";
+import LoadingSpinner from "@/components/UtilityComponents/LoadingSpinner";
 
 import type { AvailableInstruments } from "@/types";
 
@@ -14,7 +15,7 @@ const InstrumentPadContainer = () => {
   const activePad = useActivePadStore();
 
   const volume = useVolumeStore();
-  if (!instruments) return <>Loading...</>;
+  if (!instruments) return <LoadingSpinner />;
 
   // TODO: turn off playback on click when isPlaying
   const padHandler = (element: AvailableInstruments) => {
