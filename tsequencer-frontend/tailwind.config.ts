@@ -48,9 +48,10 @@ const config = {
         "accordion-up": "accordion-up 0.2s ease-out",
       },
       boxShadow: {
-        "1-stack": "0px 10px 15px -3px #a3e635",
-        "2-stack": "0px 10px 15px -3px #3730a3",
-        "3-stack": "0px 10px 15px -3px #fbbf24",
+        "1-stack": "0 0 0 0.5rem #0ea5e9, 0 0 0 -0.5rem #0ea5e9",
+        "2-stack": "0 0 0 0.5rem #84cc16, 0 0 0 -0.5rem #84cc16",
+        "3-stack": "0 0 0 0.5rem #d946ef, 0 0 0 -0.5rem #d946ef",
+        "4-stack": "0 0 0 0.5rem #f43f5e, 0 0 0 -0.5rem #f43f5e",
       },
       textShadow: {
         sm: "0 1px 2px var(--tw-shadow-color)",
