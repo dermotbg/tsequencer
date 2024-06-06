@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -15,6 +16,7 @@ import SelectFormContainer from "../../../../../UtilityComponents/SelectInputCon
 import TextInput from "../../../../../UtilityComponents/TextInputContainer";
 
 import type { SaveDialogType } from "../../../../types";
+import LoadingSpinner from "@/components/UtilityComponents/LoadingSpinner";
 
 const SaveDialog = ({
   isMobile = false,
@@ -26,7 +28,9 @@ const SaveDialog = ({
   sequences,
   setSelection,
   updateHandler,
+  isLoading,
 }: SaveDialogType) => {
+  const [wasClicked, setWasClicked] = useState(false);
   return (
     <Dialog open={isSaveDialogOpen} onOpenChange={setIsSaveDialogOpen}>
       <DialogTrigger asChild>
@@ -54,8 +58,17 @@ const SaveDialog = ({
           />
           {errorMessage ? <DisplayErrorMessage errorMessage={errorMessage} /> : null}
           <DialogFooter className="p-4">
-            <Button className={isMobile ? "mb-2" : ""} type="submit">
-              Save
+            <Button
+              className={isMobile ? "mb-2" : ""}
+              type="submit"
+              onClick={() => {
+                setWasClicked(true);
+                setTimeout(() => {
+                  setWasClicked(false);
+                }, 1000);
+              }}
+            >
+              {isLoading && wasClicked ? <LoadingSpinner size={20} margin={0} /> : "Save"}
             </Button>
           </DialogFooter>
         </form>
@@ -67,7 +80,8 @@ const SaveDialog = ({
           submitHandler={updateHandler}
           sequences={sequences}
           setSelection={setSelection}
-          confirmText="Update"
+          confirmText={"Update"}
+          isLoading={isLoading}
         />
       </DialogContent>
     </Dialog>

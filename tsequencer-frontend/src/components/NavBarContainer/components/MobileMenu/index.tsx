@@ -27,6 +27,7 @@ const MobileNavMenu = ({
   registerHandler,
   isRegisterDialogOpen,
   setIsRegisterDialogOpen,
+  isLoading,
 }: MobileNavMenuType) => {
   return (
     <div className="sm:hidden" id="mobile-menu">
@@ -56,6 +57,7 @@ const MobileNavMenu = ({
               sequences={sequences}
               setSelection={setSelection}
               updateHandler={updateHandler}
+              isLoading={isLoading}
             />
             <LoadDialog
               isMobile={true}
@@ -79,6 +81,7 @@ const MobileNavMenu = ({
             registerHandler={registerHandler}
             isRegisterDialogOpen={isRegisterDialogOpen}
             setIsRegisterDialogOpen={setIsRegisterDialogOpen}
+            isLoading={isLoading}
           />
         )}
       </div>

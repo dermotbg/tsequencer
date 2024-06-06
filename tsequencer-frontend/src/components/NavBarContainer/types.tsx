@@ -28,6 +28,7 @@ export interface NavBarType {
   isRunning: boolean;
   updateHandler: (e: FormEvent) => Promise<void>;
   registerHandler: (e: FormEvent) => void;
+  isLoading: boolean;
 }
 
 export type NavBarMobileMenuType = Pick<NavBarType, "mobileMenuOpen" | "setMobileMenuOpen">;
@@ -56,6 +57,7 @@ export type MobileNavMenuType = Pick<
   | "setConfPassword"
   | "isRegisterDialogOpen"
   | "setIsRegisterDialogOpen"
+  | "isLoading"
 >;
 
 export type LoginLogicType = Pick<
@@ -68,6 +70,7 @@ export type LoginLogicType = Pick<
   | "setConfPassword"
   | "isRegisterDialogOpen"
   | "setIsRegisterDialogOpen"
+  | "isLoading"
 >;
 export interface LoginDialogType extends LoginLogicType {
   isMobile: boolean;
@@ -94,6 +97,7 @@ export type SaveLogicType = Pick<
   | "sequences"
   | "setSelection"
   | "updateHandler"
+  | "isLoading"
 >;
 export interface SaveDialogType extends SaveLogicType {
   isMobile: boolean;
@@ -120,6 +124,7 @@ export interface SelectFormType extends SelectLogicType {
   isMobile: boolean;
   confirmText: string;
   submitHandler: (e: FormEvent) => Promise<void>;
+  isLoading: boolean;
 }
 
 export interface InputFormType {

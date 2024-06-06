@@ -6,7 +6,7 @@ interface BPMStateType {
 }
 
 const useBPMStore = create<BPMStateType>()((set) => ({
-  bpm: 120,
+  bpm: 128,
   set: (bpm) => set(() => ({ bpm })),
 }));
 

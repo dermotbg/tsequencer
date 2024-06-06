@@ -37,6 +37,7 @@ const NavBar = ({
   registerHandler,
   isRegisterDialogOpen,
   setIsRegisterDialogOpen,
+  isLoading,
 }: NavBarType) => {
   return (
     <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -78,6 +79,7 @@ const NavBar = ({
                     sequences={sequences}
                     setSelection={setSelection}
                     updateHandler={updateHandler}
+                    isLoading={isLoading}
                   />
                   <LoadDialog
                     isMobile={false}
@@ -101,6 +103,7 @@ const NavBar = ({
                   registerHandler={registerHandler}
                   isRegisterDialogOpen={isRegisterDialogOpen}
                   setIsRegisterDialogOpen={setIsRegisterDialogOpen}
+                  isLoading={isLoading}
                 />
               )}
             </div>

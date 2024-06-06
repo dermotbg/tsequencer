@@ -3,12 +3,13 @@ import { useEffect, useState } from "react";
 import MobileNavMenu from "./components/MobileMenu";
 import NavBar from "./components/NavBar";
 
+import useIsLoadingStore from "@/hooks/StateHooks/useIsLoadingStore";
 import useLogin from "@/hooks/useLogin";
 import useMessageStore from "@/hooks/StateHooks/useMessageStore";
 import useRegisterUser from "@/hooks/useRegisterUser";
 import useSequencerStore from "@/hooks/StateHooks/useSequencerStore";
 import useSequencerActions from "@/hooks/useSequencerActions";
-import useUserStore from "@/hooks/StateHooks/UseUserStore";
+import useUserStore from "@/hooks/StateHooks/useUserStore";
 
 import { loadSequencerAsync } from "@/services/sequencerService";
 import { validateTokenAsync } from "@/services/loginService";
@@ -54,6 +55,7 @@ const NavBarContainer = () => {
   const sequencer = useSequencerStore();
   const user = useUserStore();
   const errorMessage = useMessageStore();
+  const { isLoading } = useIsLoadingStore();
   const { saveHandler, loadHandler, updateHandler } = useSequencerActions({
     sequences,
     seqName,
@@ -126,6 +128,7 @@ const NavBarContainer = () => {
         setConfPassword={setConfPassword}
         isRegisterDialogOpen={isRegisterDialogOpen}
         setIsRegisterDialogOpen={setIsRegisterDialogOpen}
+        isLoading={isLoading}
       />
       {mobileMenuOpen ? (
         <MobileNavMenu
@@ -150,6 +153,7 @@ const NavBarContainer = () => {
           setConfPassword={setConfPassword}
           isRegisterDialogOpen={isRegisterDialogOpen}
           setIsRegisterDialogOpen={setIsRegisterDialogOpen}
+          isLoading={isLoading}
         />
       ) : null}
     </nav>
