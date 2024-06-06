@@ -13,11 +13,17 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 
-const ClearSequencerController = ({ clearSequencer }: { clearSequencer: () => void }) => {
+const ClearSequencerController = ({
+  clearSequencer,
+  isRunning,
+}: {
+  clearSequencer: () => void;
+  isRunning: boolean;
+}) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button className="p-8 border-4 rounded-md m-2">
+        <Button disabled={isRunning === true} className="p-8 border-4 rounded-md m-2">
           <Trash2 />
         </Button>
       </AlertDialogTrigger>

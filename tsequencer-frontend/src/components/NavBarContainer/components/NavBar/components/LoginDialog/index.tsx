@@ -16,6 +16,7 @@ import RegisterDialog from "../RegisterDialog";
 import TextInput from "../../../../../UtilityComponents/TextInputContainer";
 
 import type { LoginDialogType } from "../../../../types";
+import LoadingSpinner from "@/components/UtilityComponents/LoadingSpinner";
 
 const LoginDialog = ({
   isMobile = false,
@@ -27,6 +28,7 @@ const LoginDialog = ({
   registerHandler,
   isRegisterDialogOpen,
   setIsRegisterDialogOpen,
+  isLoading,
 }: LoginDialogType) => {
   return (
     <Dialog>
@@ -59,7 +61,7 @@ const LoginDialog = ({
               </Button>
             </DialogClose>
             <Button className={isMobile ? "mb-2" : ""} type="submit">
-              Login
+              {isLoading ? <LoadingSpinner size={20} margin={0} /> : "Login"}
             </Button>
           </DialogFooter>
         </form>

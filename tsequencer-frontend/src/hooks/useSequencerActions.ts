@@ -4,8 +4,9 @@ import { prepareSaveSequencerObject } from "@/components/NavBarContainer/utils/p
 import { saveSequencerAsync, updateSequencerAsync } from "@/services/sequencerService";
 import { validateString } from "@/utils/typeChecking";
 
+import useIsLoadingStore from "./StateHooks/useIsLoadingStore";
 import useSequencerStore from "./StateHooks/useSequencerStore";
-import useUserStore from "./StateHooks/UseUserStore";
+import useUserStore from "./StateHooks/useUserStore";
 import useMessageStore from "./StateHooks/useMessageStore";
 
 import type { FormEvent } from "react";
@@ -29,14 +30,18 @@ const useSequencerActions = ({
   const sequencer = useSequencerStore();
   const user = useUserStore();
   const errorMessage = useMessageStore();
+  const isLoading = useIsLoadingStore();
 
   const saveHandler = async (e: FormEvent) => {
     e.preventDefault();
+    isLoading.set(true);
     try {
       await saveSequencerAsync(prepareSaveSequencerObject(sequencer.seq, user.username, seqName));
       toast({ description: "Save successful." });
       setIsSaveDialogOpen(false);
+      isLoading.set(false);
     } catch (error) {
+      isLoading.set(false);
       errorMessage.set(`${error}`.slice(29));
       setTimeout(() => {
         errorMessage.set(undefined);
@@ -46,6 +51,7 @@ const useSequencerActions = ({
 
   const loadHandler = async (e: FormEvent) => {
     e.preventDefault();
+    isLoading.set(true);
     if (sequences !== undefined) {
       const selectedSequencer = sequences.find((s) => s.name === validateString(selection));
       if (selectedSequencer) {
@@ -53,20 +59,24 @@ const useSequencerActions = ({
         setIsLoadDialogOpen(false);
       }
     }
+    isLoading.set(false);
   };
 
   const updateHandler = async (e: FormEvent) => {
     e.preventDefault();
     console.log(sequences);
     try {
+      isLoading.set(true);
       const selectedSeq = sequences?.find((s) => s.name === selection);
       if (selectedSeq) {
         selectedSeq.sequence = sequencer.seq;
         await updateSequencerAsync(selectedSeq);
         toast({ description: "Update successful." });
         setIsSaveDialogOpen(false);
+        isLoading.set(false);
       }
     } catch (error) {
+      isLoading.set(false);
       errorMessage.set(`${error}`.slice(29));
       setTimeout(() => {
         errorMessage.set(undefined);

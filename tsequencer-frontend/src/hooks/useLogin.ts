@@ -2,8 +2,9 @@ import { loginRequestAsync, logoutRequestAsync } from "@/services/loginService";
 
 import { toast } from "@/components/ui/use-toast";
 
+import useIsLoadingStore from "./StateHooks/useIsLoadingStore";
 import useMessageStore from "./StateHooks/useMessageStore";
-import useUserStore from "./StateHooks/UseUserStore";
+import useUserStore from "./StateHooks/useUserStore";
 
 import type { FormEvent } from "react";
 
@@ -17,17 +18,21 @@ interface LoginType {
 const useLogin = ({ username, password, setUsername, setPassword }: LoginType) => {
   const user = useUserStore();
   const errorMessage = useMessageStore();
+  const isLoading = useIsLoadingStore();
 
   const loginHandler = async (e: FormEvent) => {
     e.preventDefault();
+    isLoading.set(true);
     try {
       const resp = await loginRequestAsync({ username, password });
       // set string to LS only to fire token validation when it's defined
       localStorage.setItem("user", JSON.stringify("loggedIn"));
       user.setUsername(resp.username);
       user.setAuthenticated(true);
+      isLoading.set(false);
       toast({ description: "You are now logged in." });
     } catch (error) {
+      isLoading.set(false);
       errorMessage.set(`${error}`.slice(7));
       setTimeout(() => {
         errorMessage.set(undefined);

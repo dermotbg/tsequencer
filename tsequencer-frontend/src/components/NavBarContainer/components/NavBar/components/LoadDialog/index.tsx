@@ -15,6 +15,7 @@ const LoadDialog = ({
   setSelection,
   loadHandler,
   isRunning,
+  isLoading,
 }: LoadDialogType) => {
   return (
     <Dialog open={isLoadDialogOpen} onOpenChange={setIsLoadDialogOpen}>
@@ -45,6 +46,7 @@ const LoadDialog = ({
           setSelection={setSelection}
           isMobile={isMobile}
           confirmText="Load"
+          isLoading={isLoading}
         />
         {errorMessage ? <DisplayErrorMessage errorMessage={errorMessage} /> : null}
       </DialogContent>
