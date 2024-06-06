@@ -19,7 +19,7 @@ const ControllerContainer = ({
     <div className="p-10">
       <LaunchController launchHandler={launchHandler} isRunning={isRunning} />
       <RecordController recordHandler={recordHandler} isRecording={isRecording} />
-      <ClearSequencerController clearSequencer={clearSequencer} />
+      <ClearSequencerController clearSequencer={clearSequencer} isRunning={isRunning} />
     </div>
   );
 };

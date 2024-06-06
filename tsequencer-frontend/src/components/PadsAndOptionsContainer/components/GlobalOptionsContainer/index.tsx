@@ -6,6 +6,7 @@ import useVolumeStore from "@/hooks/StateHooks/useVolumeStore";
 import useInstruments from "@/hooks/useInstruments";
 import useMessageStore from "@/hooks/StateHooks/useMessageStore";
 import useSequencer from "@/hooks/useSequencer";
+import useSequencerStore from "@/hooks/StateHooks/useSequencerStore";
 import useWindowSize from "@/hooks/useWindowSize";
 
 import { validateInstrumentRack } from "@/utils/typeChecking";
@@ -27,6 +28,7 @@ const GlobalOptionsContainer = () => {
   const instruments = useInstruments();
   const assignedKeys = useAssignedKeysStore();
   const { pushToSequencer, isPlaying } = useSequencer();
+  const { isRunning } = useSequencerStore();
   const { level } = useVolumeStore();
   const { record, stepRef } = useRecordStore();
   const windowSize = useWindowSize();
@@ -105,7 +107,7 @@ const GlobalOptionsContainer = () => {
         />
       </div>
       <div className="flex flex-col items-start">
-        <MetronomeController />
+        <MetronomeController isRunning={isRunning} />
         <BpmController />
       </div>
     </div>
