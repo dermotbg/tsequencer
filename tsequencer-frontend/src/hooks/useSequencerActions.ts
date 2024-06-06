@@ -36,6 +36,10 @@ const useSequencerActions = ({
     e.preventDefault();
     isLoading.set(true);
     try {
+      if (sequences && sequences?.length >= 10)
+        throw new Error(
+          "Something went wrong: You have reached the maximum number of sequences, please delete or update your current sequences",
+        );
       await saveSequencerAsync(prepareSaveSequencerObject(sequencer.seq, user.username, seqName));
       toast({ description: "Save successful." });
       setIsSaveDialogOpen(false);
