@@ -68,6 +68,7 @@ const MobileNavMenu = ({
               setSelection={setSelection}
               loadHandler={loadHandler}
               isRunning={isRunning}
+              isLoading={isLoading}
             />
           </div>
         ) : (

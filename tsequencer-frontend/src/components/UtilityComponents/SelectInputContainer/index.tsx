@@ -28,7 +28,7 @@ const SelectFormContainer = ({
   sequences,
   setSelection,
   confirmText,
-  isLoading,
+  isLoading = false,
 }: SelectFormType) => {
   const [wasClicked, setWasClicked] = useState(false);
   return (

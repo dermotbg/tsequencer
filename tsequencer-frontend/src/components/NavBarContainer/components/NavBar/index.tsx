@@ -90,6 +90,7 @@ const NavBar = ({
                     setSelection={setSelection}
                     loadHandler={loadHandler}
                     isRunning={isRunning}
+                    isLoading={isLoading}
                   />
                 </>
               ) : (

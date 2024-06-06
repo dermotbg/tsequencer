@@ -51,6 +51,7 @@ const useSequencerActions = ({
 
   const loadHandler = async (e: FormEvent) => {
     e.preventDefault();
+    isLoading.set(true);
     if (sequences !== undefined) {
       const selectedSequencer = sequences.find((s) => s.name === validateString(selection));
       if (selectedSequencer) {
@@ -58,6 +59,7 @@ const useSequencerActions = ({
         setIsLoadDialogOpen(false);
       }
     }
+    isLoading.set(false);
   };
 
   const updateHandler = async (e: FormEvent) => {

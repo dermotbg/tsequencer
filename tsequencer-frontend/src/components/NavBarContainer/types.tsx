@@ -112,6 +112,7 @@ export type LoadLogicType = Pick<
   | "setSelection"
   | "loadHandler"
   | "isRunning"
+  | "isLoading"
 >;
 export interface LoadDialogType extends LoadLogicType {
   isMobile: boolean;
