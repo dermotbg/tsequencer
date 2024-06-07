@@ -68,7 +68,6 @@ const useSequencerActions = ({
 
   const updateHandler = async (e: FormEvent) => {
     e.preventDefault();
-    console.log(sequences);
     try {
       isLoading.set(true);
       const selectedSeq = sequences?.find((s) => s.name === selection);

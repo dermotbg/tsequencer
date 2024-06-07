@@ -55,7 +55,7 @@ const NavBarContainer = () => {
   const sequencer = useSequencerStore();
   const user = useUserStore();
   const errorMessage = useMessageStore();
-  const { isLoading } = useIsLoadingStore();
+  const { isLoading, set: setIsLoading } = useIsLoadingStore();
   const { saveHandler, loadHandler, updateHandler } = useSequencerActions({
     sequences,
     seqName,
@@ -66,6 +66,7 @@ const NavBarContainer = () => {
 
   // Login Validation Effect
   useEffect(() => {
+    setIsLoading(true);
     const runTokenValidation = async () => {
       // fetch validation info from BE
       const userValidation = await validateTokenAsync();
@@ -84,8 +85,8 @@ const NavBarContainer = () => {
     const tokenValidationPoll = setInterval(() => {
       // start polling to validate access token if user has already gone through loop
       if (localStorage.getItem("user")) runTokenValidation();
+      setIsLoading(false);
     }, 2000);
-
     return () => clearInterval(tokenValidationPoll);
   }, [user, user.isAuthenticated]);
 
