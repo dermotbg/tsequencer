@@ -16,6 +16,7 @@ import RegisterDialog from "../RegisterDialog";
 import TextInput from "../../../../../UtilityComponents/TextInputContainer";
 
 import type { LoginDialogType } from "../../../../types";
+import LoadingSpinner from "@/components/UtilityComponents/LoadingSpinner";
 
 const LoginDialog = ({
   isMobile = false,
@@ -27,19 +28,21 @@ const LoginDialog = ({
   registerHandler,
   isRegisterDialogOpen,
   setIsRegisterDialogOpen,
+  isLoading,
 }: LoginDialogType) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        {!isMobile ? (
-          <Button className="bg-inherit text-stone-300 hover:bg-stone-600 hover:text-white rounded-md px-3 py-2 text-sm font-medium">
-            Login
-          </Button>
-        ) : (
-          <Button className="bg-inherit min-w-full block text-left text-stone-300 hover:bg-stone-700 hover:text-white rounded-md px-3 py-2 text-md font-medium">
-            Login
-          </Button>
-        )}
+        <Button
+          disabled={isLoading}
+          className={
+            !isMobile
+              ? "bg-inherit text-stone-300 hover:bg-stone-600 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
+              : "bg-inherit min-w-full block text-left text-stone-300 hover:bg-stone-700 hover:text-white rounded-md px-3 py-2 text-md font-medium"
+          }
+        >
+          Login
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
@@ -59,7 +62,7 @@ const LoginDialog = ({
               </Button>
             </DialogClose>
             <Button className={isMobile ? "mb-2" : ""} type="submit">
-              Login
+              {isLoading ? <LoadingSpinner size={20} margin={0} /> : "Login"}
             </Button>
           </DialogFooter>
         </form>

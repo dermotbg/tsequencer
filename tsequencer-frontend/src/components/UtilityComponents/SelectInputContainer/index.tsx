@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   DialogClose,
@@ -17,6 +18,7 @@ import {
 
 import type { LoadedSeqType } from "@/services/sequencerService";
 import type { SelectFormType } from "@/components/NavBarContainer/types";
+import LoadingSpinner from "../LoadingSpinner";
 
 const SelectFormContainer = ({
   title,
@@ -26,7 +28,9 @@ const SelectFormContainer = ({
   sequences,
   setSelection,
   confirmText,
+  isLoading = false,
 }: SelectFormType) => {
+  const [wasClicked, setWasClicked] = useState(false);
   return (
     <>
       <DialogHeader>
@@ -60,8 +64,17 @@ const SelectFormContainer = ({
               Cancel
             </Button>
           </DialogClose>
-          <Button className={isMobile ? "mb-2" : ""} type="submit">
-            {confirmText}
+          <Button
+            className={isMobile ? "mb-2" : ""}
+            type="submit"
+            onClick={() => {
+              setWasClicked(true);
+              setTimeout(() => {
+                setWasClicked(false);
+              }, 1000);
+            }}
+          >
+            {isLoading && wasClicked ? <LoadingSpinner size={20} margin={0} /> : confirmText}
           </Button>
         </DialogFooter>
       </form>

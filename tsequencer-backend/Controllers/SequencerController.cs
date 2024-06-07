@@ -65,6 +65,11 @@ public class SequencerController : Controller
       return BadRequest("Sequencer already exists, please update below");
     }
 
+    var userSeqs = await _sequencerService.GetUserSequencersAsync(user.Id);
+    if(userSeqs.Count >= 10 ){
+      return BadRequest("You have reached the maximum number of sequences, please delete or update your current sequences");
+    }
+
     Sequencer newSequence = new Sequencer
     {
       Name = newSequenceBody.Name.ToLower(),
