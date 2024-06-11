@@ -30,50 +30,40 @@ ___
 
 <h1 align="center">Current State</h1>
 
-<h2 align="center">Landing:</h2>
-
-<div align="center">
-  <img src="https://github.com/dermotbg/tsequencer/assets/123154617/5c7675d8-064f-48d6-9076-b260b51b8b2b" alt="Landing" width="80%" height="80%"/>
-</div>
-
-<h2 align="center">Logged in + Playing:</h2>
+<h2 align="center">Sequencer:</h2>
 <div align="center">
   <img src="https://github.com/dermotbg/tsequencer/assets/123154617/611b2c74-75fb-42ab-95db-3ce437632afe" alt="Logged in + Playing" width="80%" height="80%" />
 </div>
 
 <h2 align="center">Mixing Desk (WIP):</h2>
 <div align="center">
-  <img src="https://github.com/dermotbg/tsequencer/assets/123154617/db180368-e2c4-4432-8fc7-62f82cd97f0e" alt="Mixing Desk" width="80%" height="80%" />
+  <img src="https://github.com/dermotbg/tsequencer/assets/123154617/4f79af58-4f18-4781-9293-fee90cedcda1" alt="Mixing Desk" width="80%" height="80%" />
 </div>
 
-<h2 align="center">Save/Update Dialog:</h2>
-<div align="center">
-  <img src="https://github.com/dermotbg/tsequencer/assets/123154617/ba8477e0-f204-4e2f-b2e0-b034fbae6ebb" alt="Save/Update Dialog" width="80%" height="80%"/>
-</div>
-
-<h2 align="center">Load Dialog:</h2>
-<div align="center">
-  <img src="https://github.com/dermotbg/tsequencer/assets/123154617/290f2c1c-9ccf-41cd-ba1d-05feccde334b" alt="Load Dialog" width="80%" height="80%" />
-</div>
-
-<h2 align="center">Key Mapping Dialog:</h2>
-<div align="center">
-  <img src="https://github.com/dermotbg/tsequencer/assets/123154617/d48e73b9-5521-43cd-a4bd-88c23543f95a" alt="Key Mapping Dialog" width="80%" height="80%" />
-</div>
-
-<h2 align="center">Key Sequencer Dialog:</h2>
-<div align="center">
-  <img src="https://github.com/dermotbg/tsequencer/assets/123154617/c3df441e-77d0-4e2a-b867-e7189fdabd7b" alt="Clear Sequencer Dialog" width="80%" height="80%" />
-</div>
-
-<h2 align="center">KeyMobile View (WIP)</h2>
+<h2 align="center">Mobile View (WIP)</h2>
 <div align="center">
   <img src="https://github.com/dermotbg/tsequencer/assets/123154617/3fc0778e-4e81-470c-b669-b5dc80f8501c" alt="Mobile View" />
+  <img src="https://github.com/dermotbg/tsequencer/assets/123154617/4c8c64fc-83ba-45c9-bff2-8ed252c3fe12" alt="Mobile View Mixing Desk"  />
 </div>
 
-<h2 align="center">Mobile View Mixing Desk (WIP)</h2>
+<h2 align="center">Tutorial:</h2>
 <div align="center">
-  <img src="https://github.com/dermotbg/tsequencer/assets/123154617/4c8c64fc-83ba-45c9-bff2-8ed252c3fe12" alt="Mobile View Mixing Desk"  />
+  <img src="https://github.com/dermotbg/tsequencer/assets/123154617/20c999b2-76b6-4c7c-980b-d3a52a8cf223" alt="Tutorial" width="80%" height="80%" />
+  <img src="https://github.com/dermotbg/tsequencer/assets/123154617/7a805be1-4719-4d6e-adcf-78ae26f5b7a0" alt="Tutorial-2" width="80%" height="80%" />
+</div>
+
+<h2 align="center">Dialogs:</h2>
+<div align="center">
+  <img src="https://github.com/dermotbg/tsequencer/assets/123154617/ba8477e0-f204-4e2f-b2e0-b034fbae6ebb" alt="Save/Update Dialog" width="20%" height="20%"/>
+  <img src="https://github.com/dermotbg/tsequencer/assets/123154617/290f2c1c-9ccf-41cd-ba1d-05feccde334b" alt="Load Dialog" width="20%" height="20%" />
+  <img src="https://github.com/dermotbg/tsequencer/assets/123154617/c3df441e-77d0-4e2a-b867-e7189fdabd7b" alt="Clear Sequencer Dialog" width="20%" height="20%" />
+  <img src="https://github.com/dermotbg/tsequencer/assets/123154617/d48e73b9-5521-43cd-a4bd-88c23543f95a" alt="Key Mapping Dialog" width="50%" height="20%" />
+</div>
+
+<h2 align="center">Tutorial (Mobile):</h2>
+<div align="center">
+  <img src="https://github.com/dermotbg/tsequencer/assets/123154617/8c4a3b10-940b-4ae0-b518-fffbc7636b38" alt="Tutorial-mobile" />
+  <img src="https://github.com/dermotbg/tsequencer/assets/123154617/c3d2c962-2118-4fd4-b54c-3f1b30f1f565" alt="Tutorial-2-mobile" />
 </div>
 
 ---
