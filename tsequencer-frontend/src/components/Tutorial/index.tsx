@@ -10,6 +10,59 @@ const Tutorial = () => {
           className="mt-10"
         />
       </div>
+      <div className="flex flex-col items-center">
+        <h1 className="text-4xl text-stone-300 shadow-black text-shadow-md">
+          What is a Step Sequencer?
+        </h1>
+        <p className="text-stone-300 shadow-black text-shadow-md">
+          A sequencer in the broader term is a tool that is used to playback notes of an instrument,
+          or playback samples for you. This can be a real-time sequencer, which would be ideal for
+          recording a keyboard melody from a synthesizer, or a step sequencer which offers a set
+          grid of places where instruments or samples can be played. Step sequencers are used in the
+          overwhelming majority of drum machines and samplers in electronic music, as the desired
+          patterns are usually static don't fall outside of the grid.
+        </p>
+        <p className="text-stone-300 shadow-black text-shadow-md">
+          The grid, as mentioned above are the divisions of the time across the span of the full
+          sequence. In the example of this sequencer, we are using a single measure 4/4 time
+          signature with subdivisions of 1/16th notes. In most cases of electronic music that you
+          hear daily, the subdivisons used won't go past the 1/16th note grid, but doing so can
+          create interesting results. These subdivisons are commonly called steps of the sequencer.
+          The speed of the sequence is set by the BPM or Beats Per Minute.
+        </p>
+        <p className="text-stone-300 shadow-black text-shadow-md">
+          Each row of four steps in our sequencer represents one beat of the 4/4 measure. This is
+          then broken into four columns for each row on the grid, all represtening subdivisons of
+          that one beat measure per row. This results in the 4x4 or 1/16th grid. By placing an
+          instrument or sample within a step, this tells the sequencer to play that instrument when
+          the step is called. You can see each step being called by its visual cue. The sequencer
+          will loop continuously, playing the notes in order from step one to sixteen.
+        </p>
+        <p className="text-stone-300 shadow-black text-shadow-md">
+          If you're still here, congrats! That was very wordy. The best way to get your head around
+          it is just just experiment. Start off with the Kickdrum sample in this sequencer and place
+          it on the on-beats of the bar, these are the steps in the leftmost column (1,5,9,13). Now
+          you have a 4/4 drum beat which is 90% of modern music. Then select a different sample for
+          the off beats, and your ears will tell you more than text on a screen ever will. Most
+          importantly, have fun. That's what it's about. For more info on what exactly each button
+          and option does, see below.
+        </p>
+        <p className="text-stone-300 shadow-black text-shadow-md">
+          Prefer video format for information? Check out the great overview by Roland here
+        </p>
+        <div className="aspect-video">
+          <iframe
+            className="w-full h-full"
+            width="853"
+            height="480"
+            src="https://www.youtube.com/embed/09zHp2xzErA"
+            title="How To Use A Step Sequencer...Electronic Music For Beginners!"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
+          />
+        </div>
+      </div>
       <div className="flex flex-row justify-center">
         <Tabs defaultValue="instrument-pad" className="bg-stone-800 w-11/12 h-full rounded-md">
           <TabsList className="grid w-full grid-cols-4 bg-inherit text-stone-300  ">
@@ -21,7 +74,7 @@ const Tutorial = () => {
           <TabsContent value="instrument-pad">
             <div className="relative text-center">
               <div
-                className="bg-repeat bg-center min-h-dvh"
+                className="bg-repeat bg-center opacity-15 min-h-dvh"
                 style={{
                   backgroundImage:
                     "url(https://github.com/dermotbg/tsequencer/assets/123154617/b0b98744-fd72-4656-9a23-265009743355",
@@ -64,7 +117,7 @@ const Tutorial = () => {
           <TabsContent value="sequencer">
             <div className="relative text-center">
               <div
-                className="bg-repeat bg-left-top sm:bg-center min-h-dvh"
+                className="bg-repeat bg-left-top opacity-15 sm:bg-center min-h-dvh"
                 style={{
                   backgroundImage:
                     "url(https://github.com/dermotbg/tsequencer/assets/123154617/62e3fedb-fa16-4552-b689-7a5d00f4192d",
@@ -112,7 +165,7 @@ const Tutorial = () => {
           <TabsContent value="mixing-desk">
             <div className="relative text-center">
               <div
-                className="bg-repeat bg-center min-h-dvh"
+                className="bg-repeat bg-center opacity-15 min-h-dvh"
                 style={{
                   backgroundImage:
                     "url(https://github.com/dermotbg/tsequencer/assets/123154617/83f18af9-2111-4f70-9024-90f5cfcd4d23",
@@ -161,7 +214,7 @@ const Tutorial = () => {
           <TabsContent value="global-options">
             <div className="relative text-center">
               <div
-                className=" bg-center min-h-dvh bg-repeat-y"
+                className=" bg-center opacity-15 min-h-dvh bg-repeat-y"
                 style={{
                   backgroundImage:
                     "url(https://github.com/dermotbg/tsequencer/assets/123154617/b1533131-f516-4fa0-94b5-c8f7e3cbe449",
@@ -195,7 +248,6 @@ const Tutorial = () => {
                 <div className="p-4">
                   <h3>Key Tracking</h3>
                   <p className="p-4 m-4 inline-flex bg-black/75 text-shadow-lg rounded-md">
-                    {" "}
                     *Key Tracking is only available on Desktop
                   </p>
                   <p className="p-4 m-4 inline-flex bg-black/75 text-shadow-lg rounded-md">
