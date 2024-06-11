@@ -5,6 +5,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const Tutorial = () => {
   return (
@@ -23,13 +24,13 @@ const Tutorial = () => {
               style={{
                 color: "#d6d3d1",
               }}
-              className="text-shadow-md items-center justify-center text-center text-4xl text-stone-300 shadow-black"
+              className="items-center justify-center text-center text-4xl text-stone-300"
             >
               <h1>What is a Step Sequencer?</h1>
             </AccordionTrigger>
             <AccordionContent>
               <div className="flex flex-col items-center bg-black/25">
-                <p className="text-shadow-md max-w-4/5 p-5 text-stone-300 shadow-black">
+                <p className="text-shadow-md max-w-4/5 p-5 text-stone-300">
                   A sequencer, in broader terms is a tool that is used to playback notes of an
                   instrument. This can be a real-time sequencer, which would be ideal for recording
                   a keyboard melody from a synthesizer, or a step sequencer which offers a set grid
@@ -39,7 +40,7 @@ const Tutorial = () => {
                   samplers in electronic music, as the desired patterns are usually static and don't
                   fall outside of the grid.
                 </p>
-                <p className="text-shadow-md max-w-4/5 text-pretty p-5 text-stone-300 shadow-black">
+                <p className="text-shadow-md max-w-4/5 text-pretty p-5 text-stone-300">
                   The grid, as mentioned above, consist of the divisions of the time across the span
                   of the full sequence. In the example of this sequencer, we are using a single
                   measure 4/4 time signature with subdivisions of 1/16th notes. In most cases of
@@ -49,7 +50,7 @@ const Tutorial = () => {
                   These subdivisions are commonly called steps of the sequencer. The speed of the
                   sequence is set by the BPM or Beats Per Minute.
                 </p>
-                <p className="text-shadow-md max-w-4/5 text-pretty p-5 text-stone-300 shadow-black">
+                <p className="text-shadow-md max-w-4/5 text-pretty p-5 text-stone-300">
                   Each row of four steps in our sequencer represents one beat of the 4/4 measure.
                   This is then broken into four columns for each row on the grid, all representing
                   subdivisons of that one beat measure per row. This results in the 4x4 or 1/16th
@@ -58,7 +59,7 @@ const Tutorial = () => {
                   by its visual cue. The sequencer will loop continuously, playing the notes in
                   order from step one to sixteen.
                 </p>
-                <p className="text-shadow-md max-w-4/5 text-pretty p-5 text-stone-300 shadow-black">
+                <p className="text-shadow-md max-w-4/5 text-pretty p-5 text-stone-300">
                   If you're still here, congrats! That was very wordy. The best way to get your head
                   around it is just to experiment. Start off with the Kickdrum sample in this
                   sequencer and place it on the on-beats of the bar, these are the steps in the
@@ -105,7 +106,7 @@ const Tutorial = () => {
             <TabsTrigger value="instrument-pad">Pads</TabsTrigger>
             <TabsTrigger value="sequencer">Sequencer</TabsTrigger>
             <TabsTrigger value="mixing-desk">Mixing Desk</TabsTrigger>
-            <TabsTrigger value="global-options">Controls</TabsTrigger>
+            <TabsTrigger value="global-options">Options</TabsTrigger>
           </TabsList>
           <TabsContent value="instrument-pad">
             <div className="relative text-center">
@@ -117,22 +118,22 @@ const Tutorial = () => {
                 }}
               ></div>
               <div className="absolute left-0 top-0 mt-10 w-full text-center text-white">
-                <h2 className="m-4 inline-flex rounded-md bg-black/75 p-4 text-2xl font-bold text-shadow-lg sm:text-6xl">
+                <h2 className="m-4 inline-flex rounded-md bg-black/75 p-4 text-2xl font-bold shadow-1-stack sm:text-6xl">
                   INSTRUMENT PAD
                 </h2>
                 <div className="flex flex-col items-center p-4">
-                  <p className="m-4 inline-flex rounded-md bg-black/75 p-4 text-shadow-lg">
+                  <p className="m-4 inline-flex rounded-md bg-black/75 p-4">
                     Each instrument has a dedicated pad. Clicking on the pad will launch the sample
                     and assign that sample to be the “active pad”.
                   </p>
-                  <p className="m-4 inline-flex rounded-md bg-black/75 p-4 text-shadow-lg">
+                  <p className="m-4 inline-flex rounded-md bg-black/75 p-4">
                     You can tell which pad is active as the pad will be highlighted.
                   </p>
-                  <p className="m-4 inline-flex rounded-md bg-black/75 p-4 text-shadow-lg">
+                  <p className="m-4 inline-flex rounded-md bg-black/75 p-4">
                     To add an instrument to a step in the sequencer, ensure the desired instrument
                     is set as the active pad, then click the desired sequencer step.
                   </p>
-                  <p className="m-4 inline-flex rounded-md bg-black/75 p-4 text-shadow-lg">
+                  <p className="m-4 inline-flex rounded-md bg-black/75 p-4">
                     To default to no active pad, click on the currently active pad.
                   </p>
                 </div>
@@ -149,32 +150,32 @@ const Tutorial = () => {
                 }}
               ></div>
               <div className="absolute left-0 top-0 mt-10 w-full text-center text-white">
-                <h2 className="m-4 inline-flex rounded-md bg-black/75 p-4 text-2xl font-bold text-shadow-lg sm:text-6xl">
+                <h2 className="m-4 inline-flex rounded-md bg-black/75 p-4 text-2xl font-bold shadow-2-stack sm:text-6xl">
                   SEQUENCER
                 </h2>
-                <div className="overflow-y-scroll p-4">
-                  <p className="mb-1 inline-flex rounded-md bg-black/75 p-4 text-shadow-lg sm:m-4">
+                <div className="overflow-y-scroll p-4 sm:overflow-y-hidden">
+                  <p className="mb-1 inline-flex rounded-md bg-black/75 p-4 sm:m-4">
                     The sequencer is a one bar length 4/4 grid, split into 16ths, with the leftmost
                     buttons being the on-beat steps.
                   </p>
-                  <p className="mb-1 inline-flex rounded-md bg-black/75 p-4 text-shadow-lg sm:m-4">
+                  <p className="mb-1 inline-flex rounded-md bg-black/75 p-4 sm:m-4">
                     It shows the currently playing step by changing the border color, the
                     highlighted border colors represent how many samples are loaded into the step.
                   </p>
-                  <p className="mb-1 inline-flex rounded-md bg-black/75 p-4 text-shadow-lg sm:m-4">
+                  <p className="mb-1 inline-flex rounded-md bg-black/75 p-4 sm:m-4">
                     When you assign instruments to a step, you will see the first and last letter of
                     those instruments populate the step button.{" "}
                   </p>
-                  <p className="mb-1 inline-flex rounded-md bg-black/75 p-4 text-shadow-lg sm:m-4">
+                  <p className="mb-1 inline-flex rounded-md bg-black/75 p-4 sm:m-4">
                     When you click a specific step without an active pad, it will load the mixing
                     desk for that step, where you can assign different volumes to all the
                     instruments of that step.{" "}
                   </p>
-                  <p className="mb-1 inline-flex rounded-md bg-black/75 p-4 text-shadow-lg sm:m-4">
+                  <p className="mb-1 inline-flex rounded-md bg-black/75 p-4 sm:m-4">
                     The launch controls are found underneath the sequencer, recording toggles if key
                     press recording is active, and trash clears the sequencer to a blank slate.{" "}
                   </p>
-                  <p className="mb-1 inline-flex rounded-md bg-black/75 p-4 text-shadow-lg sm:m-4">
+                  <p className="mb-1 inline-flex rounded-md bg-black/75 p-4 sm:m-4">
                     The sequencer can be launched using the launch controls below the steps.
                   </p>
                 </div>
@@ -191,23 +192,23 @@ const Tutorial = () => {
                 }}
               ></div>
               <div className="absolute left-0 top-0 mt-10 w-full text-center text-white">
-                <h2 className="m-4 inline-flex rounded-md bg-black/75 p-4 text-2xl font-bold text-shadow-lg sm:text-6xl">
+                <h2 className="m-4 inline-flex rounded-md bg-black/75 p-4 text-2xl font-bold shadow-3-stack sm:text-6xl">
                   MIXING DESK
                 </h2>
                 <div className="p-4">
-                  <p className="m-4 inline-flex rounded-md bg-black/75 p-4 text-shadow-lg">
+                  <p className="m-4 inline-flex rounded-md bg-black/75 p-4">
                     Each step has its own selection of volume controls.
                   </p>
-                  <p className="m-4 inline-flex rounded-md bg-black/75 p-4 text-shadow-lg">
+                  <p className="m-4 inline-flex rounded-md bg-black/75 p-4">
                     You can access each steps controls by clicking on a step without having an
                     instrument active Any adjustments to individual instrument levels will only
                     apply to that specific step.
                   </p>
-                  <p className="m-4 inline-flex rounded-md bg-black/75 p-4 text-shadow-lg">
+                  <p className="m-4 inline-flex rounded-md bg-black/75 p-4">
                     As the number of samples grow within a step, the number of volume faders will
                     too.
                   </p>
-                  <p className="m-4 inline-flex rounded-md bg-black/75 p-4 text-shadow-lg">
+                  <p className="m-4 inline-flex rounded-md bg-black/75 p-4">
                     By default, only the pad channel will be visible. This is the volume of how the
                     instrument pads are both launched, and assigned to the sequencer. For example,
                     when you have kick as the active pad, and the PAD level at 50%, pressing the
@@ -229,33 +230,48 @@ const Tutorial = () => {
                 }}
               ></div>
               <div className="absolute left-0 top-0 mt-10 w-full text-center text-white">
-                <h2 className="m-4 inline-flex rounded-md bg-black/75 p-4 text-2xl font-bold text-shadow-lg sm:text-6xl">
-                  GLOBAL CONTROLS
-                </h2>
-                <div className="p-4">
-                  <h3>Key Tracking</h3>
-                  <p className="m-4 inline-flex rounded-md bg-black/75 p-4 text-shadow-lg">
-                    *Key Tracking is only available on Desktop
+                <div className="max-h-[55rem] overflow-y-scroll p-4">
+                  <h2 className="m-4 inline-flex rounded-md bg-black/75 p-4 text-2xl font-bold shadow-4-stack sm:text-6xl">
+                    METRONOME
+                  </h2>
+                  <div className="max-h-[50rem] overflow-y-scroll p-4 sm:max-h-max sm:overflow-hidden">
+                    <p className="m-4 inline-flex rounded-md bg-black/75 p-4">
+                      This switch will play the metronome on each beat. The sequencer must be
+                      stopped to launch the metronome.
+                    </p>
+                  </div>
+                  <h2 className="m-4 inline-flex rounded-md bg-black/75 p-4 text-2xl font-bold shadow-4-stack sm:text-6xl">
+                    BPM
+                  </h2>
+                  <div className="max-h-[45rem] overflow-y-scroll p-4 sm:max-h-max sm:overflow-hidden">
+                    <p className="m-4 inline-flex rounded-md bg-black/75 p-4">
+                      This value represents the Beats Per Minute of the sequencer, The sequencer
+                      must be stopped to adjust the BPM.
+                    </p>
+                  </div>
+                  <h2 className="m-4 inline-flex rounded-md bg-black/75 p-4 text-2xl font-bold shadow-4-stack sm:text-6xl">
+                    KEY TRACKING
+                  </h2>
+                  {/* <div className="p-4 max-h-[45rem] overflow-y-scroll sm:max-h-max sm:overflow-hidden"> */}
+                  <p className="m-4 inline-flex rounded-md bg-black/75 p-4">
+                    Key Tracking is only available on Desktop. The key tracking feature allows you
+                    to assign instruments to keys on your keyboard, allowing you to launch the
+                    samples by hitting keys and record to the sequencer.{" "}
                   </p>
-                  <p className="m-4 inline-flex rounded-md bg-black/75 p-4 text-shadow-lg">
-                    The key tracking feature allows you to assign instruments to keys on your
-                    keyboard, allowing you to launch the samples by hitting keys and record to the
-                    sequencer.{" "}
+                  <p className="m-4 inline-flex rounded-md bg-black/75 p-4">
+                    Press the assign keys button to map keys to instruments.
                   </p>
-                  <p className="m-4 inline-flex rounded-md bg-black/75 p-4 text-shadow-lg">
-                    Press the assign keys button to map keys to instruments.{" "}
+                  <p className="m-4 inline-flex rounded-md bg-black/75 p-4">
+                    Keys must be alphanumeric, you can only assign one sample to each key.
                   </p>
-                  <p className="m-4 inline-flex rounded-md bg-black/75 p-4 text-shadow-lg">
-                    Keys must be alphanumeric, you can only assign one sample to each key.{" "}
-                  </p>
-                  <p className="m-4 inline-flex rounded-md bg-black/75 p-4 text-shadow-lg">
+                  <p className="m-4 inline-flex rounded-md bg-black/75 p-4">
                     When the sequencer is not playing key press plays samples
                   </p>
-                  <p className="m-4 inline-flex rounded-md bg-black/75 p-4 text-shadow-lg">
+                  <p className="m-4 inline-flex rounded-md bg-black/75 p-4">
                     When the sequencer is playing and recording is active key press does not play
                     samples but assigns them to the sequencer grid.
                   </p>
-                  <p className="m-4 inline-flex rounded-md bg-black/75 p-4 text-shadow-lg">
+                  <p className="m-4 inline-flex rounded-md bg-black/75 p-4">
                     The sequencer will quantize the key press to the closest step as per the audio
                     playback at the time, so results may be unexpected.
                   </p>
