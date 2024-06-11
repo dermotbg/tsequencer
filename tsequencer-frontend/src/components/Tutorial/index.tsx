@@ -1,4 +1,10 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 const Tutorial = () => {
   return (
@@ -10,58 +16,88 @@ const Tutorial = () => {
           className="mt-10"
         />
       </div>
-      <div className="flex flex-col items-center">
-        <h1 className="text-4xl text-stone-300 shadow-black text-shadow-md">
-          What is a Step Sequencer?
-        </h1>
-        <p className="text-stone-300 shadow-black text-shadow-md">
-          A sequencer in the broader term is a tool that is used to playback notes of an instrument,
-          or playback samples for you. This can be a real-time sequencer, which would be ideal for
-          recording a keyboard melody from a synthesizer, or a step sequencer which offers a set
-          grid of places where instruments or samples can be played. Step sequencers are used in the
-          overwhelming majority of drum machines and samplers in electronic music, as the desired
-          patterns are usually static don't fall outside of the grid.
-        </p>
-        <p className="text-stone-300 shadow-black text-shadow-md">
-          The grid, as mentioned above are the divisions of the time across the span of the full
-          sequence. In the example of this sequencer, we are using a single measure 4/4 time
-          signature with subdivisions of 1/16th notes. In most cases of electronic music that you
-          hear daily, the subdivisons used won't go past the 1/16th note grid, but doing so can
-          create interesting results. These subdivisons are commonly called steps of the sequencer.
-          The speed of the sequence is set by the BPM or Beats Per Minute.
-        </p>
-        <p className="text-stone-300 shadow-black text-shadow-md">
-          Each row of four steps in our sequencer represents one beat of the 4/4 measure. This is
-          then broken into four columns for each row on the grid, all represtening subdivisons of
-          that one beat measure per row. This results in the 4x4 or 1/16th grid. By placing an
-          instrument or sample within a step, this tells the sequencer to play that instrument when
-          the step is called. You can see each step being called by its visual cue. The sequencer
-          will loop continuously, playing the notes in order from step one to sixteen.
-        </p>
-        <p className="text-stone-300 shadow-black text-shadow-md">
-          If you're still here, congrats! That was very wordy. The best way to get your head around
-          it is just just experiment. Start off with the Kickdrum sample in this sequencer and place
-          it on the on-beats of the bar, these are the steps in the leftmost column (1,5,9,13). Now
-          you have a 4/4 drum beat which is 90% of modern music. Then select a different sample for
-          the off beats, and your ears will tell you more than text on a screen ever will. Most
-          importantly, have fun. That's what it's about. For more info on what exactly each button
-          and option does, see below.
-        </p>
-        <p className="text-stone-300 shadow-black text-shadow-md">
-          Prefer video format for information? Check out the great overview by Roland here
-        </p>
-        <div className="aspect-video">
-          <iframe
-            className="w-full h-full"
-            width="853"
-            height="480"
-            src="https://www.youtube.com/embed/09zHp2xzErA"
-            title="How To Use A Step Sequencer...Electronic Music For Beginners!"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerPolicy="strict-origin-when-cross-origin"
-            allowFullScreen
-          />
-        </div>
+      <div className="flex flex-col items-center text-center">
+        <Accordion className="mb-10" type="single" collapsible>
+          <AccordionItem value="sequencer-overview">
+            <AccordionTrigger
+              style={{
+                color: "#d6d3d1",
+              }}
+              className="text-4xl text-stone-300 shadow-black text-shadow-md items-center justify-center text-center"
+            >
+              <h1>What is a Step Sequencer?</h1>
+            </AccordionTrigger>
+            <AccordionContent>
+              <div className="flex flex-col bg-black/25 items-center ">
+                <p className="text-stone-300 shadow-black text-shadow-md max-w-4/5 p-5">
+                  A sequencer, in broader terms is a tool that is used to playback notes of an
+                  instrument. This can be a real-time sequencer, which would be ideal for recording
+                  a keyboard melody from a synthesizer, or a step sequencer which offers a set grid
+                  of places where instruments or samples can be played.
+                  <br />
+                  Step sequencers are used in the overwhelming majority of drum machines and
+                  samplers in electronic music, as the desired patterns are usually static and don't
+                  fall outside of the grid.
+                </p>
+                <p className="text-stone-300 shadow-black text-shadow-md max-w-4/5 p-5 text-pretty">
+                  The grid, as mentioned above, consist of the divisions of the time across the span
+                  of the full sequence. In the example of this sequencer, we are using a single
+                  measure 4/4 time signature with subdivisions of 1/16th notes. In most cases of
+                  electronic music that you hear daily, the subdivisions used won't go past the
+                  1/16th note grid, but doing so can create interesting results.
+                  <br />
+                  These subdivisions are commonly called steps of the sequencer. The speed of the
+                  sequence is set by the BPM or Beats Per Minute.
+                </p>
+                <p className="text-stone-300 shadow-black text-shadow-md max-w-4/5 p-5 text-pretty">
+                  Each row of four steps in our sequencer represents one beat of the 4/4 measure.
+                  This is then broken into four columns for each row on the grid, all representing
+                  subdivisons of that one beat measure per row. This results in the 4x4 or 1/16th
+                  grid. By placing an instrument or sample within a step, you tell the sequencer to
+                  play that instrument when the step is reached. You can see each step being called
+                  by its visual cue. The sequencer will loop continuously, playing the notes in
+                  order from step one to sixteen.
+                </p>
+                <p className="text-stone-300 shadow-black text-shadow-md max-w-4/5 p-5 text-pretty">
+                  If you're still here, congrats! That was very wordy. The best way to get your head
+                  around it is just to experiment. Start off with the Kickdrum sample in this
+                  sequencer and place it on the on-beats of the bar, these are the steps in the
+                  leftmost column (1, 5, 9, 13). Now you have a 4/4 drum beat which is 90% of modern
+                  electronic music.
+                  <br />
+                  Then select a different sample for the off-beats, and your ears will tell you more
+                  than text on a screen ever will.
+                  <br />
+                  Most importantly, have fun. That's what it's about. For more info on what exactly
+                  each button and option does on the interface, see below.
+                </p>
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+        <Accordion className="mb-10" type="single" collapsible>
+          <AccordionItem value="yt-vid">
+            <AccordionTrigger
+              style={{
+                color: "#d6d3d1",
+              }}
+            >
+              Prefer video format for information? Check out the great overview by Roland here
+            </AccordionTrigger>
+            <AccordionContent>
+              <div className="aspect-video w-full h-full">
+                <iframe
+                  className="w-full h-full"
+                  src="https://www.youtube.com/embed/09zHp2xzErA"
+                  title="How To Use A Step Sequencer...Electronic Music For Beginners!"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allowFullScreen
+                />
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
       </div>
       <div className="flex flex-row justify-center">
         <Tabs defaultValue="instrument-pad" className="bg-stone-800 w-11/12 h-full rounded-md">
@@ -79,18 +115,7 @@ const Tutorial = () => {
                   backgroundImage:
                     "url(https://github.com/dermotbg/tsequencer/assets/123154617/b0b98744-fd72-4656-9a23-265009743355",
                 }}
-              >
-                {/* <img
-                  src="https://github.com/dermotbg/tsequencer/assets/123154617/b0b98744-fd72-4656-9a23-265009743355"
-                  alt="Instrument Pad background image"
-                  className="opacity-20 "
-                /> */}
-                {/* <img
-                  src="https://github.com/dermotbg/tsequencer/assets/123154617/0dfb49b3-a049-4e07-9c74-6400c6cb4e71"
-                  alt="Instrument Pad background image 2"
-                  className="opacity-20"
-                /> */}
-              </div>
+              ></div>
               <div className="w-full text-white absolute top-0 left-0 text-center mt-10">
                 <h2 className="font-bold text-2xl sm:text-6xl p-4 m-4 inline-flex bg-black/75 text-shadow-lg rounded-md">
                   INSTRUMENT PAD
@@ -122,13 +147,7 @@ const Tutorial = () => {
                   backgroundImage:
                     "url(https://github.com/dermotbg/tsequencer/assets/123154617/62e3fedb-fa16-4552-b689-7a5d00f4192d",
                 }}
-              >
-                {/* <img
-                  src="https://github.com/dermotbg/tsequencer/assets/123154617/62e3fedb-fa16-4552-b689-7a5d00f4192d"
-                  alt="sequencer background image"
-                  className="opacity-20"
-                /> */}
-              </div>
+              ></div>
               <div className="w-full text-white absolute top-0 left-0 text-center mt-10">
                 <h2 className="font-bold text-2xl sm:text-6xl p-4 m-4 inline-flex bg-black/75 text-shadow-lg rounded-md ">
                   SEQUENCER
@@ -170,18 +189,7 @@ const Tutorial = () => {
                   backgroundImage:
                     "url(https://github.com/dermotbg/tsequencer/assets/123154617/83f18af9-2111-4f70-9024-90f5cfcd4d23",
                 }}
-              >
-                {/* <img
-                  src="https://github.com/dermotbg/tsequencer/assets/123154617/83f18af9-2111-4f70-9024-90f5cfcd4d23"
-                  alt="Mixing Desk background image"
-                  className="opacity-20"
-                />
-                <img
-                  src="https://github.com/dermotbg/tsequencer/assets/123154617/83f18af9-2111-4f70-9024-90f5cfcd4d23"
-                  alt="Mixing Desk background image-2"
-                  className="opacity-20"
-                /> */}
-              </div>
+              ></div>
               <div className="w-full text-white absolute top-0 left-0 text-center mt-10">
                 <h2 className="font-bold text-2xl sm:text-6xl p-4 m-4 inline-flex bg-black/75 text-shadow-lg rounded-md">
                   MIXING DESK
@@ -219,28 +227,7 @@ const Tutorial = () => {
                   backgroundImage:
                     "url(https://github.com/dermotbg/tsequencer/assets/123154617/b1533131-f516-4fa0-94b5-c8f7e3cbe449",
                 }}
-              >
-                {/* <img
-                  src="https://github.com/dermotbg/tsequencer/assets/123154617/40cd4781-ed68-413e-9220-4d4bb5a672e3"
-                  alt="Global Options background image"
-                  className="opacity-20"
-                />
-                <img
-                  src="https://github.com/dermotbg/tsequencer/assets/123154617/6306df09-3e81-4ebd-b519-112e3d38e5da"
-                  alt="Global Options background image 2"
-                  className="opacity-20"
-                />
-                <img
-                  src="https://github.com/dermotbg/tsequencer/assets/123154617/40cd4781-ed68-413e-9220-4d4bb5a672e3"
-                  alt="Global Options background image"
-                  className="opacity-20"
-                />
-                <img
-                  src="https://github.com/dermotbg/tsequencer/assets/123154617/6306df09-3e81-4ebd-b519-112e3d38e5da"
-                  alt="Global Options background image 2"
-                  className="opacity-20"
-                /> */}
-              </div>
+              ></div>
               <div className="w-full text-white absolute top-0 left-0 text-center mt-10">
                 <h2 className="font-bold text-2xl sm:text-6xl p-4 m-4 inline-flex bg-black/75 text-shadow-lg rounded-md">
                   GLOBAL CONTROLS
