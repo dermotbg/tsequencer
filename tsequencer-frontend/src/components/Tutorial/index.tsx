@@ -5,7 +5,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { ScrollArea } from "@/components/ui/scroll-area";
 
 const Tutorial = () => {
   return (
@@ -121,7 +120,7 @@ const Tutorial = () => {
                 <h2 className="m-4 inline-flex rounded-md bg-black/75 p-4 text-2xl font-bold shadow-1-stack sm:text-6xl">
                   INSTRUMENT PAD
                 </h2>
-                <div className="flex flex-col items-center p-4">
+                <div className="max-h-[45rem] overflow-y-scroll p-4 sm:overflow-y-hidden">
                   <p className="m-4 inline-flex rounded-md bg-black/75 p-4">
                     Each instrument has a dedicated pad. Clicking on the pad will launch the sample
                     and assign that sample to be the “active pad”.
@@ -153,7 +152,7 @@ const Tutorial = () => {
                 <h2 className="m-4 inline-flex rounded-md bg-black/75 p-4 text-2xl font-bold shadow-2-stack sm:text-6xl">
                   SEQUENCER
                 </h2>
-                <div className="overflow-y-scroll p-4 sm:overflow-y-hidden">
+                <div className="max-h-[45rem] overflow-y-scroll p-4 sm:overflow-y-hidden">
                   <p className="mb-1 inline-flex rounded-md bg-black/75 p-4 sm:m-4">
                     The sequencer is a one bar length 4/4 grid, split into 16ths, with the leftmost
                     buttons being the on-beat steps.
@@ -164,16 +163,16 @@ const Tutorial = () => {
                   </p>
                   <p className="mb-1 inline-flex rounded-md bg-black/75 p-4 sm:m-4">
                     When you assign instruments to a step, you will see the first and last letter of
-                    those instruments populate the step button.{" "}
+                    those instruments populate the step button.
                   </p>
                   <p className="mb-1 inline-flex rounded-md bg-black/75 p-4 sm:m-4">
                     When you click a specific step without an active pad, it will load the mixing
                     desk for that step, where you can assign different volumes to all the
-                    instruments of that step.{" "}
+                    instruments of that step.
                   </p>
                   <p className="mb-1 inline-flex rounded-md bg-black/75 p-4 sm:m-4">
                     The launch controls are found underneath the sequencer, recording toggles if key
-                    press recording is active, and trash clears the sequencer to a blank slate.{" "}
+                    press recording is active, and trash clears the sequencer to a blank slate.
                   </p>
                   <p className="mb-1 inline-flex rounded-md bg-black/75 p-4 sm:m-4">
                     The sequencer can be launched using the launch controls below the steps.
@@ -195,7 +194,7 @@ const Tutorial = () => {
                 <h2 className="m-4 inline-flex rounded-md bg-black/75 p-4 text-2xl font-bold shadow-3-stack sm:text-6xl">
                   MIXING DESK
                 </h2>
-                <div className="p-4">
+                <div className="max-h-[45rem] overflow-y-scroll p-4 sm:overflow-y-hidden">
                   <p className="m-4 inline-flex rounded-md bg-black/75 p-4">
                     Each step has its own selection of volume controls.
                   </p>
@@ -214,7 +213,7 @@ const Tutorial = () => {
                     when you have kick as the active pad, and the PAD level at 50%, pressing the
                     kick pad will play the sample at 50% volume, and assigning that sample to a step
                     assigns it at 50% volume. To then increase the volume in that step, it must be
-                    done by the "kick" volume control of the step itself.{" "}
+                    done by the "kick" volume control of the step itself.
                   </p>
                 </div>
               </div>
@@ -252,11 +251,10 @@ const Tutorial = () => {
                   <h2 className="m-4 inline-flex rounded-md bg-black/75 p-4 text-2xl font-bold shadow-4-stack sm:text-6xl">
                     KEY TRACKING
                   </h2>
-                  {/* <div className="p-4 max-h-[45rem] overflow-y-scroll sm:max-h-max sm:overflow-hidden"> */}
                   <p className="m-4 inline-flex rounded-md bg-black/75 p-4">
                     Key Tracking is only available on Desktop. The key tracking feature allows you
                     to assign instruments to keys on your keyboard, allowing you to launch the
-                    samples by hitting keys and record to the sequencer.{" "}
+                    samples by hitting keys and record to the sequencer.
                   </p>
                   <p className="m-4 inline-flex rounded-md bg-black/75 p-4">
                     Press the assign keys button to map keys to instruments.
