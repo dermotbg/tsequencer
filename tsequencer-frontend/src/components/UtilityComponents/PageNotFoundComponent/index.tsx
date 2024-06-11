@@ -14,13 +14,13 @@ const PageNotFoundComponent = () => {
 
   return (
     <div className="flex flex-col items-center text-center">
-      <h1 className="text-stone-200 text-6xl p-6 mt-20 ">Oops!</h1>
-      <h2 className="text-stone-200 text-6xl p-6 m-4 ">This page doesn't exist.</h2>
-      <h3 className="text-stone-200 text-4xl">Redirecting you back to the homepage...</h3>
-      <p className="text-stone-200 text-xl">
+      <h1 className="mt-20 p-6 text-6xl text-stone-200">Oops!</h1>
+      <h2 className="m-4 p-6 text-6xl text-stone-200">This page doesn't exist.</h2>
+      <h3 className="text-4xl text-stone-200">Redirecting you back to the homepage...</h3>
+      <p className="text-xl text-stone-200">
         Not redirecting?
         <Link to="/">
-          <Button className="text-stone-200 italic text-xl pl-1 animate-pulse" variant={"link"}>
+          <Button className="animate-pulse pl-1 text-xl italic text-stone-200" variant={"link"}>
             Click here
           </Button>
         </Link>

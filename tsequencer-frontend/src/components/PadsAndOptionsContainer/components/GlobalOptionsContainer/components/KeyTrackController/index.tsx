@@ -11,7 +11,7 @@ const KeyTrackController = ({
   disabled: boolean;
 }) => {
   return (
-    <div className="flex items-center space-x-2 pb-3 mt-4">
+    <div className="mt-4 flex items-center space-x-2 pb-3">
       <Switch
         disabled={disabled}
         id="keyTracking"

@@ -37,8 +37,8 @@ const LoginDialog = ({
           disabled={isLoading}
           className={
             !isMobile
-              ? "bg-inherit text-stone-300 hover:bg-stone-600 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
-              : "bg-inherit min-w-full block text-left text-stone-300 hover:bg-stone-700 hover:text-white rounded-md px-3 py-2 text-md font-medium"
+              ? "rounded-md bg-inherit px-3 py-2 text-sm font-medium text-stone-300 hover:bg-stone-600 hover:text-white"
+              : "text-md block min-w-full rounded-md bg-inherit px-3 py-2 text-left font-medium text-stone-300 hover:bg-stone-700 hover:text-white"
           }
         >
           Login
@@ -67,7 +67,7 @@ const LoginDialog = ({
           </DialogFooter>
         </form>
         <Separator />
-        <div className="flex flex-col text-right py-4">
+        <div className="flex flex-col py-4 text-right">
           <p>Don't have an account? </p>
           <RegisterDialog
             setUsername={setUsername}

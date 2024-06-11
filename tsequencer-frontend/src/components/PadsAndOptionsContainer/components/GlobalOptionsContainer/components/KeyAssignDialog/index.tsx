@@ -48,8 +48,8 @@ const KeyAssignDialog = ({
   return (
     <Dialog open={isKeyDialogOpen} onOpenChange={setIsKeyDialogOpen}>
       <DialogTrigger asChild>
-        <Button className="hidden sm:flex bg-inherit text-stone-300 hover:bg-stone-600 hover:text-white rounded-md px-3 py-2 text-sm font-medium">
-          <div className="flex items-center justify-around space-x-2 pb-3 mt-4">
+        <Button className="hidden rounded-md bg-inherit px-3 py-2 text-sm font-medium text-stone-300 hover:bg-stone-600 hover:text-white sm:flex">
+          <div className="mt-4 flex items-center justify-around space-x-2 pb-3">
             <Keyboard />
             <div>Assign Keys</div>
           </div>
@@ -58,7 +58,7 @@ const KeyAssignDialog = ({
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle className="text-lg">Assign instruments to keyboard</DialogTitle>
-          <div className="pt-3 text-md">
+          <div className="text-md pt-3">
             Please select the keys you wish to assign to each instrument.
           </div>
           <DialogDescription>
@@ -67,7 +67,7 @@ const KeyAssignDialog = ({
               <Link to="/tutorial">
                 <Button
                   variant={"link"}
-                  className="bg-inherit text-sm justify-end text-blue-400 rounded-md pl-1 font-medium"
+                  className="justify-end rounded-md bg-inherit pl-1 text-sm font-medium text-blue-400"
                 >
                   here.
                 </Button>
@@ -77,7 +77,7 @@ const KeyAssignDialog = ({
         </DialogHeader>
         {Object.keys(instruments).map((i) => {
           return (
-            <div key={i} className="grid grid-cols-2 items-end mx-4">
+            <div key={i} className="mx-4 grid grid-cols-2 items-end">
               <div className="flex flex-row items-center justify-end">
                 <Label htmlFor={`${i}`} className="pr-20 text-start">
                   {i.toUpperCase()}
@@ -90,7 +90,7 @@ const KeyAssignDialog = ({
                       ? `${assignedKeys[i as keyof AssignedKeysType].default}`.toUpperCase()
                       : `${assignedKeys[i as keyof AssignedKeysType].previousVal}`.toUpperCase()
                   }
-                  className="max-w-10 min-w-10 col-span-3"
+                  className="col-span-3 min-w-10 max-w-10"
                 />
               </div>
               <div className="flex flex-row items-center justify-end">
@@ -99,7 +99,7 @@ const KeyAssignDialog = ({
                   id={`${i}`}
                   maxLength={1}
                   value={assignedKeys[i as keyof AssignedKeysType].inputVal}
-                  className="max-w-10 min-w-10 col-span-3 ml-14"
+                  className="col-span-3 ml-14 min-w-10 max-w-10"
                   placeholder={
                     assignedKeys.isDefault
                       ? `${assignedKeys[i as keyof AssignedKeysType].default}`.toUpperCase()

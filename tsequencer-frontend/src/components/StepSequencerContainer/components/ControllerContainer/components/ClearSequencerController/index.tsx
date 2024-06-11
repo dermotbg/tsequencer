@@ -23,7 +23,7 @@ const ClearSequencerController = ({
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button disabled={isRunning === true} className="p-8 border-4 rounded-md m-2">
+        <Button disabled={isRunning === true} className="m-2 rounded-md border-4 p-8">
           <Trash2 />
         </Button>
       </AlertDialogTrigger>

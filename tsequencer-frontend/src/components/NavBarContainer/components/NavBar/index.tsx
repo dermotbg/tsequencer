@@ -56,14 +56,14 @@ const NavBar = ({
             <div className="flex space-x-4">
               <Link to="/">
                 <Button
-                  className="bg-stone-900 hover: text-white hover:bg-stone-900 rounded-lg px-3 py-2 text-sm font-medium"
+                  className="hover: rounded-lg bg-stone-900 px-3 py-2 text-sm font-medium text-white hover:bg-stone-900"
                   aria-current="page"
                 >
                   Sequencer
                 </Button>
               </Link>
               <Link to="/tutorial">
-                <Button className="bg-inherit text-stone-300 hover:bg-stone-600 hover:text-white rounded-md px-3 py-2 text-sm font-medium">
+                <Button className="rounded-md bg-inherit px-3 py-2 text-sm font-medium text-stone-300 hover:bg-stone-600 hover:text-white">
                   Tutorial
                 </Button>
               </Link>

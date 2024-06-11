@@ -13,8 +13,8 @@ const RecordController = ({
     <Button
       className={
         isRecording
-          ? "p-8 border-4 border-red-custom rounded-md m-2"
-          : "p-8 border-4 rounded-md m-2"
+          ? "m-2 rounded-md border-4 border-red-custom p-8"
+          : "m-2 rounded-md border-4 p-8"
       }
       onClick={() => recordHandler()}
       role="switch"

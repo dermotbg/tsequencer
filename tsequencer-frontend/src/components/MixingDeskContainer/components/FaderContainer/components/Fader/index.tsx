@@ -21,7 +21,7 @@ const Fader = ({
 }) => {
   if (disabled) return null;
   return (
-    <div className="flex flex-col items-center touch-pan-x mx-2">
+    <div className="mx-2 flex touch-pan-x flex-col items-center">
       <div className="wrapper">
         <input
           type="range"

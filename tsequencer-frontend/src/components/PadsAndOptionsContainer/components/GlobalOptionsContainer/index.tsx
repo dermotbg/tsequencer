@@ -90,7 +90,7 @@ const GlobalOptionsContainer = () => {
 
   return (
     <div className="flex flex-row gap-6">
-      <div className="hidden sm:flex flex-col items-start">
+      <div className="hidden flex-col items-start sm:flex">
         <KeyTrackController
           disabled={windowSize.width < 640}
           keysActive={keysActive}
