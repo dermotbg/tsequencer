@@ -10,7 +10,7 @@ const MasterFader = ({
   setVolume: (gain: number) => void;
 }) => {
   return (
-    <div className="flex flex-col items-center touch-pan-x">
+    <div className="flex touch-pan-x flex-col items-center">
       <div className="wrapper">
         <input
           type="range"

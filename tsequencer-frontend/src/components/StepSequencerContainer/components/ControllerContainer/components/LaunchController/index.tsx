@@ -13,8 +13,8 @@ const LaunchController = ({
     <Button
       className={
         isRunning
-          ? "p-8 border-4 border-green-custom rounded-md m-2"
-          : "p-8 border-4 rounded-md m-2"
+          ? "m-2 rounded-md border-4 border-green-custom p-8"
+          : "m-2 rounded-md border-4 p-8"
       }
       onClick={() => launchHandler()}
       role="switch"

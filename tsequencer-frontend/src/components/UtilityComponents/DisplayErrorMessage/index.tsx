@@ -1,5 +1,5 @@
 const DisplayErrorMessage = ({ errorMessage }: { errorMessage: string | undefined }) => {
-  return <p className="text-right italic text-red-700 font light">{errorMessage}</p>;
+  return <p className="font light text-right italic text-red-700">{errorMessage}</p>;
 };
 
 export default DisplayErrorMessage;

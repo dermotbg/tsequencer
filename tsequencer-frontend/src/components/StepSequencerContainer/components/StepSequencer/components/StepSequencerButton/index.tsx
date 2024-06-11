@@ -6,10 +6,10 @@ import type { StepSeqProps } from "@/components/StepSequencerContainer/types";
 
 const StepSeqButton = ({ index, extraCSS, step, onClickHandler, windowSize }: StepSeqProps) => {
   return (
-    <div className="flex-col box-border">
+    <div className="box-border flex-col">
       <Button
         className={
-          "flex-col box-border border-4 p-4 bg-stone-800 sm:text-xl rounded-md w-full md:w-5/6 h-full sm:min-h-48 sm:min-w-1/2  " +
+          "sm:min-w-1/2 box-border h-full w-full flex-col rounded-md border-4 bg-stone-800 p-4 sm:min-h-48 sm:text-xl md:w-5/6 " +
           `${extraCSS}`
         }
         onClick={() => onClickHandler(index)}

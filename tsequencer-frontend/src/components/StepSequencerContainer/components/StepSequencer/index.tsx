@@ -16,8 +16,8 @@ const StepSequencer = ({
   // TODO: Proper Loading state
   if (!seq || !seq[0]) return <LoadingSpinner />;
   return (
-    <div className=" flex flex-col items-center min-w-screen w-full">
-      <div className="grid gap-4 grid-cols-4 grid-rows-4 w-full lg:w-5/6">
+    <div className="min-w-screen flex w-full flex-col items-center">
+      <div className="grid w-full grid-cols-4 grid-rows-4 gap-4 lg:w-5/6">
         {seq.map((b, i) => {
           return (
             <StepSeqButton

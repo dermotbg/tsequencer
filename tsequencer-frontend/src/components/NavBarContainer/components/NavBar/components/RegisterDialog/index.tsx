@@ -29,7 +29,7 @@ const RegisterDialog = ({
       <DialogTrigger asChild>
         <Button
           variant={"link"}
-          className="bg-inherit text-sm justify-end text-blue-400 rounded-md p-0 font-medium"
+          className="justify-end rounded-md bg-inherit p-0 text-sm font-medium text-blue-400"
         >
           Register here
         </Button>

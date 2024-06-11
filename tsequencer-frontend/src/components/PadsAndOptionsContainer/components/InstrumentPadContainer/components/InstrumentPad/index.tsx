@@ -11,11 +11,11 @@ const InstrumentPad = ({ instrument, activePad, padHandler }: InstrumentPadType)
       <Button
         className={
           setActiveBorder(activePad, instrument) +
-          " max-w-16 sm:max-w-none max-h-20 sm:max-h-none mx-3"
+          " mx-3 max-h-20 max-w-16 sm:max-h-none sm:max-w-none"
         }
         onClick={() => padHandler(validateInstrument(instrument))}
       >
-        <div className="font-mono text-xs sm:text-lg text-shadow-sm shadow-black/50 overflow-scroll sm:overflow-visible ">
+        <div className="overflow-scroll font-mono text-xs shadow-black/50 text-shadow-sm sm:overflow-visible sm:text-lg">
           {instrument.toUpperCase()}
         </div>
       </Button>
