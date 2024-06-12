@@ -44,7 +44,7 @@ public class LoginController : Controller
     return Ok(user);
   }
   [HttpPost("validate-token")]
-  public IActionResult ValidateToken()
+  public async Task<IActionResult> ValidateToken()
   {
     if(!Request.Cookies.TryGetValue("token", out var token))
     {
@@ -58,7 +58,10 @@ public class LoginController : Controller
     {
       return Conflict("No Attached user");
     }
-    return Ok(username);
+
+    var user = await _userService.GetUserByUsernameAsync(username);
+    
+    return Ok(user);
   }
   [HttpPost("logout")]
   public IActionResult RemoveToken()

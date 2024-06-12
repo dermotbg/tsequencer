@@ -39,7 +39,7 @@ export const validateTokenAsync = async () => {
     });
     const respObject = {
       status: response.status,
-      username: await response.text(),
+      user: await response.json(),
     };
     return respObject;
   } catch (err) {

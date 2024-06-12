@@ -78,7 +78,8 @@ const NavBarContainer = () => {
       } else {
         // update FE state with logged in user info set username to LS to confirm loop already completed
         user.setAuthenticated(true);
-        user.setUsername(validateString(userValidation?.username));
+        user.setUsername(validateString(userValidation?.user.username));
+        user.setUserId(validateString(userValidation?.user.id));
       }
     };
 
