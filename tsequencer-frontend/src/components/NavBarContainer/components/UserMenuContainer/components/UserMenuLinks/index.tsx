@@ -1,4 +1,14 @@
-const UserMenuLinks = ({ logoutHandler }: { logoutHandler: () => void }) => {
+import type { UseNavigateResult } from "@tanstack/react-router";
+
+const UserMenuLinks = ({
+  logoutHandler,
+  userId,
+  navigate,
+}: {
+  logoutHandler: () => void;
+  userId: string | null;
+  navigate: UseNavigateResult<string>;
+}) => {
   return (
     <div
       className={
@@ -9,24 +19,12 @@ const UserMenuLinks = ({ logoutHandler }: { logoutHandler: () => void }) => {
       aria-labelledby="user-menu-button"
       tabIndex={-1}
     >
-      <a
-        href="#"
+      <button
+        onMouseDown={() => navigate({ to: `/user/${userId}`, params: { userId } })}
         className="block border-stone-800 px-4 py-2 text-sm text-stone-700 hover:underline hover:decoration-solid"
-        role="menuitem"
-        tabIndex={-1}
-        id="user-menu-item-0"
       >
         Your Profile
-      </a>
-      <a
-        href="#"
-        className="block border-stone-800 px-4 py-2 text-sm text-stone-700 hover:underline hover:decoration-solid"
-        role="menuitem"
-        tabIndex={-1}
-        id="user-menu-item-1"
-      >
-        Settings
-      </a>
+      </button>
       <button
         onMouseDown={() => logoutHandler()}
         className="block border-stone-800 px-4 py-2 text-sm text-stone-700 hover:underline hover:decoration-solid"

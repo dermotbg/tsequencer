@@ -28,9 +28,12 @@ const useLogin = ({ username, password, setUsername, setPassword }: LoginType) =
       // set string to LS only to fire token validation when it's defined
       localStorage.setItem("user", JSON.stringify("loggedIn"));
       user.setUsername(resp.username);
+      user.setUserId(resp.id);
       user.setAuthenticated(true);
       isLoading.set(false);
       toast({ description: "You are now logged in." });
+      setUsername("");
+      setPassword("");
     } catch (error) {
       isLoading.set(false);
       errorMessage.set(`${error}`.slice(7));
@@ -41,8 +44,8 @@ const useLogin = ({ username, password, setUsername, setPassword }: LoginType) =
   };
 
   const logoutHandler = () => {
-    setUsername("");
-    setPassword("");
+    user.setUsername(null);
+    user.setUserId(null);
     user.setAuthenticated(false);
     localStorage.removeItem("user");
     logoutRequestAsync();

@@ -10,46 +10,63 @@
 
 // Import Routes
 
-import { Route as rootRoute } from "./routes/__root";
-import { Route as TutorialImport } from "./routes/tutorial";
-import { Route as IndexImport } from "./routes/index";
+import { Route as rootRoute } from './routes/__root'
+import { Route as TutorialImport } from './routes/tutorial'
+import { Route as IndexImport } from './routes/index'
+import { Route as UserUserIdImport } from './routes/user/$userId'
 
 // Create/Update Routes
 
 const TutorialRoute = TutorialImport.update({
-  path: "/tutorial",
+  path: '/tutorial',
   getParentRoute: () => rootRoute,
-} as any);
+} as any)
 
 const IndexRoute = IndexImport.update({
-  path: "/",
+  path: '/',
   getParentRoute: () => rootRoute,
-} as any);
+} as any)
+
+const UserUserIdRoute = UserUserIdImport.update({
+  path: '/user/$userId',
+  getParentRoute: () => rootRoute,
+} as any)
 
 // Populate the FileRoutesByPath interface
 
-declare module "@tanstack/react-router" {
+declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    "/": {
-      id: "/";
-      path: "/";
-      fullPath: "/";
-      preLoaderRoute: typeof IndexImport;
-      parentRoute: typeof rootRoute;
-    };
-    "/tutorial": {
-      id: "/tutorial";
-      path: "/tutorial";
-      fullPath: "/tutorial";
-      preLoaderRoute: typeof TutorialImport;
-      parentRoute: typeof rootRoute;
-    };
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/tutorial': {
+      id: '/tutorial'
+      path: '/tutorial'
+      fullPath: '/tutorial'
+      preLoaderRoute: typeof TutorialImport
+      parentRoute: typeof rootRoute
+    }
+    '/user/$userId': {
+      id: '/user/$userId'
+      path: '/user/$userId'
+      fullPath: '/user/$userId'
+      preLoaderRoute: typeof UserUserIdImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
 // Create and export the route tree
 
-export const routeTree = rootRoute.addChildren({ IndexRoute, TutorialRoute });
+export const routeTree = rootRoute.addChildren({
+  IndexRoute,
+  TutorialRoute,
+  UserUserIdRoute,
+})
 
 /* prettier-ignore-end */
 
@@ -60,7 +77,8 @@ export const routeTree = rootRoute.addChildren({ IndexRoute, TutorialRoute });
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/tutorial"
+        "/tutorial",
+        "/user/$userId"
       ]
     },
     "/": {
@@ -68,6 +86,9 @@ export const routeTree = rootRoute.addChildren({ IndexRoute, TutorialRoute });
     },
     "/tutorial": {
       "filePath": "tutorial.tsx"
+    },
+    "/user/$userId": {
+      "filePath": "user/$userId.tsx"
     }
   }
 }
