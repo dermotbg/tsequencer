@@ -17,6 +17,7 @@ import { validateTokenAsync } from "@/services/loginService";
 import { validateString } from "@/utils/typeChecking";
 
 import type { LoadedSeqType } from "@/services/sequencerService";
+import { toast } from "../ui/use-toast";
 
 const NavBarContainer = () => {
   // Template reconstructed from https://tailwindui.com/components/application-ui/navigation/navbars
@@ -66,28 +67,40 @@ const NavBarContainer = () => {
 
   // Login Validation Effect
   useEffect(() => {
+    // TODO: abstract this to hook?
     setIsLoading(true);
     const runTokenValidation = async () => {
-      // fetch validation info from BE
-      const userValidation = await validateTokenAsync();
-
-      if (userValidation && userValidation.status !== 200) {
-        // TODO: ALERT SESSION EXPIRED
+      try {
+        // fetch validation info from BE
+        const userValidation = await validateTokenAsync();
+        console.log(userValidation);
+        if (userValidation && userValidation.status !== 200) {
+          // TODO: ALERT SESSION EXPIRED
+          logoutHandler();
+          clearInterval(tokenValidationPoll);
+        } else {
+          // update FE state with logged in user info set username to LS to confirm loop already completed
+          user.setAuthenticated(true);
+          user.setUsername(validateString(userValidation?.user.username));
+          user.setUserId(validateString(userValidation?.user.id));
+        }
+      } catch (error) {
         logoutHandler();
         clearInterval(tokenValidationPoll);
-      } else {
-        // update FE state with logged in user info set username to LS to confirm loop already completed
-        user.setAuthenticated(true);
-        user.setUsername(validateString(userValidation?.user.username));
-        user.setUserId(validateString(userValidation?.user.id));
+        setIsLoading(false);
+        toast({ description: "Token validation error, please login again." });
+        throw new Error("Token missing");
+      } finally {
+        setIsLoading(false);
       }
     };
 
-    const tokenValidationPoll = setInterval(() => {
+    const tokenValidationPoll = setInterval(async () => {
       // start polling to validate access token if user has already gone through loop
-      if (localStorage.getItem("user")) runTokenValidation();
-      setIsLoading(false);
+      if (localStorage.getItem("user")) await runTokenValidation();
+      else setIsLoading(false);
     }, 2000);
+
     return () => clearInterval(tokenValidationPoll);
   }, [user, user.isAuthenticated]);
 

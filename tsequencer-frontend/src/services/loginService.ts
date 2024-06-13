@@ -37,13 +37,20 @@ export const validateTokenAsync = async () => {
     const response = await fetch(`${baseUrl}/validate-token`, {
       method: "POST",
     });
+    if (response.status !== 200) {
+      throw new Error("No Token Found");
+    }
     const respObject = {
       status: response.status,
       user: await response.json(),
     };
     return respObject;
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    let errorMessage = "";
+    if (error instanceof Error) {
+      errorMessage += error.message;
+    }
+    throw new Error(`${errorMessage}`);
   }
 };
 
