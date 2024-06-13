@@ -12,7 +12,7 @@ export interface NavBarType {
   setUsername: React.Dispatch<React.SetStateAction<string>>;
   setPassword: React.Dispatch<React.SetStateAction<string>>;
   setConfPassword: React.Dispatch<React.SetStateAction<string>>;
-  setSeqName: React.Dispatch<React.SetStateAction<string>>;
+  setSeqName: (name: string | undefined) => void;
   saveHandler: (e: FormEvent) => void;
   logoutHandler: () => void;
   errorMessage: string | undefined;
@@ -23,7 +23,7 @@ export interface NavBarType {
   isRegisterDialogOpen: boolean;
   setIsRegisterDialogOpen: React.Dispatch<React.SetStateAction<boolean>>;
   sequences: LoadedSeqType[] | undefined;
-  setSelection: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setSelection: (selectedSeq: string | undefined) => void;
   loadHandler: (e: FormEvent) => Promise<void>;
   isRunning: boolean;
   updateHandler: (e: FormEvent) => Promise<void>;

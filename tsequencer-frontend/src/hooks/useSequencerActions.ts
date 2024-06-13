@@ -14,7 +14,7 @@ import type { LoadedSeqType } from "@/services/sequencerService";
 
 interface SequencerActionsType {
   sequences: LoadedSeqType[] | undefined;
-  seqName: string;
+  seqName: string | undefined;
   selection: string | undefined;
   setIsSaveDialogOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setIsLoadDialogOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -40,7 +40,9 @@ const useSequencerActions = ({
         throw new Error(
           "Something went wrong: You have reached the maximum number of sequences, please delete or update your current sequences",
         );
-      await saveSequencerAsync(prepareSaveSequencerObject(sequencer.seq, user.username, seqName));
+      await saveSequencerAsync(
+        prepareSaveSequencerObject(sequencer.seq, user.username, validateString(seqName)),
+      );
       toast({ description: "Save successful." });
       setIsSaveDialogOpen(false);
       isLoading.set(false);

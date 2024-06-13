@@ -16,8 +16,8 @@ import { validateTokenAsync } from "@/services/loginService";
 
 import { validateString } from "@/utils/typeChecking";
 
-import type { LoadedSeqType } from "@/services/sequencerService";
 import { toast } from "../ui/use-toast";
+import useSequencerActionsDataStore from "@/hooks/StateHooks/useSequencerActionsStore";
 
 const NavBarContainer = () => {
   // Template reconstructed from https://tailwindui.com/components/application-ui/navigation/navbars
@@ -45,22 +45,16 @@ const NavBarContainer = () => {
     setIsRegisterDialogOpen,
   });
 
-  // Save Seq State
-  const [seqName, setSeqName] = useState("");
-
-  // Load seq state
-  const [sequences, setSequences] = useState<LoadedSeqType[] | undefined>();
-  const [selection, setSelection] = useState<string | undefined>();
-
   // Global State
   const sequencer = useSequencerStore();
+  const sequencerActionData = useSequencerActionsDataStore();
   const user = useUserStore();
   const errorMessage = useMessageStore();
   const { isLoading, set: setIsLoading } = useIsLoadingStore();
   const { saveHandler, loadHandler, updateHandler } = useSequencerActions({
-    sequences,
-    seqName,
-    selection,
+    sequences: sequencerActionData.loadedSequences,
+    seqName: sequencerActionData.saveSeqName,
+    selection: sequencerActionData.selectedSeq,
     setIsSaveDialogOpen,
     setIsLoadDialogOpen,
   });
@@ -73,7 +67,6 @@ const NavBarContainer = () => {
       try {
         // fetch validation info from BE
         const userValidation = await validateTokenAsync();
-        console.log(userValidation);
         if (userValidation && userValidation.status !== 200) {
           // TODO: ALERT SESSION EXPIRED
           logoutHandler();
@@ -109,7 +102,7 @@ const NavBarContainer = () => {
     const fetchSequences = async () => {
       if (user.username) {
         const response = await loadSequencerAsync(validateString(user.username));
-        setSequences(response);
+        sequencerActionData.setLoadedSequences(response);
       }
     };
     fetchSequences();
@@ -126,7 +119,7 @@ const NavBarContainer = () => {
         loginHandler={loginHandler}
         setUsername={setUsername}
         setPassword={setPassword}
-        setSeqName={setSeqName}
+        setSeqName={sequencerActionData.setSaveSeqName}
         saveHandler={saveHandler}
         logoutHandler={logoutHandler}
         errorMessage={errorMessage.message}
@@ -135,8 +128,8 @@ const NavBarContainer = () => {
         isLoadDialogOpen={isLoadDialogOpen}
         setIsLoadDialogOpen={setIsLoadDialogOpen}
         loadHandler={loadHandler}
-        sequences={sequences}
-        setSelection={setSelection}
+        sequences={sequencerActionData.loadedSequences}
+        setSelection={sequencerActionData.setSelectedSeq}
         isRunning={sequencer.isRunning}
         updateHandler={updateHandler}
         registerHandler={registerHandler}
@@ -151,7 +144,7 @@ const NavBarContainer = () => {
           loginHandler={loginHandler}
           setUsername={setUsername}
           setPassword={setPassword}
-          setSeqName={setSeqName}
+          setSeqName={sequencerActionData.setSaveSeqName}
           saveHandler={saveHandler}
           logoutHandler={logoutHandler}
           errorMessage={errorMessage.message}
@@ -160,8 +153,8 @@ const NavBarContainer = () => {
           isLoadDialogOpen={isLoadDialogOpen}
           setIsLoadDialogOpen={setIsLoadDialogOpen}
           loadHandler={loadHandler}
-          sequences={sequences}
-          setSelection={setSelection}
+          sequences={sequencerActionData.loadedSequences}
+          setSelection={sequencerActionData.setSelectedSeq}
           isRunning={sequencer.isRunning}
           updateHandler={updateHandler}
           registerHandler={registerHandler}
