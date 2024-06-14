@@ -39,3 +39,26 @@ export const createUserAsync = async (userObj: createUserType) => {
     throw new Error(`${errorMessage}`);
   }
 };
+
+export const updatePasswordAsync = async (userObj: updatePasswordType) => {
+  try {
+    const response = await fetch(baseUrl, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userObj),
+    });
+    if (response.ok) {
+      return response;
+    } else {
+      throw new Error(await response.text());
+    }
+  } catch (error) {
+    let errorMessage = "";
+    if (error instanceof Error) {
+      errorMessage += error.message;
+    }
+    throw new Error(`${errorMessage}`);
+  }
+} 
