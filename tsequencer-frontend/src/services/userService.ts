@@ -8,6 +8,7 @@ interface createUserType extends BaseUserType {
 }
 
 interface updatePasswordType extends BaseUserType {
+  id: string;
   newPassword: string;
 }
 
@@ -42,7 +43,7 @@ export const createUserAsync = async (userObj: createUserType) => {
 
 export const updatePasswordAsync = async (userObj: updatePasswordType) => {
   try {
-    const response = await fetch(baseUrl, {
+    const response = await fetch(`${baseUrl}/pw/${userObj.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -61,4 +62,4 @@ export const updatePasswordAsync = async (userObj: updatePasswordType) => {
     }
     throw new Error(`${errorMessage}`);
   }
-} 
+};
