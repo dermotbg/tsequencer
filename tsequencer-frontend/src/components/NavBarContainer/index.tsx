@@ -81,7 +81,7 @@ const NavBarContainer = () => {
         logoutHandler();
         clearInterval(tokenValidationPoll);
         setIsLoading(false);
-        toast({ description: "Token validation error, please login again." });
+        toast({ description: "Session has expired, please login again." });
         throw new Error("Token missing");
       } finally {
         setIsLoading(false);

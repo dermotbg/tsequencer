@@ -42,8 +42,13 @@ public class UserController : Controller
       {
         return BadRequest("Username must be at least 3 characters");
       }
-      else{
+      else if(newUserBody.Password.Length < 8 )
+      {
         return BadRequest("Password must be at least 8 characters");
+      }
+      else 
+      {
+        return BadRequest("Invalid Data. Please enter a username, password and password confirmation");
       }
     }
 
@@ -52,29 +57,63 @@ public class UserController : Controller
       return BadRequest("Passwords do not match");
     }
 
-    if(await _userService.CheckUsername(newUserBody.Username)){
+    if(await _userService.CheckUsernameAsync(newUserBody.Username)){
       return Conflict("Username already exists");
     }
     User user = new User{
       Username = newUserBody.Username,
-      PasswordHash = _userAuthService.CreatePasswordHash(newUserBody)
+      PasswordHash = _userAuthService.CreatePasswordHash(newUserBody, newUserBody.Password)
     };
     
     await _userService.CreateAsync(user);
     return CreatedAtAction(nameof(Get), new { id = user.Id }, user );
   }
 
-  [HttpPut("{id}")]
-  // PUT /api/user/{id}
-  public async Task<IActionResult> UpdateUsername(string id, [FromBody] UpdateUserNameDto user)
+  [HttpPut("pw/{id}")]
+  // PUT /api/user/pw/{id}
+  public async Task<IActionResult> UpdatePassword(string id, [FromBody] UpdatePasswordDto user)
   {
     if(!ModelState.IsValid){
       return BadRequest("Malformed or Missing Data");
     }
-    if(!await _userAuthService.PasswordIsCorrect(id, user.password)){
+
+    var userToUpdate = await _userService.GetUserByUsernameAsync(user.Username);
+
+    if(userToUpdate == null)
+    {
+      return BadRequest("User not found");
+    }
+    if(!await _userAuthService.PasswordIsCorrect(id, user.Password))
+    {
       return BadRequest("Incorrect Password");
     }
-    await _userService.UpdateUsername(id, user.newUsername);
+
+    var PasswordHash = _userAuthService.CreatePasswordHash(user, user.NewPassword);
+
+    await _userService.UpdatePasswordAsync(id, PasswordHash);
+
+    return NoContent();
+  }
+
+  [HttpPut("un/{id}")]
+  // PUT /api/user/un/{id}
+  public async Task<IActionResult> UpdateUsername(string id, [FromBody] UpdateUsernameDto user)
+  {
+    if(!ModelState.IsValid){
+      return BadRequest("Malformed or Missing Data");
+    }
+    if(!await _userAuthService.PasswordIsCorrect(id, user.Password)){
+      return BadRequest("Incorrect Password");
+    }
+
+    var userToUpdate = await _userService.GetUserByUsernameAsync(user.Username);
+
+    if(userToUpdate == null)
+    {
+      return BadRequest("User not found");
+    }
+    
+    await _userService.UpdateUsernameAsync(id, user.NewUsername);
     return NoContent();
   }
 

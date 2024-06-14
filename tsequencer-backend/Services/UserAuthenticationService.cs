@@ -15,10 +15,10 @@ public class UserAuthenticationService
     _userService = userService;
     _jwtHandler = jwtHandler;
   } 
-  public string CreatePasswordHash(CreateUserDto newUserBody)
+  public string CreatePasswordHash<T>(T user, string password) where T : class, IPasswordContainer
   {
-    var passwordHasher = new PasswordHasher<CreateUserDto>();
-    string hashedPassword = passwordHasher.HashPassword(newUserBody, newUserBody.Password);
+    var passwordHasher = new PasswordHasher<T>();
+    string hashedPassword = passwordHasher.HashPassword(user, password);
     return hashedPassword;
   }
   public async Task<bool> PasswordIsCorrect(string id, string password)

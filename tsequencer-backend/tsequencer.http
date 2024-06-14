@@ -14,20 +14,32 @@ POST {{tsequencer_hostAddress}}/api/user
 Content-Type: application/json
 
 {
-    "username": "dermotbg",
-    "password": "password"
+    "username": "testerino",
+    "password": "password",
+    "confPassword": "password"
 }
-###
-PUT {{tsequencer_hostAddress}}/api/user/663e07dd8d24b98b75527bb6
+### Password
+PUT {{tsequencer_hostAddress}}/api/user/pw/666bf4dafc074a2c86e09844
 Content-Type: application/json
 
 {
-    "newUsername": "dermotbg-2",
-    "password": "password"
+    "username": "testerino",
+    "password": "password",
+    "newPassword": "wordpass"
+}
+
+### Username
+PUT {{tsequencer_hostAddress}}/api/user/un/666bf4dafc074a2c86e09844
+Content-Type: application/json
+
+{
+    "username": "testerino-2",
+    "newUsername": "testerino",
+    "password": "wordpass"
 }
 
 ###
-DELETE {{tsequencer_hostAddress}}/api/user/663e07dd8d24b98b75527bb6
+DELETE {{tsequencer_hostAddress}}/api/user/666bf218ad6271b8b353b1ac
 
 # LOGIN
 ###

@@ -1,7 +1,14 @@
-interface createUserType {
+interface BaseUserType {
   username: string;
   password: string;
+}
+
+interface createUserType extends BaseUserType {
   confPassword: string;
+}
+
+interface updatePasswordType extends BaseUserType {
+  newPassword: string;
 }
 
 const baseUrl = "/api/user";
