@@ -9,7 +9,6 @@ function App() {
       <PadsAndOptionsContainer />
       <StepSequencerContainer />
       <MixingDeskContainer />
-      <Toaster />
     </div>
   );
 }

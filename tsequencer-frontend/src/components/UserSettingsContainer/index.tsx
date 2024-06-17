@@ -92,11 +92,10 @@ const UserSettingsContainer = () => {
   };
 
   const deleteSeqHandler = async (seqId: string) => {
-    //alert
-    await deleteSequencerAsync(seqId);
-    toast({ description: "Sequence Deleted" });
     if (!loadedSequences) return;
+    await deleteSequencerAsync(seqId);
     setLoadedSequences(loadedSequences.filter((seq) => seq.id !== seqId));
+    toast({ description: "Sequence deleted" });
   };
 
   return (
