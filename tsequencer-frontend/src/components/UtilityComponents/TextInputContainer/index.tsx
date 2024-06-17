@@ -5,10 +5,17 @@ import { validateString } from "@/utils/typeChecking";
 
 import type { InputFormType } from "@/components/NavBarContainer/types";
 
-const TextInput = ({ setFormState, formTitle, type, id, className }: InputFormType) => {
+const TextInput = ({
+  setFormState,
+  formTitle,
+  type,
+  id,
+  className,
+  labelTextAlign = "text-right",
+}: InputFormType) => {
   return (
     <div className="grid grid-cols-4 items-center gap-4">
-      <Label htmlFor={`${formTitle}`} className="text-right">
+      <Label htmlFor={`${formTitle}`} className={`${labelTextAlign}`}>
         {validateString(formTitle).charAt(0).toUpperCase() + validateString(formTitle).slice(1)}
       </Label>
       <Input

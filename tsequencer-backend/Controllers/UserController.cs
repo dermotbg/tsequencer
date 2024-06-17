@@ -106,6 +106,13 @@ public class UserController : Controller
       return BadRequest("Incorrect Password");
     }
 
+    var userAlreadyExists = await _userService.GetUserByUsernameAsync(user.NewUsername);
+    
+    if(userAlreadyExists != null)
+    {
+      return Conflict("Username is taken");
+    }
+
     var userToUpdate = await _userService.GetUserByUsernameAsync(user.Username);
 
     if(userToUpdate == null)

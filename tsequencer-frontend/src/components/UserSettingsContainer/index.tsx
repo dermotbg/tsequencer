@@ -61,12 +61,13 @@ const UserSettingsContainer = () => {
       setPassword("");
       setNewPassword("");
       logoutHandler();
-      navigate({ to: "/" });
     } catch (error) {
       errorMessage.set(`${error}`.slice(7));
       setTimeout(() => {
         errorMessage.set(undefined);
       }, 10000);
+    } finally {
+      navigate({ to: "/" });
     }
   };
 
@@ -85,6 +86,7 @@ const UserSettingsContainer = () => {
       });
       if (!response.ok) throw new Error(`${response.text}`);
       logoutHandler();
+      navigate({ to: "/" });
       toast({ description: "Username updated, please login with your new username." });
     } catch (error) {
       errorMessage.set(`${error}`.slice(7));
@@ -108,7 +110,7 @@ const UserSettingsContainer = () => {
           Hello {`${user.username.charAt(0).toUpperCase()}` + `${user.username.slice(1)}`}
         </h1>
       </div>
-      <Tabs defaultValue="sequences" className="flex-w-[400px] flex flex-col justify-center">
+      <Tabs defaultValue="sequences" className="flex flex-col justify-center">
         <TabsList className="bg-inherit text-stone-300">
           <TabsTrigger className="rounded-md" value="sequences">
             Sequences
@@ -141,8 +143,8 @@ const UserSettingsContainer = () => {
           )}
         </TabsContent>
         <TabsContent value="account">
-          <Tabs defaultValue="password" className="flex-w-[400px] flex flex-col justify-center">
-            <TabsList className="bg-inherit focus-visible:ring-0">
+          <Tabs defaultValue="password" className="flex flex-col justify-center">
+            <TabsList className="bg-inherit">
               <TabsTrigger
                 className="rounded-none data-[state=active]:border-b-2 data-[state=active]:bg-inherit data-[state=active]:text-stone-300"
                 value="password"
@@ -165,6 +167,7 @@ const UserSettingsContainer = () => {
                     id="ch-pw-curr-password"
                     type={"password"}
                     className="mb-2"
+                    labelTextAlign="text-left"
                   />
                   <TextInput
                     setFormState={setNewPassword}
@@ -172,13 +175,15 @@ const UserSettingsContainer = () => {
                     id="ch-pw-new-password"
                     type={"password"}
                     className="mb-2"
+                    labelTextAlign="text-left"
                   />
                   <TextInput
                     setFormState={setConfPassword}
-                    formTitle="Confirm New Password"
+                    formTitle="Confirm Password"
                     id="ch-pw-conf-new-password"
                     type={"password"}
                     className="mb-2"
+                    labelTextAlign="text-left"
                   />
                   {errorMessage ? (
                     <DisplayErrorMessage errorMessage={errorMessage.message} />
@@ -197,6 +202,7 @@ const UserSettingsContainer = () => {
                       id="ch-un-username"
                       type={"text"}
                       className="mb-2"
+                      labelTextAlign="text-left"
                     />
                     <TextInput
                       setFormState={setNewUsername}
@@ -204,12 +210,15 @@ const UserSettingsContainer = () => {
                       id="ch-un-new-username"
                       type={"text"}
                       className="mb-2"
+                      labelTextAlign="text-left"
                     />
                     <TextInput
                       setFormState={setPassword}
                       formTitle="Password"
                       id="ch-un-password"
                       type={"password"}
+                      labelTextAlign="text-left"
+                      className="mb-2"
                     />
                     {errorMessage ? (
                       <DisplayErrorMessage errorMessage={errorMessage.message} />

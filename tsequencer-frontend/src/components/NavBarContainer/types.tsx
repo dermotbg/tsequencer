@@ -134,4 +134,5 @@ export interface InputFormType {
   type: string | undefined;
   id?: string | undefined;
   className?: string | undefined;
+  labelTextAlign?: string;
 }
