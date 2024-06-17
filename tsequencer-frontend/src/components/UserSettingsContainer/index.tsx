@@ -4,27 +4,29 @@ import { Route } from "@/routes/user/$userId";
 import LoadingSpinner from "../UtilityComponents/LoadingSpinner";
 import type { LoadedSeqType } from "@/services/sequencerService";
 import { Button } from "../ui/button";
-import PageNotFoundComponent from "../UtilityComponents/PageNotFoundComponent";
 import TextInput from "../UtilityComponents/TextInputContainer";
 import type { FormEvent } from "react";
 import { useState } from "react";
 import { updatePasswordAsync, updateUsernameAsync } from "@/services/userService";
 import { toast } from "../ui/use-toast";
 import useMessageStore from "@/hooks/StateHooks/useMessageStore";
-import useLogin from "@/hooks/useLogin";
+import useUserAuth from "@/hooks/useUserAuth";
+import { useNavigate } from "@tanstack/react-router";
 
 const UserSettingsContainer = () => {
   const { userId } = Route.useParams();
   const user = useUserStore();
   const errorMessage = useMessageStore();
   const { loadedSequences } = useSequencerActionsDataStore();
-  const { logoutHandler } = useLogin();
+  const navigate = useNavigate({ from: "/user/$userId" });
+  const { logoutHandler } = useUserAuth();
+  // TODO: refactor below to userAuth Hook
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [newUsername, setNewUsername] = useState("");
 
-  if (userId !== user.userId) return <PageNotFoundComponent />; // should be redirect
+  if (userId !== user.userId) navigate({ to: "/" });
   if (!user) return <LoadingSpinner />;
   const changePasswordHandler = async (e: FormEvent) => {
     e.preventDefault();
@@ -42,10 +44,12 @@ const UserSettingsContainer = () => {
       });
       if (!response.ok) throw new Error(`${response.text}`);
 
-      toast({ description: "Password updated." });
+      toast({ description: "Password updated. Please login with your new password" });
       setUsername("");
       setPassword("");
       setNewPassword("");
+      logoutHandler();
+      navigate({ to: "/" });
     } catch (error) {
       errorMessage.set(`${error}`.slice(7));
       setTimeout(() => {
