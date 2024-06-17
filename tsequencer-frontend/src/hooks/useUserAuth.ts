@@ -16,6 +16,8 @@ const useUserAuth = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confPassword, setConfPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [newUsername, setNewUsername] = useState("");
   const [isRegisterDialogOpen, setIsRegisterDialogOpen] = useState(false);
   const user = useUserStore();
   const errorMessage = useMessageStore();
@@ -78,6 +80,12 @@ const useUserAuth = () => {
     loginHandler,
     logoutHandler,
     registerHandler,
+    newPassword,
+    setNewPassword,
+    confPassword,
+    setConfPassword,
+    newUsername,
+    setNewUsername,
   };
 };
 

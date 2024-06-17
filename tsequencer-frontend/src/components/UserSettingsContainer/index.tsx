@@ -6,7 +6,6 @@ import type { LoadedSeqType } from "@/services/sequencerService";
 import { Button } from "../ui/button";
 import TextInput from "../UtilityComponents/TextInputContainer";
 import type { FormEvent } from "react";
-import { useState } from "react";
 import { updatePasswordAsync, updateUsernameAsync } from "@/services/userService";
 import { toast } from "../ui/use-toast";
 import useMessageStore from "@/hooks/StateHooks/useMessageStore";
@@ -15,19 +14,27 @@ import { useNavigate } from "@tanstack/react-router";
 
 const UserSettingsContainer = () => {
   const { userId } = Route.useParams();
+
   const user = useUserStore();
   const errorMessage = useMessageStore();
   const { loadedSequences } = useSequencerActionsDataStore();
+  const {
+    username,
+    setUsername,
+    password,
+    setPassword,
+    newPassword,
+    setNewPassword,
+    newUsername,
+    setNewUsername,
+    logoutHandler,
+  } = useUserAuth();
+
   const navigate = useNavigate({ from: "/user/$userId" });
-  const { logoutHandler } = useUserAuth();
-  // TODO: refactor below to userAuth Hook
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [newUsername, setNewUsername] = useState("");
 
   if (userId !== user.userId) navigate({ to: "/" });
   if (!user) return <LoadingSpinner />;
+
   const changePasswordHandler = async (e: FormEvent) => {
     e.preventDefault();
     try {
