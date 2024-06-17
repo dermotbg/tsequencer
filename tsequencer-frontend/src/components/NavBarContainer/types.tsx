@@ -133,4 +133,5 @@ export interface InputFormType {
   formTitle: string | undefined;
   type: string | undefined;
   id?: string | undefined;
+  className?: string | undefined;
 }

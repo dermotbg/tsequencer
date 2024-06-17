@@ -5,7 +5,7 @@ import { validateString } from "@/utils/typeChecking";
 
 import type { InputFormType } from "@/components/NavBarContainer/types";
 
-const TextInput = ({ setFormState, formTitle, type, id }: InputFormType) => {
+const TextInput = ({ setFormState, formTitle, type, id, className }: InputFormType) => {
   return (
     <div className="grid grid-cols-4 items-center gap-4">
       <Label htmlFor={`${formTitle}`} className="text-right">
@@ -15,7 +15,7 @@ const TextInput = ({ setFormState, formTitle, type, id }: InputFormType) => {
         id={id ? id : `${formTitle}`}
         defaultValue={formTitle == "username" ? "@username" : ""}
         type={type}
-        className="col-span-3"
+        className={"col-span-3 " + `${className}`}
         onChange={(e) => setFormState(e.target.value)}
         required
       />

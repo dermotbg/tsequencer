@@ -83,7 +83,6 @@ const useUserAuth = () => {
     newPassword,
     setNewPassword,
     confPassword,
-    setConfPassword,
     newUsername,
     setNewUsername,
   };
