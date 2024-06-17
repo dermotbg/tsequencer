@@ -4,12 +4,12 @@ import MobileNavMenu from "./components/MobileMenu";
 import NavBar from "./components/NavBar";
 
 import useIsLoadingStore from "@/hooks/StateHooks/useIsLoadingStore";
-import useLogin from "@/hooks/useLogin";
 import useMessageStore from "@/hooks/StateHooks/useMessageStore";
-import useRegisterUser from "@/hooks/useRegisterUser";
 import useSequencerStore from "@/hooks/StateHooks/useSequencerStore";
 import useSequencerActions from "@/hooks/useSequencerActions";
+import useSequencerActionsDataStore from "@/hooks/StateHooks/useSequencerActionsStore";
 import useUserStore from "@/hooks/StateHooks/useUserStore";
+import useUserAuth from "@/hooks/useUserAuth";
 
 import { loadSequencerAsync } from "@/services/sequencerService";
 import { validateTokenAsync } from "@/services/loginService";
@@ -17,7 +17,6 @@ import { validateTokenAsync } from "@/services/loginService";
 import { validateString } from "@/utils/typeChecking";
 
 import { toast } from "../ui/use-toast";
-import useSequencerActionsDataStore from "@/hooks/StateHooks/useSequencerActionsStore";
 
 const NavBarContainer = () => {
   // Template reconstructed from https://tailwindui.com/components/application-ui/navigation/navbars
@@ -26,24 +25,6 @@ const NavBarContainer = () => {
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [isSaveDialogOpen, setIsSaveDialogOpen] = useState(false);
   const [isLoadDialogOpen, setIsLoadDialogOpen] = useState(false);
-  const [isRegisterDialogOpen, setIsRegisterDialogOpen] = useState(false);
-
-  // login/reg state
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [confPassword, setConfPassword] = useState("");
-  const { loginHandler, logoutHandler } = useLogin({
-    username,
-    password,
-    setUsername,
-    setPassword,
-  });
-  const { registerHandler } = useRegisterUser({
-    username,
-    password,
-    confPassword,
-    setIsRegisterDialogOpen,
-  });
 
   // Global State
   const sequencer = useSequencerStore();
@@ -51,6 +32,7 @@ const NavBarContainer = () => {
   const user = useUserStore();
   const errorMessage = useMessageStore();
   const { isLoading, set: setIsLoading } = useIsLoadingStore();
+  // TODO: refactor hook to pure
   const { saveHandler, loadHandler, updateHandler } = useSequencerActions({
     sequences: sequencerActionData.loadedSequences,
     seqName: sequencerActionData.saveSeqName,
@@ -58,6 +40,7 @@ const NavBarContainer = () => {
     setIsSaveDialogOpen,
     setIsLoadDialogOpen,
   });
+  const userAuth = useUserAuth();
 
   // Login Validation Effect
   useEffect(() => {
@@ -69,7 +52,7 @@ const NavBarContainer = () => {
         const userValidation = await validateTokenAsync();
         if (userValidation && userValidation.status !== 200) {
           // TODO: ALERT SESSION EXPIRED
-          logoutHandler();
+          userAuth.logoutHandler();
           clearInterval(tokenValidationPoll);
         } else {
           // update FE state with logged in user info set username to LS to confirm loop already completed
@@ -78,7 +61,7 @@ const NavBarContainer = () => {
           user.setUserId(validateString(userValidation?.user.id));
         }
       } catch (error) {
-        logoutHandler();
+        userAuth.logoutHandler();
         clearInterval(tokenValidationPoll);
         setIsLoading(false);
         toast({ description: "Session has expired, please login again." });
@@ -116,12 +99,12 @@ const NavBarContainer = () => {
         userMenuOpen={userMenuOpen}
         setUserMenuOpen={setUserMenuOpen}
         userIsAuthenticated={user.isAuthenticated}
-        loginHandler={loginHandler}
-        setUsername={setUsername}
-        setPassword={setPassword}
+        loginHandler={userAuth.loginHandler}
+        setUsername={userAuth.setUsername}
+        setPassword={userAuth.setPassword}
         setSeqName={sequencerActionData.setSaveSeqName}
         saveHandler={saveHandler}
-        logoutHandler={logoutHandler}
+        logoutHandler={userAuth.logoutHandler}
         errorMessage={errorMessage.message}
         isSaveDialogOpen={isSaveDialogOpen}
         setIsSaveDialogOpen={setIsSaveDialogOpen}
@@ -132,21 +115,21 @@ const NavBarContainer = () => {
         setSelection={sequencerActionData.setSelectedSeq}
         isRunning={sequencer.isRunning}
         updateHandler={updateHandler}
-        registerHandler={registerHandler}
-        setConfPassword={setConfPassword}
-        isRegisterDialogOpen={isRegisterDialogOpen}
-        setIsRegisterDialogOpen={setIsRegisterDialogOpen}
+        registerHandler={userAuth.registerHandler}
+        setConfPassword={userAuth.setConfPassword}
+        isRegisterDialogOpen={userAuth.isRegisterDialogOpen}
+        setIsRegisterDialogOpen={userAuth.setIsRegisterDialogOpen}
         isLoading={isLoading}
       />
       {mobileMenuOpen ? (
         <MobileNavMenu
           userIsAuthenticated={user.isAuthenticated}
-          loginHandler={loginHandler}
-          setUsername={setUsername}
-          setPassword={setPassword}
+          loginHandler={userAuth.loginHandler}
+          setUsername={userAuth.setUsername}
+          setPassword={userAuth.setPassword}
           setSeqName={sequencerActionData.setSaveSeqName}
           saveHandler={saveHandler}
-          logoutHandler={logoutHandler}
+          logoutHandler={userAuth.logoutHandler}
           errorMessage={errorMessage.message}
           isSaveDialogOpen={isSaveDialogOpen}
           setIsSaveDialogOpen={setIsSaveDialogOpen}
@@ -157,10 +140,10 @@ const NavBarContainer = () => {
           setSelection={sequencerActionData.setSelectedSeq}
           isRunning={sequencer.isRunning}
           updateHandler={updateHandler}
-          registerHandler={registerHandler}
-          setConfPassword={setConfPassword}
-          isRegisterDialogOpen={isRegisterDialogOpen}
-          setIsRegisterDialogOpen={setIsRegisterDialogOpen}
+          registerHandler={userAuth.registerHandler}
+          setConfPassword={userAuth.setConfPassword}
+          isRegisterDialogOpen={userAuth.isRegisterDialogOpen}
+          setIsRegisterDialogOpen={userAuth.setIsRegisterDialogOpen}
           isLoading={isLoading}
         />
       ) : null}

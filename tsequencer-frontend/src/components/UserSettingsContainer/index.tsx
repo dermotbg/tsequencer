@@ -8,15 +8,17 @@ import PageNotFoundComponent from "../UtilityComponents/PageNotFoundComponent";
 import TextInput from "../UtilityComponents/TextInputContainer";
 import type { FormEvent } from "react";
 import { useState } from "react";
-import { updatePasswordAsync } from "@/services/userService";
+import { updatePasswordAsync, updateUsernameAsync } from "@/services/userService";
 import { toast } from "../ui/use-toast";
 import useMessageStore from "@/hooks/StateHooks/useMessageStore";
+import useLogin from "@/hooks/useLogin";
 
 const UserSettingsContainer = () => {
   const { userId } = Route.useParams();
   const user = useUserStore();
   const errorMessage = useMessageStore();
   const { loadedSequences } = useSequencerActionsDataStore();
+  const { logoutHandler } = useLogin();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -24,12 +26,6 @@ const UserSettingsContainer = () => {
 
   if (userId !== user.userId) return <PageNotFoundComponent />; // should be redirect
   if (!user) return <LoadingSpinner />;
-
-  console.log(username);
-  console.log(password);
-  console.log(newPassword);
-  console.log(newUsername);
-
   const changePasswordHandler = async (e: FormEvent) => {
     e.preventDefault();
     try {
@@ -58,14 +54,22 @@ const UserSettingsContainer = () => {
     }
   };
 
-  const changeUsernameHandler = (e: FormEvent) => {
+  const changeUsernameHandler = async (e: FormEvent) => {
     e.preventDefault();
     try {
       if (!username || !password || !newUsername)
         throw new Error(
           "Missing Data. Please enter your current username, password and new username",
         );
-      console.log("need to implement the service first!");
+      const response = await updateUsernameAsync({
+        username,
+        newUsername,
+        password,
+        id: userId,
+      });
+      if (!response.ok) throw new Error(`${response.text}`);
+      logoutHandler();
+      toast({ description: "Username updated, please login with your new username." });
     } catch (error) {
       errorMessage.set(`${error}`.slice(7));
       setTimeout(() => {
@@ -102,7 +106,7 @@ const UserSettingsContainer = () => {
             type={"text"}
           />
           <TextInput
-            setFormState={setNewPassword}
+            setFormState={setPassword}
             formTitle="Password"
             id="ch-un-password"
             type={"password"}
