@@ -109,9 +109,12 @@ const UserSettingsContainer = () => {
         <h1 className="border-b-2 pb-2 text-4xl font-bold shadow-stone-200">
           Hello {`${user.username.charAt(0).toUpperCase()}` + `${user.username.slice(1)}`}
         </h1>
+        <h2 className="mt-10 font-bold shadow-stone-200">
+          Here you can delete your saved sequences, or modify your username and password.
+        </h2>
       </div>
       <Tabs defaultValue="sequences" className="flex flex-col justify-center">
-        <TabsList className="bg-inherit text-stone-300">
+        <TabsList className="rounded-none border-b-2 bg-inherit text-stone-300">
           <TabsTrigger className="rounded-md" value="sequences">
             Sequences
           </TabsTrigger>
