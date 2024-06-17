@@ -1,7 +1,6 @@
 import MixingDeskContainer from "./components/MixingDeskContainer";
 import PadsAndOptionsContainer from "./components/PadsAndOptionsContainer";
 import StepSequencerContainer from "./components/StepSequencerContainer";
-import { Toaster } from "./components/ui/toaster";
 
 function App() {
   return (

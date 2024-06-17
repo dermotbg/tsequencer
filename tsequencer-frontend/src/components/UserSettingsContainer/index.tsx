@@ -13,6 +13,8 @@ import useUserAuth from "@/hooks/useUserAuth";
 import { useNavigate } from "@tanstack/react-router";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import AlertDialogComponent from "../UtilityComponents/AlertDialogComponent";
+import { validateString } from "@/utils/typeChecking";
+import DisplayErrorMessage from "../UtilityComponents/DisplayErrorMessage";
 
 const UserSettingsContainer = () => {
   const { userId } = Route.useParams();
@@ -29,6 +31,8 @@ const UserSettingsContainer = () => {
     setNewPassword,
     newUsername,
     setNewUsername,
+    confPassword,
+    setConfPassword,
     logoutHandler,
   } = useUserAuth();
 
@@ -40,13 +44,12 @@ const UserSettingsContainer = () => {
   const changePasswordHandler = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      if (!username || !password || !newPassword)
-        throw new Error(
-          "Missing Data. Please enter your username, current password and new password",
-        );
+      if (!user.username || !password || !newPassword)
+        throw new Error("Missing Data. Please enter your current password and new password");
+      if (newPassword !== confPassword) throw new Error("Confirm Password doesn't match");
 
       const response = await updatePasswordAsync({
-        username,
+        username: validateString(user.username),
         password,
         newPassword,
         id: userId,
@@ -157,13 +160,6 @@ const UserSettingsContainer = () => {
               <form onSubmit={changePasswordHandler}>
                 <div className="flex max-w-1/2 flex-col">
                   <TextInput
-                    setFormState={setUsername}
-                    formTitle="Username"
-                    id="ch-pw-username"
-                    type={"text"}
-                    className="mb-2"
-                  />
-                  <TextInput
                     setFormState={setPassword}
                     formTitle="Current Password"
                     id="ch-pw-curr-password"
@@ -175,7 +171,18 @@ const UserSettingsContainer = () => {
                     formTitle="New Password"
                     id="ch-pw-new-password"
                     type={"password"}
+                    className="mb-2"
                   />
+                  <TextInput
+                    setFormState={setConfPassword}
+                    formTitle="Confirm New Password"
+                    id="ch-pw-conf-new-password"
+                    type={"password"}
+                    className="mb-2"
+                  />
+                  {errorMessage ? (
+                    <DisplayErrorMessage errorMessage={errorMessage.message} />
+                  ) : null}
                   <Button>Submit</Button>
                 </div>
               </form>
@@ -204,6 +211,9 @@ const UserSettingsContainer = () => {
                       id="ch-un-password"
                       type={"password"}
                     />
+                    {errorMessage ? (
+                      <DisplayErrorMessage errorMessage={errorMessage.message} />
+                    ) : null}
                     <Button>Submit</Button>
                   </div>
                 </form>
