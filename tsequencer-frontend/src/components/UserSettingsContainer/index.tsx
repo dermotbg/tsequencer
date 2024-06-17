@@ -188,7 +188,9 @@ const UserSettingsContainer = () => {
                   {errorMessage ? (
                     <DisplayErrorMessage errorMessage={errorMessage.message} />
                   ) : null}
-                  <Button>Submit</Button>
+                  <Button variant={"ghost"} className="self-end">
+                    Submit
+                  </Button>
                 </div>
               </form>
             </TabsContent>
@@ -223,7 +225,9 @@ const UserSettingsContainer = () => {
                     {errorMessage ? (
                       <DisplayErrorMessage errorMessage={errorMessage.message} />
                     ) : null}
-                    <Button>Submit</Button>
+                    <Button variant={"ghost"} className="self-end">
+                      Submit
+                    </Button>
                   </div>
                 </form>
               </div>
