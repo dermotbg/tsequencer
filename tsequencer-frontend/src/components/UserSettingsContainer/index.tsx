@@ -2,7 +2,7 @@ import useSequencerActionsDataStore from "@/hooks/StateHooks/useSequencerActions
 import useUserStore from "@/hooks/StateHooks/useUserStore";
 import { Route } from "@/routes/user/$userId";
 import LoadingSpinner from "../UtilityComponents/LoadingSpinner";
-import type { LoadedSeqType } from "@/services/sequencerService";
+import { deleteSequencerAsync, type LoadedSeqType } from "@/services/sequencerService";
 import { Button } from "../ui/button";
 import TextInput from "../UtilityComponents/TextInputContainer";
 import type { FormEvent } from "react";
@@ -12,13 +12,14 @@ import useMessageStore from "@/hooks/StateHooks/useMessageStore";
 import useUserAuth from "@/hooks/useUserAuth";
 import { useNavigate } from "@tanstack/react-router";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import AlertDialogComponent from "../UtilityComponents/AlertDialogComponent";
 
 const UserSettingsContainer = () => {
   const { userId } = Route.useParams();
 
   const user = useUserStore();
   const errorMessage = useMessageStore();
-  const { loadedSequences } = useSequencerActionsDataStore();
+  const { loadedSequences, setLoadedSequences } = useSequencerActionsDataStore();
   const {
     username,
     setUsername,
@@ -90,8 +91,12 @@ const UserSettingsContainer = () => {
     }
   };
 
-  const deleteSeqHandler = (seqId: string) => {
-    console.log("deleted")
+  const deleteSeqHandler = async (seqId: string) => {
+    //alert
+    await deleteSequencerAsync(seqId);
+    toast({ description: "Sequence Deleted" });
+    if (!loadedSequences) return;
+    setLoadedSequences(loadedSequences.filter((seq) => seq.id !== seqId));
   };
 
   return (
@@ -120,9 +125,12 @@ const UserSettingsContainer = () => {
                   <li className="p-2" key={s.id}>
                     <div className="flex flex-row items-center justify-between">
                       <div className="px-2 font-mono font-semibold">{s.name}</div>
-                      <Button variant={"destructive"} onClick={() => deleteSeqHandler(s.id)}>
-                        Delete
-                      </Button>
+                      <AlertDialogComponent
+                        title="Are you sure you want to delete this sequence?"
+                        description={`You will not be able to recover ${s.name}`}
+                        trigger={<Button variant={"destructive"}>Delete</Button>}
+                        action={() => deleteSeqHandler(s.id)}
+                      />
                     </div>
                   </li>
                 );

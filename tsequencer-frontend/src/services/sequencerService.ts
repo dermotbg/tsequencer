@@ -78,3 +78,18 @@ export const updateSequencerAsync = async (UpdateSeqObj: LoadedSeqType) => {
     throw new Error(`${errorMessage}`);
   }
 };
+
+export const deleteSequencerAsync = async (seqId: string) => {
+  try {
+    const response = await fetch(`${baseUrl}/${seqId}`, {
+      method: "DELETE",
+    });
+    if (!response.ok) throw new Error(`${response.text}`);
+  } catch (error) {
+    let errorMessage = "Something went wrong: ";
+    if (error instanceof Error) {
+      errorMessage += error.message;
+    }
+    throw new Error(`${errorMessage}`);
+  }
+};
