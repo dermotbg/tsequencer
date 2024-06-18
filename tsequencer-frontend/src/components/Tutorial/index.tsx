@@ -118,14 +118,14 @@ const Tutorial = () => {
                     "url(https://github.com/dermotbg/tsequencer/assets/123154617/b0b98744-fd72-4656-9a23-265009743355",
                 }}
               ></div>
-              <div className="absolute left-0 top-0 mt-10 w-full text-center text-white">
+              <div className="absolute left-0 top-0 mt-10 text-center text-white">
                 <h2 className="m-4 inline-flex rounded-md bg-black/75 p-4 text-2xl font-bold shadow-1-stack sm:text-6xl">
                   INSTRUMENT PAD
                 </h2>
-                <div className="max-h-[45rem] overflow-y-scroll p-4 sm:overflow-y-hidden">
+                <div className="inline-flex max-h-[45rem] flex-col items-center overflow-y-scroll p-4 sm:overflow-y-hidden">
                   <p className="m-4 inline-flex rounded-md bg-black/75 p-4">
-                    Each instrument has a dedicated pad. Clicking on the pad will launch the sample
-                    and assign that sample to be the “active pad”.
+                    Each instrument has a dedicated pad. Click on the pad to launch the sample and
+                    assign that sample to be the “active pad”.
                   </p>
                   <p className="m-4 inline-flex rounded-md bg-black/75 p-4">
                     You can tell which pad is active as the pad will be highlighted.
@@ -135,7 +135,7 @@ const Tutorial = () => {
                     is set as the active pad, then click the desired sequencer step.
                   </p>
                   <p className="m-4 inline-flex rounded-md bg-black/75 p-4">
-                    To default to no active pad, click on the currently active pad.
+                    To deactivate all pads, click on the currently active pad.
                   </p>
                 </div>
               </div>
@@ -156,28 +156,23 @@ const Tutorial = () => {
                 </h2>
                 <div className="max-h-[45rem] overflow-y-scroll p-4 sm:overflow-y-hidden">
                   <p className="mb-1 inline-flex rounded-md bg-black/75 p-4 sm:m-4">
-                    The sequencer is a one bar length 4/4 grid, split into 16ths, with the leftmost
-                    buttons being the on-beat steps.
+                    The sequencer features a single-bar, 4/4 time signature grid divided into
+                    sixteenth notes, with the leftmost buttons being the on-beat steps.
                   </p>
                   <p className="mb-1 inline-flex rounded-md bg-black/75 p-4 sm:m-4">
                     It shows the currently playing step by changing the border color, the
                     highlighted border colors represent how many samples are loaded into the step.
                   </p>
                   <p className="mb-1 inline-flex rounded-md bg-black/75 p-4 sm:m-4">
-                    When you assign instruments to a step, you will see the first and last letter of
-                    those instruments populate the step button.
+                    Assigning instruments to a step displays their initials on the step button.
                   </p>
                   <p className="mb-1 inline-flex rounded-md bg-black/75 p-4 sm:m-4">
-                    When you click a specific step without an active pad, it will load the mixing
-                    desk for that step, where you can assign different volumes to all the
-                    instruments of that step.
+                    Clicking on a step without selecting an active pad opens its mixing desk, where
+                    you can assign different volumes to all the instruments of that step.
                   </p>
                   <p className="mb-1 inline-flex rounded-md bg-black/75 p-4 sm:m-4">
-                    The launch controls are found underneath the sequencer, recording toggles if key
+                    The launch controls are located below the sequencer, recording toggles if key
                     press recording is active, and trash clears the sequencer to a blank slate.
-                  </p>
-                  <p className="mb-1 inline-flex rounded-md bg-black/75 p-4 sm:m-4">
-                    The sequencer can be launched using the launch controls below the steps.
                   </p>
                 </div>
               </div>
@@ -198,24 +193,20 @@ const Tutorial = () => {
                 </h2>
                 <div className="max-h-[45rem] overflow-y-scroll p-4 sm:overflow-y-hidden">
                   <p className="m-4 inline-flex rounded-md bg-black/75 p-4">
-                    Each step has its own selection of volume controls.
+                    Each step of the sequencer has its own selection of volume controls.
                   </p>
                   <p className="m-4 inline-flex rounded-md bg-black/75 p-4">
-                    You can access each steps controls by clicking on a step without having an
-                    instrument active Any adjustments to individual instrument levels will only
-                    apply to that specific step.
+                    To access a step&apos;s volume controls, click on it without any active
+                    instrument. Any adjustments you make will only apply to that specific step.
                   </p>
                   <p className="m-4 inline-flex rounded-md bg-black/75 p-4">
-                    As the number of samples grow within a step, the number of volume faders will
-                    too.
+                    The number of volume faders increases with the number of samples in a step.
                   </p>
                   <p className="m-4 inline-flex rounded-md bg-black/75 p-4">
-                    By default, only the pad channel will be visible. This is the volume of how the
-                    instrument pads are both launched, and assigned to the sequencer. For example,
-                    when you have kick as the active pad, and the PAD level at 50%, pressing the
-                    kick pad will play the sample at 50% volume, and assigning that sample to a step
-                    assigns it at 50% volume. To then increase the volume in that step, it must be
-                    done by the "kick" volume control of the step itself.
+                    By default, you&apos;ll only see the pad channel&apos;s volume control. This
+                    control adjusts the launch and assignment volume of the active instrument pad.
+                    To adjust the volume further within a specific step after assignment, use that
+                    step&apos;s individual instrument volume control.
                   </p>
                 </div>
               </div>
@@ -246,7 +237,7 @@ const Tutorial = () => {
                   </h2>
                   <div className="max-h-[45rem] overflow-y-scroll p-4 sm:max-h-max sm:overflow-hidden">
                     <p className="m-4 inline-flex rounded-md bg-black/75 p-4">
-                      This value represents the Beats Per Minute of the sequencer, The sequencer
+                      This value represents the Beats Per Minute of the sequencer. The sequencer
                       must be stopped to adjust the BPM.
                     </p>
                   </div>
@@ -262,18 +253,18 @@ const Tutorial = () => {
                     Press the assign keys button to map keys to instruments.
                   </p>
                   <p className="m-4 inline-flex rounded-md bg-black/75 p-4">
-                    Keys must be alphanumeric, you can only assign one sample to each key.
+                    Keys must be alphanumeric; you can only assign one sample to each key.
                   </p>
                   <p className="m-4 inline-flex rounded-md bg-black/75 p-4">
-                    When the sequencer is not playing key press plays samples
+                    When the sequencer is not playing, key press plays samples
                   </p>
                   <p className="m-4 inline-flex rounded-md bg-black/75 p-4">
-                    When the sequencer is playing and recording is active key press does not play
+                    When the sequencer is playing and recording is active, key press does not play
                     samples but assigns them to the sequencer grid.
                   </p>
                   <p className="m-4 inline-flex rounded-md bg-black/75 p-4">
-                    The sequencer will quantize the key press to the closest step as per the audio
-                    playback at the time, so results may be unexpected.
+                    The sequencer will quantize each key press to align with the nearest step in
+                    accordance with audio playback at that moment.
                   </p>
                 </div>
               </div>
