@@ -33,16 +33,16 @@ const useUserAuth = () => {
       user.setUsername(resp.username);
       user.setUserId(resp.id);
       user.setAuthenticated(true);
-      isLoading.set(false);
       toast({ description: "You are now logged in." });
       setUsername("");
       setPassword("");
     } catch (error) {
-      isLoading.set(false);
       errorMessage.set(`${error}`.slice(7));
       setTimeout(() => {
         errorMessage.set(undefined);
       }, 10000);
+    } finally {
+      isLoading.set(false);
     }
   };
 

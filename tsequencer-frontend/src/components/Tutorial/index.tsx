@@ -25,11 +25,11 @@ const Tutorial = () => {
               }}
               className="items-center justify-center text-center text-4xl text-stone-300"
             >
-              <h1>What is a Step Sequencer?</h1>
+              <h1 className="shadow-black text-shadow-sm">What is a Step Sequencer?</h1>
             </AccordionTrigger>
             <AccordionContent>
               <div className="flex flex-col items-center bg-black/25">
-                <p className="text-shadow-md max-w-4/5 p-5 text-stone-300">
+                <p className="max-w-4/5 p-5 text-stone-300 shadow-black text-shadow-sm">
                   A sequencer, in broader terms is a tool that is used to playback notes of an
                   instrument. This can be a real-time sequencer, which would be ideal for recording
                   a keyboard melody from a synthesizer, or a step sequencer which offers a set grid
@@ -39,7 +39,7 @@ const Tutorial = () => {
                   samplers in electronic music, as the desired patterns are usually static and don't
                   fall outside of the grid.
                 </p>
-                <p className="text-shadow-md max-w-4/5 text-pretty p-5 text-stone-300">
+                <p className="max-w-4/5 p-5 text-stone-300 shadow-black text-shadow-sm">
                   The grid, as mentioned above, consist of the divisions of the time across the span
                   of the full sequence. In the example of this sequencer, we are using a single
                   measure 4/4 time signature with subdivisions of 1/16th notes. In most cases of
@@ -49,7 +49,7 @@ const Tutorial = () => {
                   These subdivisions are commonly called steps of the sequencer. The speed of the
                   sequence is set by the BPM or Beats Per Minute.
                 </p>
-                <p className="text-shadow-md max-w-4/5 text-pretty p-5 text-stone-300">
+                <p className="max-w-4/5 p-5 text-stone-300 shadow-black text-shadow-sm">
                   Each row of four steps in our sequencer represents one beat of the 4/4 measure.
                   This is then broken into four columns for each row on the grid, all representing
                   subdivisons of that one beat measure per row. This results in the 4x4 or 1/16th
@@ -58,7 +58,7 @@ const Tutorial = () => {
                   by its visual cue. The sequencer will loop continuously, playing the notes in
                   order from step one to sixteen.
                 </p>
-                <p className="text-shadow-md max-w-4/5 text-pretty p-5 text-stone-300">
+                <p className="max-w-4/5 p-5 text-stone-300 shadow-black text-shadow-sm">
                   If you're still here, congrats! That was very wordy. The best way to get your head
                   around it is just to experiment. Start off with the Kickdrum sample in this
                   sequencer and place it on the on-beats of the bar, these are the steps in the
@@ -82,7 +82,9 @@ const Tutorial = () => {
                 color: "#d6d3d1",
               }}
             >
-              Prefer video format for information? Check out the great overview by Roland here
+              <span className="shadow-black text-shadow-sm">
+                Prefer video format for information? Check out the great overview by Roland here
+              </span>
             </AccordionTrigger>
             <AccordionContent>
               <div className="aspect-video h-full w-full">

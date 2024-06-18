@@ -104,7 +104,7 @@ const UserSettingsContainer = () => {
   };
 
   return (
-    <div className="flex flex-col items-center text-stone-300">
+    <div className="flex flex-col items-center text-stone-300 shadow-black text-shadow-sm">
       <div className="flex flex-col items-center p-10">
         <h1 className="border-b-2 pb-2 text-4xl font-bold shadow-stone-200">
           Hello {`${user.username.charAt(0).toUpperCase()}` + `${user.username.slice(1)}`}

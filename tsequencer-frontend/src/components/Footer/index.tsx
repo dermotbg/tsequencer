@@ -2,7 +2,7 @@ const Footer = () => {
   return (
     <footer className="mt-1 border-t-2 py-6 md:px-8 md:py-0">
       <div className="container flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row">
-        <p className="text-balance text-center text-sm text-stone-300">
+        <p className="text-balance text-center text-sm text-stone-300 shadow-black text-shadow-sm">
           Built by{" "}
           <a
             href={"https://www.linkedin.com/in/dermot-bateman-7139971a2/"}
