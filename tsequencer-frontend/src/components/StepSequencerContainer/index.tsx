@@ -56,6 +56,7 @@ const StepSequencerContainer = () => {
         clearSequencer={clearHandler}
         isRecording={record}
         isRunning={isRunning}
+        windowSize={windowSize}
       />
     </>
   );
