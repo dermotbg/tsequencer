@@ -1,4 +1,5 @@
 import { useState } from "react";
+import type { FormEvent } from "react";
 
 import { loginRequestAsync, logoutRequestAsync } from "@/services/loginService";
 
@@ -6,20 +7,16 @@ import { toast } from "@/components/ui/use-toast";
 
 import useIsLoadingStore from "./StateHooks/useIsLoadingStore";
 import useMessageStore from "./StateHooks/useMessageStore";
+import useUserAuthStore from "./StateHooks/useUserAuthStore";
 import useUserStore from "./StateHooks/useUserStore";
 
-import type { FormEvent } from "react";
 import { createUserAsync } from "@/services/userService";
 import { prepareSaveUserObject } from "@/components/NavBarContainer/utils/prepareSaveUserObject";
 
 const useUserAuth = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [confPassword, setConfPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [newUsername, setNewUsername] = useState("");
   const [isRegisterDialogOpen, setIsRegisterDialogOpen] = useState(false);
   const user = useUserStore();
+  const userAuth = useUserAuthStore();
   const errorMessage = useMessageStore();
   const isLoading = useIsLoadingStore();
 
@@ -27,15 +24,18 @@ const useUserAuth = () => {
     e.preventDefault();
     isLoading.set(true);
     try {
-      const resp = await loginRequestAsync({ username, password });
+      const resp = await loginRequestAsync({
+        username: userAuth.username,
+        password: userAuth.password,
+      });
       // set string to LS only to fire token validation when it's defined
       localStorage.setItem("user", JSON.stringify("loggedIn"));
       user.setUsername(resp.username);
       user.setUserId(resp.id);
       user.setAuthenticated(true);
       toast({ description: "You are now logged in." });
-      setUsername("");
-      setPassword("");
+      userAuth.setUsername("");
+      userAuth.setPassword("");
     } catch (error) {
       errorMessage.set(`${error}`.slice(7));
       setTimeout(() => {
@@ -57,7 +57,9 @@ const useUserAuth = () => {
   const registerHandler = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      await createUserAsync(prepareSaveUserObject(username, password, confPassword));
+      await createUserAsync(
+        prepareSaveUserObject(userAuth.username, userAuth.password, userAuth.confPassword),
+      );
       toast({ description: "Registration successful! Please log in." });
       setIsRegisterDialogOpen(false);
     } catch (error) {
@@ -70,21 +72,21 @@ const useUserAuth = () => {
   };
 
   return {
-    username,
-    password,
-    setUsername,
-    setPassword,
-    setConfPassword,
+    username: userAuth.username,
+    password: userAuth.password,
+    setUsername: userAuth.setUsername,
+    setPassword: userAuth.setPassword,
+    setConfPassword: userAuth.setConfPassword,
     isRegisterDialogOpen,
     setIsRegisterDialogOpen,
     loginHandler,
     logoutHandler,
     registerHandler,
-    newPassword,
-    setNewPassword,
-    confPassword,
-    newUsername,
-    setNewUsername,
+    newPassword: userAuth.newPassword,
+    setNewPassword: userAuth.setNewPassword,
+    confPassword: userAuth.confPassword,
+    newUsername: userAuth.newUsername,
+    setNewUsername: userAuth.setNewUsername,
   };
 };
 

@@ -31,6 +31,7 @@ const SaveDialog = ({
   isLoading,
 }: SaveDialogType) => {
   const [wasClicked, setWasClicked] = useState(false);
+  if (window.location.pathname !== "/") return null;
   return (
     <Dialog open={isSaveDialogOpen} onOpenChange={setIsSaveDialogOpen}>
       <DialogTrigger asChild>

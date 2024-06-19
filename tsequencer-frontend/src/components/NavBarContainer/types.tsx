@@ -9,9 +9,9 @@ export interface NavBarType {
   setUserMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
   userIsAuthenticated: boolean;
   loginHandler: (e: FormEvent) => void;
-  setUsername: React.Dispatch<React.SetStateAction<string>>;
-  setPassword: React.Dispatch<React.SetStateAction<string>>;
-  setConfPassword: React.Dispatch<React.SetStateAction<string>>;
+  setUsername: (name: string) => void;
+  setPassword: (name: string) => void;
+  setConfPassword: (name: string) => void;
   setSeqName: (name: string | undefined) => void;
   saveHandler: (e: FormEvent) => void;
   logoutHandler: () => void;
@@ -129,7 +129,7 @@ export interface SelectFormType extends SelectLogicType {
 }
 
 export interface InputFormType {
-  setFormState: React.Dispatch<React.SetStateAction<string>>;
+  setFormState: (name: string) => void;
   formTitle: string | undefined;
   type: string | undefined;
   id?: string | undefined;

@@ -17,6 +17,7 @@ const LoadDialog = ({
   isRunning,
   isLoading,
 }: LoadDialogType) => {
+  if (window.location.pathname !== "/") return null;
   return (
     <Dialog open={isLoadDialogOpen} onOpenChange={setIsLoadDialogOpen}>
       <DialogTrigger asChild>
