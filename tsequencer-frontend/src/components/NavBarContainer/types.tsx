@@ -3,10 +3,10 @@ import type { FormEvent } from "react";
 import type { LoadedSeqType } from "@/services/sequencerService";
 
 export interface NavBarType {
-  mobileMenuOpen: boolean;
-  setMobileMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  userMenuOpen: boolean;
-  setUserMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  isMobileMenuOpen: boolean;
+  setIsMobileMenuOpen: (toggle: boolean) => void;
+  isUserMenuOpen: boolean;
+  setIsUserMenuOpen: (toggle: boolean) => void;
   userIsAuthenticated: boolean;
   loginHandler: (e: FormEvent) => void;
   setUsername: (name: string) => void;
@@ -17,22 +17,22 @@ export interface NavBarType {
   logoutHandler: () => void;
   errorMessage: string | undefined;
   isSaveDialogOpen: boolean;
-  setIsSaveDialogOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsSaveDialogOpen: (toggle: boolean) => void;
   isLoadDialogOpen: boolean;
-  setIsLoadDialogOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsLoadDialogOpen: (toggle: boolean) => void;
   isRegisterDialogOpen: boolean;
-  setIsRegisterDialogOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsRegisterDialogOpen: (toggle: boolean) => void;
   sequences: LoadedSeqType[] | undefined;
   setSelection: (selectedSeq: string | undefined) => void;
-  loadHandler: (e: FormEvent) => Promise<void>;
+  loadHandler: (e: FormEvent) => void;
   isRunning: boolean;
   updateHandler: (e: FormEvent) => Promise<void>;
   registerHandler: (e: FormEvent) => void;
   isLoading: boolean;
 }
 
-export type NavBarMobileMenuType = Pick<NavBarType, "mobileMenuOpen" | "setMobileMenuOpen">;
-export type NavBarUserMenuType = Pick<NavBarType, "userMenuOpen" | "setUserMenuOpen">;
+export type NavBarMobileMenuType = Pick<NavBarType, "isMobileMenuOpen" | "setIsMobileMenuOpen">;
+export type NavBarUserMenuType = Pick<NavBarType, "isUserMenuOpen" | "setIsUserMenuOpen">;
 
 export type MobileNavMenuType = Pick<
   NavBarType,
@@ -124,7 +124,7 @@ export interface SelectFormType extends SelectLogicType {
   description: string;
   isMobile: boolean;
   confirmText: string;
-  submitHandler: (e: FormEvent) => Promise<void>;
+  submitHandler: (e: FormEvent) => Promise<void> | void;
   isLoading: boolean;
 }
 
