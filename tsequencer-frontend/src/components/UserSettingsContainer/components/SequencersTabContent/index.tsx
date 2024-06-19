@@ -5,13 +5,9 @@ import { Button } from "@/components/ui/button";
 import LoadingSpinner from "@/components/UtilityComponents/LoadingSpinner";
 import { TabsContent } from "@/components/ui/tabs";
 
-const SequencerTabContent = ({
-  loadedSequences,
-  deleteSeqHandler,
-}: {
-  loadedSequences: LoadedSeqType[] | undefined;
-  deleteSeqHandler: (seqId: string) => Promise<void>;
-}) => {
+import type { SequencerTabContentType } from "../TabsContainer";
+
+const SequencerTabContent = ({ loadedSequences, deleteSeqHandler }: SequencerTabContentType) => {
   return (
     <TabsContent value="sequences">
       {!loadedSequences ? (

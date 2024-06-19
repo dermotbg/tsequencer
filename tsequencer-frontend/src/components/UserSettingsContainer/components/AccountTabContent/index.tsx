@@ -4,19 +4,7 @@ import { Button } from "@/components/ui/button";
 import DisplayErrorMessage from "@/components/UtilityComponents/DisplayErrorMessage";
 import TextInput from "@/components/UtilityComponents/TextInputContainer";
 
-import type { UserAuthStoreType } from "@/hooks/StateHooks/useUserAuthStore";
-
-type AccountTabContentType = {
-  errorMessage: string | undefined;
-  userAuthStore: Omit<
-    UserAuthStoreType,
-    "username" | "newUsername" | "password" | "newPassword" | "confPassword"
-  >;
-  userActions: {
-    changePasswordHandler: (e: React.FormEvent<Element>) => Promise<void>;
-    changeUsernameHandler: (e: React.FormEvent<Element>) => Promise<void>;
-  };
-};
+import type { AccountTabContentType } from "../TabsContainer";
 
 const AccountTabContent = ({ errorMessage, userAuthStore, userActions }: AccountTabContentType) => {
   return (
