@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-interface UserAuthStoreType {
+export interface UserAuthStoreType {
   username: string;
   setUsername: (username: string) => void;
   password: string;
