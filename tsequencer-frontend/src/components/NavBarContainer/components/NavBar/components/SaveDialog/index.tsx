@@ -17,6 +17,7 @@ import TextInput from "../../../../../UtilityComponents/TextInputContainer";
 
 import type { SaveDialogType } from "../../../../types";
 import LoadingSpinner from "@/components/UtilityComponents/LoadingSpinner";
+import useSequencerStore from "@/hooks/StateHooks/useSequencerStore";
 
 const SaveDialog = ({
   isMobile = false,
@@ -32,6 +33,8 @@ const SaveDialog = ({
 }: SaveDialogType) => {
   const [wasClicked, setWasClicked] = useState(false);
   if (window.location.pathname !== "/") return null;
+  const {activeSeqName} = useSequencerStore();
+  console.log(seq)
   return (
     <Dialog open={isSaveDialogOpen} onOpenChange={setIsSaveDialogOpen}>
       <DialogTrigger asChild>

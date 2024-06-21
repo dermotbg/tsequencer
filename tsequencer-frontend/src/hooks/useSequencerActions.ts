@@ -60,6 +60,7 @@ const useSequencerActions = () => {
         (s) => s.name === validateString(sequencerActionData.selectedSeq),
       );
       if (selectedSequencer) {
+        sequencer.setActiveSeqName(selectedSequencer.name);
         sequencer.setSeq(selectedSequencer.sequence);
         uiState.setIsLoadDialogOpen(false);
       }
