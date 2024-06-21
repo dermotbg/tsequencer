@@ -22,8 +22,8 @@ const UserSettingsContainer = () => {
   const userActions = useUserActions();
   const userAuthStore = useUserAuthStore();
 
-  if (!user || !user.username) return <LoadingSpinner />;
   if (userId !== user.userId) return <PageNotFoundComponent />;
+  if (!user || !user.username) return <LoadingSpinner />;
 
   return (
     <div className="flex flex-col items-center text-stone-300 shadow-black text-shadow-sm">

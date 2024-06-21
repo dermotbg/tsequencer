@@ -10,6 +10,8 @@ import useMessageStore from "./StateHooks/useMessageStore";
 import useUserAuthStore from "./StateHooks/useUserAuthStore";
 import useUserStore from "./StateHooks/useUserStore";
 
+import { useNavigate } from "@tanstack/react-router";
+
 import { createUserAsync } from "@/services/userService";
 import { prepareSaveUserObject } from "@/components/NavBarContainer/utils/prepareSaveUserObject";
 
@@ -19,6 +21,7 @@ const useUserAuthActions = () => {
   const userAuthStore = useUserAuthStore();
   const errorMessage = useMessageStore();
   const isLoading = useIsLoadingStore();
+  const navigate = useNavigate({ from: window.location.pathname });
 
   const loginHandler = async (e: FormEvent) => {
     e.preventDefault();
@@ -52,6 +55,7 @@ const useUserAuthActions = () => {
     user.setAuthenticated(false);
     localStorage.removeItem("user");
     logoutRequestAsync();
+    navigate({ to: "/" });
   };
 
   const registerHandler = async (e: FormEvent) => {
