@@ -21,6 +21,7 @@
 
   &::before {
     content: "+";
+    z-index: 1;
   }
 
   &::after {

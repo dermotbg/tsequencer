@@ -2,13 +2,13 @@ import { CircleUser } from "lucide-react";
 
 import type { NavBarUserMenuType } from "@/components/NavBarContainer/types";
 
-const UserMenuIcon = ({ userMenuOpen, setUserMenuOpen }: NavBarUserMenuType) => {
+const UserMenuIcon = ({ isUserMenuOpen, setIsUserMenuOpen }: NavBarUserMenuType) => {
   return (
     <button
       type="button"
-      onClick={() => setUserMenuOpen(!userMenuOpen)}
+      onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
       onBlur={(e) => {
-        if (e.relatedTarget !== e.currentTarget) setUserMenuOpen(false);
+        if (e.relatedTarget !== e.currentTarget) setIsUserMenuOpen(false);
       }}
       className="relative flex rounded-full bg-stone-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-stone-800"
       id="user-menu-button"

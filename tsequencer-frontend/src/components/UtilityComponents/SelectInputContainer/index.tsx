@@ -29,6 +29,7 @@ const SelectFormContainer = ({
   setSelection,
   confirmText,
   isLoading = false,
+  activeSeq = undefined,
 }: SelectFormType) => {
   const [wasClicked, setWasClicked] = useState(false);
   return (
@@ -39,9 +40,12 @@ const SelectFormContainer = ({
       </DialogHeader>
       <form onSubmit={submitHandler}>
         <div className="gap-4">
-          <Select onValueChange={(value) => setSelection(value)}>
+          <Select value={activeSeq ? activeSeq : ""} onValueChange={(value) => setSelection(value)}>
             <SelectTrigger className="w-full">
-              <SelectValue placeholder="Select a sequence" />
+              <SelectValue
+                defaultValue={activeSeq ? activeSeq : undefined}
+                placeholder="Select a sequence"
+              />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>

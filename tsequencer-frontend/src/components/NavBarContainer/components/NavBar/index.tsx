@@ -12,10 +12,10 @@ import UserMenuContainer from "../UserMenuContainer";
 import type { NavBarType } from "../../types";
 
 const NavBar = ({
-  mobileMenuOpen,
-  setMobileMenuOpen,
-  userMenuOpen,
-  setUserMenuOpen,
+  isMobileMenuOpen,
+  setIsMobileMenuOpen,
+  isUserMenuOpen,
+  setIsUserMenuOpen,
   userIsAuthenticated,
   loginHandler,
   setUsername,
@@ -43,8 +43,8 @@ const NavBar = ({
     <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
       <div className="relative flex h-16 items-center justify-between">
         <MobileMenuAccessButton
-          mobileMenuOpen={mobileMenuOpen}
-          setMobileMenuOpen={setMobileMenuOpen}
+          isMobileMenuOpen={isMobileMenuOpen}
+          setIsMobileMenuOpen={setIsMobileMenuOpen}
         />
         {/* Logo */}
         <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
@@ -112,8 +112,8 @@ const NavBar = ({
         </div>
         {/* <!-- Profile dropdown --> */}
         <UserMenuContainer
-          userMenuOpen={userMenuOpen}
-          setUserMenuOpen={setUserMenuOpen}
+          isUserMenuOpen={isUserMenuOpen}
+          setIsUserMenuOpen={setIsUserMenuOpen}
           logoutHandler={logoutHandler}
         />
       </div>
