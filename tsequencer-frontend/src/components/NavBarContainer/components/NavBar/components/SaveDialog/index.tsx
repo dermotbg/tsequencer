@@ -32,9 +32,8 @@ const SaveDialog = ({
   isLoading,
 }: SaveDialogType) => {
   const [wasClicked, setWasClicked] = useState(false);
+  const { activeSeqName } = useSequencerStore();
   if (window.location.pathname !== "/") return null;
-  const {activeSeqName} = useSequencerStore();
-  console.log(seq)
   return (
     <Dialog open={isSaveDialogOpen} onOpenChange={setIsSaveDialogOpen}>
       <DialogTrigger asChild>
@@ -86,6 +85,7 @@ const SaveDialog = ({
           setSelection={setSelection}
           confirmText={"Update"}
           isLoading={isLoading}
+          activeSeq={activeSeqName}
         />
       </DialogContent>
     </Dialog>

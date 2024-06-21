@@ -126,6 +126,7 @@ export interface SelectFormType extends SelectLogicType {
   confirmText: string;
   submitHandler: (e: FormEvent) => Promise<void> | void;
   isLoading: boolean;
+  activeSeq: string | undefined;
 }
 
 export interface InputFormType {
