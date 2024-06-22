@@ -18,14 +18,14 @@ import { Route as UserUserIdImport } from './routes/user/$userId'
 // Create/Update Routes
 
 const TutorialRoute = TutorialImport.update({
-  path: "/tutorial",
+  path: '/tutorial',
   getParentRoute: () => rootRoute,
-} as any);
+} as any)
 
 const IndexRoute = IndexImport.update({
-  path: "/",
+  path: '/',
   getParentRoute: () => rootRoute,
-} as any);
+} as any)
 
 const UserUserIdRoute = UserUserIdImport.update({
   path: '/user/$userId',
@@ -34,7 +34,7 @@ const UserUserIdRoute = UserUserIdImport.update({
 
 // Populate the FileRoutesByPath interface
 
-declare module "@tanstack/react-router" {
+declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
     '/': {
       id: '/'
