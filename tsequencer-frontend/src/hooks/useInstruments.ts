@@ -5,9 +5,17 @@ import { setSamples } from "../utils/setSamples";
 export interface LoadedInstruments {
   [key: string]: AudioBuffer;
   kick: AudioBuffer;
+  sub: AudioBuffer;
   clap: AudioBuffer;
+  snare: AudioBuffer;
   closedHH: AudioBuffer;
+  openHH: AudioBuffer;
   ride: AudioBuffer;
+  perc: AudioBuffer;
+  perc2: AudioBuffer;
+  perc3: AudioBuffer;
+  perc4: AudioBuffer;
+  perc5: AudioBuffer;
 }
 
 const useInstruments = () => {
@@ -27,9 +35,8 @@ const useInstruments = () => {
       const perc3 = await setSamples("https://dermotbg.github.io/tseq-audio/perc6.wav");
       const perc4 = await setSamples("https://dermotbg.github.io/tseq-audio/perc3.wav");
       const perc5 = await setSamples("https://dermotbg.github.io/tseq-audio/perc3-2.wav");
-      // Unused below:
 
-      const loadedInstruments = {
+      const loadedInstruments: LoadedInstruments = {
         kick,
         clap,
         snare,
@@ -43,12 +50,10 @@ const useInstruments = () => {
         perc4,
         perc5,
       };
-      // const loadedInstruments = await fetchInstruments();
       setInstruments(loadedInstruments);
     };
     if (!instruments) loadInstruments();
   }, []);
-
   return instruments;
 };
 
