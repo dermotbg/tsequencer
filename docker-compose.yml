@@ -1,0 +1,49 @@
+
+services:
+  frontend:
+    image: tseq-frontend-prod
+    container_name: tseq-frontend-prod
+    build:
+      context: ./tsequencer-frontend
+      dockerfile: Dockerfile
+    volumes:
+    - frontend_build:/usr/share/nginx/html
+  
+  backend:
+    image: tseq-backend-prod
+    container_name: tseq-backend-prod
+    build:
+      context: ./tsequencer-backend
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/user/src/app/tsequencer-backend
+    ports:
+      - 5179:5179
+    environment:
+      - MONGO_URI=${MONGO_URI}
+      - JWT_ISSUER=${JWT_ISSUER}
+      - JWT_AUDIENCE=${JWT_AUDIENCE}
+      - JWT_SECRET=${JWT_SECRET}
+
+  mongo:
+    image: mongo
+    container_name: mongodb-prod
+    ports:
+      - 27017:27017
+    volumes:
+      - ./mongo_data:/data/db
+
+  nginx:
+    image: nginx
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - frontend_build:/usr/share/nginx/html
+    ports:
+      - 8080:80
+    container_name: reverse-proxy
+    depends_on:
+      - frontend
+
+volumes:
+  frontend_build:
+  mongo_data:

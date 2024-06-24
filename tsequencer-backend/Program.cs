@@ -1,6 +1,7 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using TSequencer.Helpers;
 using TSequencer.Models;
@@ -43,7 +44,7 @@ builder.Services.AddAuthorization(options =>
 
 // Get Mongo settings from settings etc
 var mongoConfig = builder.Configuration.GetSection("MongoDB").Get<MongoDBSettings>();
-var mongoConnectionURI = Environment.GetEnvironmentVariable("MONGO_URI");
+var mongoConnectionURI = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production" ? Environment.GetEnvironmentVariable("MONGO_URI") : "mongodb://dev_user:dev_password@mongo:27017?authSource=admin";
 
 if(mongoConfig == null || mongoConnectionURI == null)
 {
@@ -75,9 +76,22 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseStaticFiles();
+app.UseDefaultFiles(new DefaultFilesOptions
+{
+  DefaultFileNames = new List<string> { "index.html" }
+});
+app.UseStaticFiles(new StaticFileOptions
+{
+  FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")
+  ),
+  RequestPath = ""
+});
+
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+
+app.MapFallbackToFile("/index.html");
 
 app.Run();

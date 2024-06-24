@@ -11,21 +11,17 @@ export interface LoadedMetronome {
   metroDown: AudioBuffer;
 }
 
-const fetchMetronome = async () => {
-  const metroUp = await setSamples("src/audio/metroUp.wav");
-  const metroDown = await setSamples("src/audio/metroDown.wav");
-  return { metroUp, metroDown };
-};
-
 const useMetronome = () => {
   const [metronome, setMetronome] = useState<LoadedMetronome>();
 
   useEffect(() => {
     const loadMetro = async () => {
-      const loadedMetronome = await fetchMetronome();
+      const metroUp = await setSamples("https://dermotbg.github.io/tseq-audio/metroUp.wav");
+      const metroDown = await setSamples("https://dermotbg.github.io/tseq-audio/metroDown.wav");
+      const loadedMetronome = { metroUp, metroDown };
       setMetronome(loadedMetronome);
     };
-    loadMetro();
+    if (!metronome) loadMetro();
   }, []);
 
   const triggerMetronome = (step: Step, time: number) => {
