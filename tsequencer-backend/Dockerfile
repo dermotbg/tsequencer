@@ -8,4 +8,6 @@ COPY . .
 
 ENV ASPNETCORE_SERVER.URLS=http://0.0.0.0:5179/
 
-CMD ["dotnet", "run", "--environment", "Production"]
+ENV ASPNETCORE_ENVIRONMENT=Production
+
+CMD ["dotnet", "run"]
