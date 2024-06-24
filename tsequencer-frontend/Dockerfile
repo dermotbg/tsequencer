@@ -12,4 +12,4 @@ CMD [ "cp", "-r", "./dist/.", "../tsequencer-backend/wwwroot/" ]
 
 FROM nginx as serve-stage
 
-COPY --from=build-stage /usr/src/app/dist /var/www
+COPY --from=build-stage /usr/src/app/dist /usr/share/nginx/html
