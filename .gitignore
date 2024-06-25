@@ -136,5 +136,4 @@ src/.vs/config/applicationhost.config
 
 .env
 /mongo_data
-tsequencer-backend/wwwroot
 .prettier*
