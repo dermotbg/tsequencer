@@ -1,7 +1,6 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using TSequencer.Helpers;
 using TSequencer.Models;
@@ -74,18 +73,6 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Error");
     app.UseHsts();
 }
-
-app.UseStaticFiles();
-app.UseDefaultFiles(new DefaultFilesOptions
-{
-  DefaultFileNames = new List<string> { "index.html" }
-});
-app.UseStaticFiles(new StaticFileOptions
-{
-  FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")
-  ),
-  RequestPath = ""
-});
 
 app.UseRouting();
 app.UseAuthentication();
