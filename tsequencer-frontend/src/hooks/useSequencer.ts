@@ -81,7 +81,7 @@ const useSequencer = () => {
     timerId.current = setTimeout(scheduleSequencer, lookahead);
   };
 
-  let lastStepHighlighted = 3;
+  let lastStepHighlighted = 15;
   const colorSteps = () => {
     if (!isPlaying.current) return; // needed for clear function. Without it the sequencer state keeps previous instruments FOREVER
     let highlightStep = lastStepHighlighted;

@@ -8,6 +8,8 @@
 
 <h3 align="center">Drum/Sample sequencer made with TypeScript and the <a href="https://webaudioapi.com/">Web Audio API</a></h3>
 
+<h4 align="center">Jump to: <a href="#overview">Overview</a> | <a href="#screenshots">Screenshots</a></h4>
+
 ___
 ## How to run the dev build locally:
 
@@ -20,7 +22,67 @@ ___
 5. **Visit http://localhost:8080/ in your browser**
 ---
 
-<h1 align="center">Current State</h1>
+<h1 align="center" id="overview">Overview:</h1>
+<ul>
+  <li><strong>Front-End Technologies used:</strong>
+    <ul>
+      <li>TypeScript</li>
+      <li>React</li>
+    </ul>
+  </li>
+  <li><strong>Back-End Technologies used:</strong>
+    <ul>
+      <li>C#</li>
+      <li>.NET Core</li>
+      <li>MongoDB</li>
+    </ul>
+  </li>
+  <li><strong>Deployment Technologies used:</strong>
+    <ul>
+      <li>AWS EC2</li>
+      <li>Docker Network</li>
+      <li>Nginx</li>
+    </ul>
+  </li>
+</ul>
+<h2 align="center">Audio</h2>
+  <p>
+    The logic of the audio leverages the Web Audio API. My implementation was pretty simple as it was purely sample playback. The loop works as follows:
+    <br>
+    <code>Initialize the context → Fetch the sample and store in buffer  →  Connect the gain node and output destination → Playback</code>
+  </p>
+
+<h2 align="center">Sequencer</h2>
+<p>The sequencer itself is simply an array of objects generated on the initial load, which is then processed through the useSequencer hook which handles the scheduling, highlighting, playback and assignment of samples. </p>
+<p>Instruments are stored as an array of strings. Upon determining which instrument is due to play, the system checks for keywords like “kick” or “clap” within this array and triggers the corresponding sample.</p>
+<p>The scheduling is done by comparing the Audio Context’s currentTime value plus a minimum schedule time against a set lookahead time.</p>
+<p>The majority of logic in the scheduler itself is handling the UI representation, adding and removing CSS fields as time passes.</p>
+
+<h2 align="center">API</h2>
+<p>
+    The Back-end features a straightforward API developed using C# and ASP.NET Core. This being a new tech for me gave me a good duction into both the language and the framework. It handles communication to a Mongo database using REST endpoints and validates the user authentication token as it’s being passed from the front end using HTTPOnly cookies. 
+</p>
+<p>
+    Initially I had wanted to stay away from using a MongoDB integration again, but couldn’t justify storing the sequencer objects within a relational database. 
+</p>
+
+<h2 align="center">UI</h2>
+<p>Using shadcn/ui as the component library along with TailwindCSS really simplified the process of getting the interface as I wanted. My main goal with it was to have the overal aesthetic as simple and neutral as possible while it's inactive, and giving anything that required attention bright colors that would pop off the screen. </p>
+
+<p>Clear visualization of state in audio is something I really appreciate when using music technologies, without it you're effectively restricting your analysis to one sense.</p>
+
+<h2 align="center">Concluding thoughts:</h2>
+<p>The Web Audio API offers numerous features that I initially aimed to incorporate. Filtering, Panning and many different types of processing per step would have opened up the possibilities of more complex sequences. </p>
+
+<p>Expanding the sequencer length was also something left unchecked on the list. While pretty simple to implement on the sequencer side of things, having a good UX with multiple pages of steps was not. </p>
+
+<p>The Front-end container structure presented a few UX challenges, when the sequencer grew in size, it became awkward to launch the sequencer and assign without scrolling. This issue stemmed from the visual representation of steps in the sequencer, something that could have been handled by not showing all active instruments on the sequencer, but only the active pad selected.</p>
+
+<p>Maybe on a future iteration...   </p>
+
+---
+
+<h1 id="screenshots" align="center">Screenshots</h1>
 
 <h2 align="center">Sequencer:</h2>
 <div align="center">
@@ -69,5 +131,3 @@ ___
   <img src="https://github.com/dermotbg/tsequencer/assets/123154617/c3df441e-77d0-4e2a-b867-e7189fdabd7b" alt="Clear Sequencer Dialog" width="20%" height="20%" />
   <img src="https://github.com/dermotbg/tsequencer/assets/123154617/d48e73b9-5521-43cd-a4bd-88c23543f95a" alt="Key Mapping Dialog" width="50%" height="20%" />
 </div>
-
----
